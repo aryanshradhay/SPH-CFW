@@ -1,0 +1,405 @@
+/* =======================
+   Fonts
+   ======================= */
+
+/* Merck Corporate Font (place files in /public/fonts/) */
+@font-face {
+  font-family: 'Merck';
+  src:
+       url('../../public/fonts/merck.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Default font = Verdana */
+html, body {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+/* Headlines = Merck with Verdana fallback */
+h1, h2, h3, h4, h5, h6,
+.title-lg, .title-md, .title-sm {
+  font-family: 'Merck', Verdana, Geneva, sans-serif;
+}
+
+/* =======================
+   Brand & Neutrals
+   ======================= */
+
+:root {
+  /* Brand colors */
+  --purple: #503291;   /* Base */
+  --green:  #a5cd50;   /* Primary */
+  --yellow: #ffc832;   /* Secondary */
+
+  /* Neutral system */
+  --bg: #ffffff;       /* page background */
+  --surface: #ffffff;  /* cards/toolbar */
+  --surface-2: #fafafb;/* subtle alt surface */
+  --text: #0f1222;     /* body text (dark neutral) */
+  --muted: #62667a;    /* secondary text */
+  --line: #e6e7ee;     /* borders */
+  --shadow: 0 2px 10px rgba(17, 17, 26, 0.08);
+  --radius: 5px;
+}
+
+* { box-sizing:border-box }
+html, body, #root { height:100% }
+body {
+  margin:0;
+  color:var(--text);
+  background:var(--bg);
+}
+
+/* =======================
+   Layout
+   ======================= */
+
+.page { min-height:100vh; }
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 3px solid var(--purple);
+  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+}
+.container { max-width:1200px; margin:0 auto; padding:20px 24px; }
+.content { padding:28px 24px; }
+
+.row { display:flex; gap:10px; }
+.column { display:flex; flex-direction:column; }
+.space-between { justify-content:space-between; }
+.align-center { align-items:center; }
+.center { justify-content:center; align-items:center; }
+
+.gap-12 { gap:12px; }
+.gap-8 { gap:8px; }
+.mr-6 { margin-right:6px; }
+.mr-8 { margin-right:8px; }
+.mb-4 { margin-bottom:4px; }
+.mb-6 { margin-bottom:6px; }
+.mb-8 { margin-bottom:8px; }
+.mb-12 { margin-bottom:12px; }
+.mb-16 { margin-bottom:16px; }
+.mt-4 { margin-top:4px; }
+
+.title-lg { font-size:24px; font-weight:800; color: var(--purple); }
+.title-md { font-size:18px; font-weight:800; color: var(--purple); }
+.title-sm { font-size:15px; font-weight:700; color: var(--purple); }
+.section-h2 { font-size:22px; font-weight:800; color:var(--purple); margin:24px 0 12px; }
+
+.text-600 { font-weight:600; }
+.text-xs { font-size:12px; }
+.text-sm { font-size:14px; }
+.muted { color:var(--muted); }
+.lh { line-height:1.6; }
+
+.brand-logo { height:40px; width:auto; display:block; }
+
+/* =======================
+   Inputs & Toolbar
+   ======================= */
+
+.toolbar.card {
+  padding:16px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  background: var(--surface);
+  margin-bottom:24px;
+}
+
+.toolbar-grid {
+  display:grid;
+  grid-template-columns:1fr 320px;
+  gap:16px;
+}
+
+.field { position:relative; }
+.input {
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--line);
+  border-radius:6px;
+  font-size:14px;
+  outline:none;
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color .15s, box-shadow .15s;
+}
+.input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(80, 50, 145, 0.12);
+}
+.abs-left { position:absolute; left:12px; top:50%; transform:translateY(-50%); }
+.pl { padding-left:40px; }
+
+/* =======================
+   Cards / Sections
+   ======================= */
+
+.layout { display:flex; gap:24px; }
+.col.main.full { flex:1; }
+.col.main.half { flex:1; }
+.col.side.sticky { width:50%; position:sticky; top:24px; height:fit-content; }
+
+.card {
+  background: var(--surface);
+  border:1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.section { padding:16px; }
+.header-pad {
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  border-top-left-radius:var(--radius);
+  border-top-right-radius:var(--radius);
+  background: var(--surface-2);
+}
+.pad { padding:16px; }
+
+/* Subtle section separators */
+.hr {
+  height:2px;
+  background: var(--purple);
+  opacity:.12;
+  border:0;
+  margin:16px 0;
+}
+
+.grid-cards {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+@media (min-width:768px){.grid-cards{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:1024px){.grid-cards{grid-template-columns:repeat(4,1fr)}}
+
+.job-pill {
+  text-align:center;
+  border:1px solid var(--line);
+  background: var(--surface);
+  border-radius:8px;
+  padding:10px;
+  cursor:pointer;
+  transition:.15s box-shadow,.15s border-color,.15s transform,.15s background;
+  font-weight:700;
+  color:#31344a;
+}
+.job-pill:hover { box-shadow:var(--shadow); transform: translateY(-1px); }
+.job-pill.selected {
+  background: #f3f2f8;               /* light neutral with purple hint (no new color) */
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(80,50,145,0.15);
+}
+
+/* =======================
+   Empty states
+   ======================= */
+
+.empty {
+  padding:28px;
+  text-align:center;
+  color:var(--muted);
+  background: var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+}
+.empty.small { padding:16px; }
+
+/* =======================
+   Sidebar
+   ======================= */
+
+.scroll-300 { max-height:384px; overflow:auto; }
+.scroll-180 { max-height:200px; overflow:auto; }
+.list { list-style:none; margin:0; padding:0; }
+.dot { width:6px; height:6px; border-radius:50%; display:inline-block; margin-top:8px; margin-right:8px; background:var(--purple); }
+
+/* =======================
+   Buttons & Badges
+   ======================= */
+
+.btn {
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  cursor:pointer;
+  font-weight:800;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
+}
+
+/* Primary action = Green, with purple focus ring */
+.btn.primary {
+  background: var(--green);
+  color:#122300;           /* dark text for contrast on light green */
+  border-color: var(--green);
+}
+.btn.primary:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn.primary:focus-visible { outline: 3px solid rgba(80,50,145,0.25); outline-offset: 2px; }
+
+/* Secondary action = Yellow outline / subtle fill on hover */
+.btn.secondary {
+  background: var(--surface);
+  color: #2b2300;
+  border-color: var(--yellow);
+}
+.btn.secondary:hover {
+  background: #fff7d1;     /* soft hover using yellow family without adding a new color */
+}
+
+/* Tertiary (ghost) = Purple text + border */
+.btn.ghost {
+  background: transparent;
+  color: var(--purple);
+  border-color: var(--purple);
+}
+.btn.ghost:hover { background: #f3f2f8; }
+
+.btn.full { width:100%; }
+
+.icon-button {
+  background: transparent;
+  color: var(--purple);
+  border:1px solid var(--line);
+  padding:6px 8px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.icon-button:hover { background: var(--surface-2); }
+
+/* Badges */
+.badge {
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  font-weight:700;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.badge.green  { background: var(--green);  color:#122300; border-color: var(--green); }
+.badge.yellow { background: var(--yellow); color:#2b2300; border-color: var(--yellow); }
+.badge.purple { background: var(--purple); color:#fff;      border-color: var(--purple); }
+
+/* =======================
+   Match cards (similar jobs)
+   ======================= */
+
+.match {
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  cursor:pointer;
+  transition:.15s box-shadow,.15s transform,.15s border-color;
+  background: var(--surface);
+}
+.match:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+
+/* Color-coded left accents (clean, minimal color use) */
+.match { position:relative; }
+.match::before {
+  content:"";
+  position:absolute;
+  left:0; top:0; bottom:0;
+  width:4px;
+  border-top-left-radius:8px;
+  border-bottom-left-radius:8px;
+}
+.match-excellent::before { background: var(--green); }
+.match-good::before      { background: var(--yellow); }
+.match-fair::before      { background: var(--purple); }
+.match-low::before       { background: #c8cad6; }
+
+/* =======================
+   Progress bars
+   ======================= */
+
+.bar {
+  width:100%;
+  height:8px;
+  background:#eef0f5;          /* neutral track */
+  border-radius:999px;
+  position:relative;
+  overflow:hidden;
+}
+.bar-fill { height:100%; }
+
+/* Current = purple; planned = green (if you show planned separately) */
+.bar-fill.blue   { background: var(--purple); }
+.bar-fill.yellow { background: var(--yellow); }
+.bar-fill.red    { background: var(--green); } /* using green as “priority” instead of red */
+
+/* =======================
+   Modal & Panels
+   ======================= */
+
+.modal-backdrop {
+  position:fixed;
+  inset:0;
+  background:rgba(15, 18, 34, .55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:50;
+  padding:16px;
+}
+.modal-card {
+  background: var(--surface);
+  border-radius:10px;
+  box-shadow:0 16px 40px rgba(15, 18, 34, .25);
+  max-width:900px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+  border:1px solid var(--line);
+}
+.modal-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  background: var(--surface-2);
+}
+.modal-body { padding:16px; }
+
+/* Panels inside modal */
+.panel {
+  background: var(--surface);
+  border:1px solid var(--line);
+  border-radius:8px;
+  padding:14px;
+  margin-bottom:14px;
+}
+.panel-title { display:flex; align-items:center; font-weight:800; margin-bottom:8px; color: var(--purple); }
+.panel-subtext { font-size:13px; margin-bottom:12px; color:var(--muted); }
+
+.border-green  { border-color: var(--green); }
+.border-yellow { border-color: var(--yellow); }
+.border-purple { border-color: var(--purple); }
+
+/* =======================
+   Header icon chip
+   ======================= */
+
+.header-icon {
+  background: var(--purple);
+  padding:6px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+}
+
+/* =======================
+   Accessibility helpers
+   ======================= */
+
+:focus-visible {
+  outline: 3px solid rgba(80,50,145,0.35);
+  outline-offset: 2px;
+}
