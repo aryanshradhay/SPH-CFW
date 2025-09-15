@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/SPH-CFW/static/css/main.4350162d.css",
-    "main.js": "/SPH-CFW/static/js/main.b8b979d3.js",
+    "main.css": "/SPH-CFW/static/css/main.e356b5ac.css",
+    "main.js": "/SPH-CFW/static/js/main.bd4aa98a.js",
     "static/media/merck.ttf": "/SPH-CFW/static/media/merck.46efd46cde48fa957018.ttf",
     "index.html": "/SPH-CFW/index.html",
-    "main.4350162d.css.map": "/SPH-CFW/static/css/main.4350162d.css.map",
-    "main.b8b979d3.js.map": "/SPH-CFW/static/js/main.b8b979d3.js.map"
+    "main.e356b5ac.css.map": "/SPH-CFW/static/css/main.e356b5ac.css.map",
+    "main.bd4aa98a.js.map": "/SPH-CFW/static/js/main.bd4aa98a.js.map"
   },
   "entrypoints": [
-    "static/css/main.4350162d.css",
-    "static/js/main.b8b979d3.js"
+    "static/css/main.e356b5ac.css",
+    "static/js/main.bd4aa98a.js"
   ]
 }
