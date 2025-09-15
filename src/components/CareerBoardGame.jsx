@@ -181,14 +181,27 @@ export default function CareerBoardGame() {
     }
   }, [position]);
 
-  // Serpentine grid mapping (board look)
-  const COLS = 5;
+  // Responsive serpentine grid mapping
+  const [cols, setCols] = useState(5);
+  const [tileMin, setTileMin] = useState(180);
+  useEffect(() => {
+    const updateCols = () => {
+      const w = typeof window !== 'undefined' ? window.innerWidth : 1200;
+      const newCols = w < 480 ? 3 : w < 900 ? 4 : 5;
+      setCols(newCols);
+      setTileMin(w < 480 ? 150 : 180);
+    };
+    updateCols();
+    window.addEventListener('resize', updateCols);
+    return () => window.removeEventListener('resize', updateCols);
+  }, []);
+
   const cells = boardJobs.length;
-  const rows = Math.max(1, Math.ceil(cells / COLS));
+  const rows = Math.max(1, Math.ceil(cells / cols));
   const indexToGrid = (i) => {
-    const r = Math.floor(i / COLS);
-    const cInRow = i % COLS;
-    const c = r % 2 === 0 ? cInRow : COLS - 1 - cInRow;
+    const r = Math.floor(i / cols);
+    const cInRow = i % cols;
+    const c = r % 2 === 0 ? cInRow : cols - 1 - cInRow;
     return { r, c };
   };
 
@@ -246,7 +259,7 @@ export default function CareerBoardGame() {
       {/* Header */}
       <div className="topbar">
         <div className="container">
-          <div className="row space-between align-center">
+          <div className="row space-between align-center wrap">
             <div className="row align-center gap-12">
                 <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Brand" className="brand-logo" />
                 <RouteIcon className="icon-md" />
@@ -255,12 +268,12 @@ export default function CareerBoardGame() {
                   <p className="brand-sub muted">See how roles progress across the pathway</p>
                 </div>
               </div>
-            <div className="row gap-12 align-center">
-              <Link to="/games" className="btn">Games Hub</Link>
-              <Link to="/" className="btn">
-                <Home className="icon-xs mr-6" /> Explorer
-              </Link>
-            </div>
+              <div className="row gap-12 align-center">
+                <Link to="/games" className="btn">Games Hub</Link>
+                <Link to="/" className="btn">
+                  <Home className="icon-xs mr-6" /> Explorer
+                </Link>
+              </div>
           </div>
         </div>
       </div>
@@ -307,7 +320,7 @@ export default function CareerBoardGame() {
           </div>
 
           {/* Scoreboard */}
-          <div className="row space-between align-center mb-12">
+          <div className="row space-between align-center wrap mb-12">
             <div className="row align-center gap-12">
               <Trophy className="icon-sm yellow" />
               <div className="text-sm">
@@ -323,7 +336,7 @@ export default function CareerBoardGame() {
               className="board-grid"
               style={{
                 display: 'grid',
-                gridTemplateColumns: `repeat(${COLS}, minmax(180px, 1fr))`,
+                gridTemplateColumns: `repeat(${cols}, minmax(${tileMin}px, 1fr))`,
                 gap: 16,
                 padding: '8px 4px 12px',
               }}

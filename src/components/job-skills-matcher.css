@@ -90,6 +90,13 @@ body {
 .align-center { align-items:center; }
 .center { justify-content:center; align-items:center; }
 
+/* Utilities */
+.wrap { flex-wrap: wrap; }
+
+/* Simple responsive two-column grid utility */
+.grid-two { display:grid; grid-template-columns:1fr; gap:12px; }
+@media (min-width:768px){ .grid-two { grid-template-columns:1fr 1fr; } }
+
 .gap-12 { gap:12px; }
 .gap-8 { gap:8px; }
 .mr-6 { margin-right:6px; }
@@ -114,6 +121,15 @@ body {
 
 .brand-logo { height:40px; width:auto; display:block; }
 
+/* Media helpers and defaults */
+.hide-mobile { display:none; }
+@media (min-width:768px){ .hide-mobile { display:initial; } }
+@media (max-width:767.98px){ .show-mobile { display:initial; } }
+@media (min-width:768px){ .show-mobile { display:none; } }
+
+/* Make media scale down on small screens */
+img, video { max-width:100%; height:auto; }
+
 /* =======================
    Inputs & Toolbar
    ======================= */
@@ -131,6 +147,9 @@ body {
   display:grid;
   grid-template-columns:1fr 320px;
   gap:16px;
+}
+@media (max-width: 900px){
+  .toolbar-grid { grid-template-columns: 1fr; }
 }
 
 .field { position:relative; }
@@ -160,6 +179,11 @@ body {
 .col.main.full { flex:1; }
 .col.main.half { flex:1; }
 .col.side.sticky { width:50%; position:sticky; top:24px; height:fit-content; }
+
+@media (max-width: 900px){
+  .layout { flex-direction: column; }
+  .col.side.sticky { width:100%; position:static; }
+}
 
 .card {
   background: var(--surface);
@@ -191,8 +215,28 @@ body {
   grid-template-columns:repeat(2,minmax(0,1fr));
   gap:12px;
 }
+@media (max-width: 600px){
+  .grid-cards { grid-template-columns: 1fr; }
+}
 @media (min-width:768px){.grid-cards{grid-template-columns:repeat(3,1fr)}}
 @media (min-width:1024px){.grid-cards{grid-template-columns:repeat(4,1fr)}}
+
+/* Topbar and spacing tweaks on small screens */
+@media (max-width: 768px){
+  .container { padding:16px; }
+  .content { padding:20px 16px; }
+  .topbar .row { flex-wrap: wrap; }
+  .topbar .brand-logo { height:28px; }
+  .title-lg { font-size:20px; }
+  .title-md { font-size:16px; }
+  .title-sm { font-size:14px; }
+}
+
+/* Narrow screen form controls: relax inline min-widths */
+@media (max-width: 600px){
+  .field { min-width: 0 !important; width:100%; }
+  .row.space-between.align-center { row-gap: 8px; }
+}
 
 .job-pill {
   text-align:center;

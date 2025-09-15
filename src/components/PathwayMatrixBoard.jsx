@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
-import { Grid3X3, Dice5, Home, Flag, Shuffle, HelpCircle, BookOpen } from 'lucide-react';
+import { Grid3x3, Dice5, Home, Flag, Shuffle, HelpCircle, BookOpen } from 'lucide-react';
 import './job-skills-matcher.css';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
@@ -356,9 +356,9 @@ export default function PathwayMatrixBoard() {
       {/* Header */}
       <div className="topbar">
         <div className="container">
-          <div className="row space-between align-center">
+          <div className="row space-between align-center wrap">
             <div className="row align-center gap-12">
-              <Grid3X3 className="icon-md" />
+              <Grid3x3 className="icon-md" />
               <div>
                 <h1 className="brand-title">Pathway Matrix Board</h1>
                 <p className="brand-sub muted">From origin cluster to landing cluster</p>
@@ -378,7 +378,7 @@ export default function PathwayMatrixBoard() {
       <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
           {/* Controls */}
-          <div className="row space-between align-center mb-12">
+          <div className="row space-between align-center wrap mb-12">
             <div className="row align-center gap-12">
               <div className="field" style={{ minWidth: 320 }}>
                 <label className="text-sm muted">Origin Cluster</label>

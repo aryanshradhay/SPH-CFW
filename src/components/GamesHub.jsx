@@ -1,7 +1,7 @@
 // src/components/GamesHub.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Gamepad2, Target, BookOpen, Home, ListChecks, Route as RouteIcon, Grid3X3 } from 'lucide-react';
+import { Gamepad2, Target, BookOpen, Home, ListChecks, Route as RouteIcon, Grid3x3 } from 'lucide-react';
 import './job-skills-matcher.css';
 
 export default function GamesHub() {
@@ -10,7 +10,7 @@ export default function GamesHub() {
       {/* Header */}
       <div className="topbar">
         <div className="container">
-          <div className="row space-between align-center">
+          <div className="row space-between align-center wrap">
             <div className="row align-center gap-12">
               <Gamepad2 className="icon-md" />
               <div>
@@ -99,7 +99,7 @@ export default function GamesHub() {
             <div className="match match-fair">
               <div className="row space-between mb-6">
                 <h4 className="text-sm text-600 row align-center">
-                  <Grid3X3 className="icon-sm mr-8" /> Pathway Matrix Board
+                  <Grid3x3 className="icon-sm mr-8" /> Pathway Matrix Board
                 </h4>
                 <span className="badge">Matrix</span>
               </div>
