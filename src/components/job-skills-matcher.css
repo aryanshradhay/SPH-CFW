@@ -403,3 +403,61 @@ body {
   outline: 3px solid rgba(80,50,145,0.35);
   outline-offset: 2px;
 }
+
+/* =======================
+   Career Board (Pathway)
+   ======================= */
+.board {
+  overflow-x: auto;
+  padding: 8px 4px;
+}
+.board-track {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 8px 4px 16px;
+}
+.tile {
+  position: relative;
+  min-width: 220px;
+  max-width: 260px;
+  padding: 12px 12px 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+.tile.reached { border-color: #dfe2ef; }
+.tile.active {
+  border-color: var(--purple);
+  box-shadow: 0 6px 16px rgba(80, 50, 145, .15);
+}
+.tile-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 999px;
+  background: var(--purple);
+  color: #fff;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.tile-title { font-weight: 700; }
+.tile-division { margin-top: 4px; }
+
+.token {
+  position: absolute;
+  top: -12px; left: 12px;
+  width: 18px; height: 18px;
+  border-radius: 999px;
+  background: var(--green);
+  border: 2px solid #17330011;
+  box-shadow: 0 2px 6px rgba(0,0,0,.15);
+}
+.connector {
+  position: absolute;
+  right: -24px; top: 24px;
+  width: 24px; height: 2px;
+  background: #dfe2ef;
+}

@@ -1,7 +1,7 @@
 // src/components/GamesHub.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Gamepad2, Target, BookOpen, Home, ListChecks } from 'lucide-react';
+import { Gamepad2, Target, BookOpen, Home, ListChecks, Route as RouteIcon } from 'lucide-react';
 import './job-skills-matcher.css';
 
 export default function GamesHub() {
@@ -78,10 +78,25 @@ export default function GamesHub() {
                 Play
               </Link>
             </div>
+
+            {/* Game: Career Path Board */}
+            <div className="match match-good">
+              <div className="row space-between mb-6">
+                <h4 className="text-sm text-600 row align-center">
+                  <RouteIcon className="icon-sm mr-8" /> Career Path Board
+                </h4>
+                <span className="badge">Pathway</span>
+              </div>
+              <p className="text-xs muted mb-8">
+                Follow a board-style path of roles to see how careers progress within a function. Roll to advance and view key skills at each step.
+              </p>
+              <Link to="/games/career-board" className="btn primary full row center">
+                Play
+              </Link>
+            </div>
           </div>
         </div>
       </div>
     </div>
   );
 }
-
