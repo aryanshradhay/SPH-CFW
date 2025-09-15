@@ -7,6 +7,7 @@ import GamesHub from './components/GamesHub';
 import GuessRoleGame from './components/GuessRoleGame';
 import SkillDefinitionQuiz from './components/SkillDefinitionQuiz';
 import CareerBoardGame from './components/CareerBoardGame';
+import PathwayMatrixBoard from './components/PathwayMatrixBoard';
 
 export default function App(){
   return (
@@ -18,6 +19,7 @@ export default function App(){
         <Route path="/games/guess-role" element={<GuessRoleGame/>} />
         <Route path="/games/skill-quiz" element={<SkillDefinitionQuiz/>} />
         <Route path="/games/career-board" element={<CareerBoardGame/>} />
+        <Route path="/games/pathway-matrix" element={<PathwayMatrixBoard/>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </HashRouter>

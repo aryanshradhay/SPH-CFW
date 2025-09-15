@@ -181,7 +181,7 @@ export default function JobExplorerGame() {
       {/* Header */}
       <div className="topbar">
         <div className="container">
-          <div className="row space-between align-center">
+          <div className="row space-between align-center wrap">
             <div className="row align-center gap-12">
               <Gamepad2 className="icon-md" />
               <div>
@@ -202,7 +202,7 @@ export default function JobExplorerGame() {
       {/* Content */}
       <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
-          <div className="row space-between align-center mb-12">
+          <div className="row space-between align-center wrap mb-12">
             <div className="row align-center gap-12">
               <Trophy className="icon-sm yellow" />
               <div className="text-sm">Score: <span className="text-600">{score}</span></div>

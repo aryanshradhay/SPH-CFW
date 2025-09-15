@@ -1,7 +1,7 @@
 // src/components/GamesHub.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Gamepad2, Target, BookOpen, Home, ListChecks, Route as RouteIcon } from 'lucide-react';
+import { Gamepad2, Target, BookOpen, Home, ListChecks, Route as RouteIcon, Grid3x3 } from 'lucide-react';
 import './job-skills-matcher.css';
 
 export default function GamesHub() {
@@ -10,7 +10,7 @@ export default function GamesHub() {
       {/* Header */}
       <div className="topbar">
         <div className="container">
-          <div className="row space-between align-center">
+          <div className="row space-between align-center wrap">
             <div className="row align-center gap-12">
               <Gamepad2 className="icon-md" />
               <div>
@@ -91,6 +91,22 @@ export default function GamesHub() {
                 Follow a board-style path of roles to see how careers progress within a function. Roll to advance and view key skills at each step.
               </p>
               <Link to="/games/career-board" className="btn primary full row center">
+                Play
+              </Link>
+            </div>
+
+            {/* Game: Pathway Matrix Board */}
+            <div className="match match-fair">
+              <div className="row space-between mb-6">
+                <h4 className="text-sm text-600 row align-center">
+                  <Grid3x3 className="icon-sm mr-8" /> Pathway Matrix Board
+                </h4>
+                <span className="badge">Matrix</span>
+              </div>
+              <p className="text-xs muted mb-8">
+                A grid of origin vs landing clusters. Roll or click to explore allowed transitions and see example roles in the destination.
+              </p>
+              <Link to="/games/pathway-matrix" className="btn primary full row center">
                 Play
               </Link>
             </div>
