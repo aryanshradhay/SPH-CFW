@@ -1,0 +1,46 @@
+Origin Cluster,Landing Cluster,Path Label,Notes,Frequency
+Global Program Management,Global Program Management,SPH Sub-Function Path,,5
+Global Program Management,Portfolio Analytics,SPH Path,,3
+Global Program Management,Program Planning,SPH Path,,4
+Global Program Management,Resource Management,SPH Path,,4
+Global Program Management,Strategic Portfolio Management,SPH Path,,3
+Global Program Management,Clinical Governance Operations,SPH Path,,3
+Global Program Management,R&D,R&D Path: GPH Position in RU,,2
+Global Program Management,Merck,Merck Path: Chief of Staff or SRO,,1
+
+Portfolio Analytics,Global Program Management,SPH Sub-Function Path,,3
+Portfolio Analytics,Program Planning,SPH Path,,3
+Portfolio Analytics,Strategic Portfolio Management,SPH Path,,3
+
+Program Planning,Global Program Management,SPH Path,,3
+Program Planning,Portfolio Analytics,SPH Sub-Function Path,,2
+Program Planning,Resource Management,SPH Sub-Function Path,,2
+Program Planning,Strategic Portfolio Management,SPH Path,,3
+
+Resource Management,Global Program Management,SPH Path,,3
+Resource Management,Portfolio Analytics,SPH Path,,2
+Resource Management,Program Planning,SPH Path,,3
+Resource Management,Resource Management,SPH Sub-Function Path,,4
+Resource Management,Strategic Portfolio Management,SPH Path,,2
+
+Strategic Portfolio Management,Global Program Management,SPH Path,,3
+Strategic Portfolio Management,Strategic Portfolio Management,SPH Sub-Function Path,,4
+Strategic Portfolio Management,Clinical Governance Operations,SPH Path,,2
+
+Clinical Governance Operations,Global Program Management,SPH Path,,3
+Clinical Governance Operations,Program Planning,SPH Path,,2
+Clinical Governance Operations,Resource Management,SPH Path,,2
+Clinical Governance Operations,Clinical Governance Operations,SPH Sub-Function Path,,4
+
+Chief Medical Officer Governance & Operations,Chief Medical Officer Governance & Operations,SPH Sub-Function Path,,4
+
+Clinical Development China / Japan,Global Program Management,SPH Path,,2
+Clinical Development China / Japan,Chief Medical Officer Governance & Operations,SPH Sub-Function Path,,3
+Clinical Development China / Japan,R&D,R&D Path: DU or GDO,,4
+Clinical Development China / Japan,Healthcare,Healthcare Path: BD Due Diligence Lead,,3
+
+R&D,R&D,R&D Path: DU or GDO,,5
+
+Healthcare,Healthcare,Healthcare Path: BD Due Diligence Lead,,5
+
+Merck,Global Program Management,Merck Path: Inhouse Consulting,,2
