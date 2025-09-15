@@ -613,7 +613,7 @@ const JobSkillsMatcher = () => {
         <div className="container">
           <div className="row space-between align-center">
             <div className="row align-center gap-12">
-              <img src="/logo.png" alt="Brand" className="brand-logo" />
+              <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Brand" className="brand-logo" />
               <div>
                 <h1 className="brand-title">SPH Career Roadmap</h1>
                 <p className="brand-sub muted">Explore roles, skills & roadmaps</p>

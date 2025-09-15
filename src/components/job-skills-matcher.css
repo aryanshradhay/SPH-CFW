@@ -59,10 +59,28 @@ body {
 .page { min-height:100vh; }
 
 .topbar {
-  background: var(--surface);
-  border-bottom: 3px solid var(--purple);
-  box-shadow: 0 1px 0 rgba(0,0,0,.03);
+  background: var(--purple);
+  color: #fff;
+  border-bottom: 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,.08);
 }
+/* Ensure all header text/icons are white for contrast */
+.topbar h1, .topbar h2, .topbar h3, .topbar p,
+.topbar .brand-title, .topbar .brand-sub,
+.topbar .text-sm, .topbar .muted,
+.topbar a { color:#fff; }
+
+/* Buttons in topbar use white text/border on purple */
+.topbar .btn {
+  background: transparent;
+  color:#fff;
+  border-color: rgba(255,255,255,0.85);
+}
+.topbar .btn:hover { background: rgba(255,255,255,0.10); border-color:#fff; box-shadow:none; }
+.topbar .btn:focus-visible { outline: 3px solid rgba(255,255,255,0.55); outline-offset: 2px; }
+
+/* Utility: force white where explicitly requested */
+.white { color:#fff !important; }
 .container { max-width:1200px; margin:0 auto; padding:20px 24px; }
 .content { padding:28px 24px; }
 
@@ -411,12 +429,6 @@ body {
   overflow-x: auto;
   padding: 8px 4px;
 }
-.board-track {
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  padding: 8px 4px 16px;
-}
 .tile {
   position: relative;
   min-width: 220px;
@@ -427,6 +439,7 @@ body {
   background: var(--surface);
   box-shadow: var(--shadow);
 }
+.tile.grid { min-width: auto; max-width: none; width: 100%; }
 .tile.reached { border-color: #dfe2ef; }
 .tile.active {
   border-color: var(--purple);
@@ -461,3 +474,45 @@ body {
   width: 24px; height: 2px;
   background: #dfe2ef;
 }
+
+/* =======================
+   Pathway Matrix Board
+   ======================= */
+.matrix-board { overflow:auto; }
+.matrix-grid {
+  display:grid;
+  gap:4px;
+  background: #e8eaf4;
+  padding:6px;
+  border-radius:10px;
+  border:1px solid var(--line);
+}
+.matrix-cell {
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:6px;
+  min-height:46px;
+  padding:6px 8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.matrix-cell.header {
+  background: var(--surface-2);
+  font-weight:700;
+}
+.matrix-cell.header.active { outline: 3px solid rgba(80,50,145,0.2); }
+.matrix-cell.rotate { writing-mode: sideways-lr; }
+.matrix-cell.allowed { cursor:pointer; transition: .12s transform, .12s box-shadow; }
+.matrix-cell.allowed:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.matrix-cell.picked { outline: 3px solid rgba(165,205,80,0.6); }
+
+/* Cell kinds (soft color hints) */
+.kind-sph       { background: #f3fff0; border-color: #ceefc0; }
+.kind-sph-sub   { background: #f1f7ff; border-color: #c5d8fb; }
+.kind-rd        { background: #eefcf6; border-color: #c4efdd; }
+.kind-health    { background: #fff7e5; border-color: #ffe5ac; }
+.kind-merck     { background: #f5f1ff; border-color: #d7cbff; }
+.kind-other     { background: #f8f9fc; }
+.kind-empty     { background: #ffffff; }

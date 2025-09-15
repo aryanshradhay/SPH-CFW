@@ -77,6 +77,7 @@ export default function CareerBoardGame() {
   const [turn, setTurn] = useState(0);
   const [lastRoll, setLastRoll] = useState(0);
   const [finished, setFinished] = useState(false);
+  const [isMoving, setIsMoving] = useState(false);
   const MAX_TURNS = 15;
 
   const scrollerRef = useRef(null);
@@ -180,18 +181,42 @@ export default function CareerBoardGame() {
     }
   }, [position]);
 
+  // Serpentine grid mapping (board look)
+  const COLS = 5;
+  const cells = boardJobs.length;
+  const rows = Math.max(1, Math.ceil(cells / COLS));
+  const indexToGrid = (i) => {
+    const r = Math.floor(i / COLS);
+    const cInRow = i % COLS;
+    const c = r % 2 === 0 ? cInRow : COLS - 1 - cInRow;
+    return { r, c };
+  };
+
+  // Animated movement across tiles
   const onRoll = () => {
-    if (finished || boardJobs.length < 2) return;
+    if (finished || boardJobs.length < 2 || isMoving) return;
     const roll = Math.floor(Math.random() * 6) + 1; // 1..6
     setLastRoll(roll);
     setTurn((t) => t + 1);
-    setPosition((p) => {
-      const next = Math.min(p + roll, boardJobs.length - 1);
-      if (next >= boardJobs.length - 1 || turn + 1 >= MAX_TURNS) {
-        setFinished(true);
+    setIsMoving(true);
+    let steps = roll;
+    const stepOnce = () => {
+      setPosition((p) => {
+        const next = Math.min(p + 1, boardJobs.length - 1);
+        return next;
+      });
+      steps -= 1;
+      if (steps > 0) {
+        setTimeout(stepOnce, 280);
+      } else {
+        // finish animation
+        const endReached = position + roll >= boardJobs.length - 1;
+        const turnsExceeded = turn + 1 >= MAX_TURNS;
+        if (endReached || turnsExceeded) setFinished(true);
+        setIsMoving(false);
       }
-      return next;
-    });
+    };
+    setTimeout(stepOnce, 150);
   };
 
   const current = boardJobs[position];
@@ -223,12 +248,13 @@ export default function CareerBoardGame() {
         <div className="container">
           <div className="row space-between align-center">
             <div className="row align-center gap-12">
-              <RouteIcon className="icon-md" />
-              <div>
-                <h1 className="brand-title">Career Path Board</h1>
-                <p className="brand-sub muted">See how roles progress across the pathway</p>
+                <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Brand" className="brand-logo" />
+                <RouteIcon className="icon-md" />
+                <div>
+                  <h1 className="brand-title">Career Path Board</h1>
+                  <p className="brand-sub muted">See how roles progress across the pathway</p>
+                </div>
               </div>
-            </div>
             <div className="row gap-12 align-center">
               <Link to="/games" className="btn">Games Hub</Link>
               <Link to="/" className="btn">
@@ -291,39 +317,58 @@ export default function CareerBoardGame() {
             <div className="text-sm muted">Turn {turn} / {MAX_TURNS}</div>
           </div>
 
-          {/* Board */}
+          {/* Board (serpentine grid) */}
           <div className="board" ref={scrollerRef}>
-            <div className="board-track">
+            <div
+              className="board-grid"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${COLS}, minmax(180px, 1fr))`,
+                gap: 16,
+                padding: '8px 4px 12px',
+              }}
+            >
               {boardJobs.map((j, idx) => {
                 const active = idx === position;
                 const reached = idx <= position;
+                const { r, c } = indexToGrid(idx);
+                const isStart = idx === 0;
+                const isFinish = idx === boardJobs.length - 1;
                 return (
                   <div
                     key={j.id}
-                    className={`tile ${active ? 'active' : ''} ${reached ? 'reached' : ''}`}
+                    className={`tile grid ${active ? 'active' : ''} ${reached ? 'reached' : ''}`}
+                    style={{ gridRow: r + 1, gridColumn: c + 1 }}
                     ref={(el) => (tileRefs.current[idx] = el)}
                     title={j.title}
                   >
-                    <div className="tile-index">{idx + 1}</div>
+                    <div className="row space-between mb-6">
+                      <div className="tile-index">{idx + 1}</div>
+                      {isStart && (
+                        <span className="badge purple" title="Start">Start</span>
+                      )}
+                      {isFinish && (
+                        <span className="badge green" title="Finish"><Flag className="icon-xs mr-6" />Finish</span>
+                      )}
+                    </div>
                     <div className="tile-title">{j.title}</div>
                     <div className="tile-division text-xs muted">{j.division}</div>
                     {active && <div className="token" aria-hidden />}
-                    {idx < boardJobs.length - 1 && <div className="connector" aria-hidden />}
                   </div>
                 );
               })}
-              {boardJobs.length === 0 && (
-                <div className="empty" style={{ padding: 16 }}>
-                  No roles available. Try another function.
-                </div>
-              )}
             </div>
+            {boardJobs.length === 0 && (
+              <div className="empty" style={{ padding: 16 }}>
+                No roles available. Try another function.
+              </div>
+            )}
           </div>
 
           {/* Actions */}
           <div className="row gap-12 mt-12">
-            <button className="btn primary row center" onClick={onRoll} disabled={finished || boardJobs.length < 2}>
-              <PlayCircle className="icon-xs mr-6 white" /> {finished ? 'Finished' : lastRoll ? `Roll again (${lastRoll})` : 'Roll Dice'}
+            <button className="btn primary row center" onClick={onRoll} disabled={finished || boardJobs.length < 2 || isMoving}>
+              <PlayCircle className="icon-xs mr-6 white" /> {finished ? 'Finished' : lastRoll ? `Roll (${lastRoll})` : 'Roll Dice'}
             </button>
             <button
               className="btn"
@@ -332,6 +377,7 @@ export default function CareerBoardGame() {
                 setTurn(0);
                 setLastRoll(0);
                 setFinished(false);
+                setIsMoving(false);
               }}
             >
               Reset
