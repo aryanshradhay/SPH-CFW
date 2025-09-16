@@ -403,10 +403,6 @@ const JobSkillsMatcher = () => {
             skillTypeByName: j.skillTypeByName,
             description,
             requirements: [
-              'Bachelorâ€™s degree in relevant field',
-              'Experience in pharma/healthcare industry',
-              'Strong stakeholder and project management skills',
-              'Excellent communication',
             ],
           };
         });
@@ -927,7 +923,7 @@ const JobSkillsMatcher = () => {
                                 return (
                                   <div key={name + i}>
                                     <div className="row space-between">
-                                      <span className="muted text-sm">{name}</span>
+                                      <span className="muted text-sm"><strong>{name}</strong></span>
                                       <span className="text-sm text-600">{val}/5</span>
                                     </div>
                                     {def && <div className="text-xs muted mb-4">{def}</div>}
@@ -951,7 +947,7 @@ const JobSkillsMatcher = () => {
                                 return (
                                   <div key={name + i}>
                                     <div className="row space-between">
-                                      <span className="muted text-sm">{name}</span>
+                                      <span className="muted text-sm"><strong>{name}</strong></span>
                                       <span className="text-sm text-600">{val}/5</span>
                                     </div>
                                     {def && <div className="text-xs muted mb-4">{def}</div>}
