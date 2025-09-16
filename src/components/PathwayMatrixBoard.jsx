@@ -353,10 +353,10 @@ export default function PathwayMatrixBoard() {
   };
 
   return (
-    <div className="page solid-bg">
+    <div className="page solid-bg experience-page">
       <SiteHeader />
 
-      <div className="container content">
+      <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">
             <div className="page-heading-icon" aria-hidden="true">
@@ -374,9 +374,9 @@ export default function PathwayMatrixBoard() {
           </div>
         </div>
 
-        <div className="card section" style={{ marginBottom: 16 }}>
+        <div className="card section">
           {/* Controls */}
-          <div className="row space-between align-center wrap mb-12">
+          <div className="row space-between align-center wrap mb-12 control-bar">
             <div className="row align-center gap-12">
               <div className="field" style={{ minWidth: 320 }}>
                 <label className="text-sm muted">Origin Cluster</label>

@@ -280,10 +280,10 @@ export default function CareerRoadmap() {
   const hasSelection = plannerCurrentJob && plannerTargetJob;
 
   return (
-    <div className="page solid-bg">
+    <div className="page solid-bg experience-page">
       <SiteHeader />
 
-      <div className="container content">
+      <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">
             <div className="page-heading-icon" aria-hidden="true">
@@ -296,7 +296,7 @@ export default function CareerRoadmap() {
           </div>
         </div>
 
-        <div className="card section" style={{ marginBottom: 16 }}>
+        <div className="card section">
           <div className="row space-between align-start wrap" style={{ gap: 16 }}>
             <div className="column gap-8" style={{ flex: 1, minWidth: 260 }}>
               <h2 className="section-h2" style={{ marginTop: 0 }}>
@@ -338,7 +338,7 @@ export default function CareerRoadmap() {
           </div>
         </div>
 
-        <div className="card section" style={{ marginBottom: 16 }}>
+        <div className="card section">
           <div className="toolbar-grid" style={{ marginBottom: 16 }}>
             <div className="field">
               <label className="text-sm muted">Filter by Function</label>

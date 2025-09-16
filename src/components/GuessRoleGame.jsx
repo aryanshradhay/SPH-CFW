@@ -155,10 +155,10 @@ export default function GuessRoleGame() {
   }, [ready]);
 
   return (
-    <div className="page solid-bg">
+    <div className="page solid-bg experience-page">
       <SiteHeader />
 
-      <div className="container content">
+      <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">
             <div className="page-heading-icon" aria-hidden="true">
@@ -176,13 +176,27 @@ export default function GuessRoleGame() {
           </div>
         </div>
 
-        <div className="card section" style={{ marginBottom: 16 }}>
-          <div className="row space-between align-center wrap mb-12">
-            <div className="row align-center gap-12">
-              <Trophy className="icon-sm yellow" />
-              <div className="text-sm">Score: <span className="text-600">{score}</span></div>
+        <div className="card section">
+          <div className="stat-strip">
+            <div className="stat-strip__item">
+              <span className="stat-icon stat-icon--gold">
+                <Trophy className="icon-sm" />
+              </span>
+              <div>
+                <div className="stat-label">Score</div>
+                <div className="stat-value">{score}</div>
+              </div>
             </div>
-            <div className="text-sm muted">Round {Math.min(round, TOTAL_ROUNDS)} / {TOTAL_ROUNDS}</div>
+            <div className="stat-strip__item stat-strip__item--muted">
+              <div>
+                <div className="stat-label">Round</div>
+                <div className="stat-value">
+                  {Math.min(round, TOTAL_ROUNDS)}
+                  <span className="stat-divider">/</span>
+                  <span className="stat-total">{TOTAL_ROUNDS}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {!ready && <div className="empty">Loading game data…</div>}
