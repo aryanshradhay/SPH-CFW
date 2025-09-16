@@ -12,10 +12,13 @@ import {
   Route,
   Sparkles,
 } from 'lucide-react';
-import './job-skills-matcher.css';
+import '../styles/main.css';
 import useJobDataset from '../hooks/useJobDataset';
 import { alignVectors, classifyType } from '../utils/jobDataUtils';
 import SiteHeader from './SiteHeader';
+import HeroSection from './HeroSection';
+import FrameworkFunctions from './FrameworkFunctions';
+import { frameworkFunctions } from '../data/frameworkFunctions';
 
 function getSimilarityColor(sim) {
   if (sim >= 70) return 'match match-excellent';
@@ -48,10 +51,17 @@ const JobSkillsMatcher = () => {
   const [myPickerTitle, setMyPickerTitle] = useState('');
 
   const myPositionRef = useRef(null);
+  const frameworkRef = useRef(null);
 
   const scrollToMyPosition = () => {
     if (myPositionRef.current) {
       myPositionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const scrollToFramework = () => {
+    if (frameworkRef.current) {
+      frameworkRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -219,20 +229,15 @@ const JobSkillsMatcher = () => {
 
   const startingRoleMessage = myPosition
     ? myPosition.title
-    : 'Choose a position in “My Position” below to anchor your EVA Room.';
+    : 'Set a home position in “My Position” to personalise your EVA Room.';
 
   return (
     <div className="page solid-bg">
       <SiteHeader />
 
-      <section className="hero-simple">
-        <div className="container hero-simple-container">
-          <div className="hero-simple-content">
-            <h1 className="hero-simple-title">SPH Career Framework</h1>
-            <p className="hero-simple-subtitle">Why it</p>
-          </div>
-        </div>
-      </section>
+      <HeroSection onExplore={scrollToFramework} />
+
+      <FrameworkFunctions ref={frameworkRef} functions={frameworkFunctions} />
 
       {/* Content */}
       <div className="container content">

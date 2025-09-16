@@ -1,229 +1,9 @@
-/* =======================
-   Fonts
-   ======================= */
-
-/* Merck Corporate Font (place files in /public/fonts/) */
-@font-face {
-  font-family: 'Merck';
-  src:
-       url('../../public/fonts/merck.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-/* Default font = Verdana */
-html, body {
-  font-family: Verdana, Geneva, sans-serif;
-}
-
-/* Headlines use Verdana (keep Merck reserved for wordmark only) */
-h1, h2, h3, h4, h5, h6,
-.title-lg, .title-md, .title-sm {
-  font-family: Verdana, Geneva, sans-serif;
-}
-
-/* =======================
-   Brand & Neutrals
-   ======================= */
-
-:root {
-  --brand-dark: #111827;
-  --brand-accent: #8ec641;
-  --brand-highlight: #f4c542;
-  --purple: #1f2937;
-  --green: #8ec641;
-  --yellow: #f4c542;
-  --blue: #2563eb;
-  --bg: #f2f4f8;
-  --surface: #ffffff;
-  --surface-2: #eef1f7;
-  --text: #0f172a;
-  --muted: #5b6275;
-  --line: #d4d9e3;
-  --shadow: 0 12px 30px rgba(15, 18, 34, 0.12);
-  --radius: 12px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html, body, #root {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-  color: var(--text);
-  background: var(--bg);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-.page {
-  min-height: 100vh;
-  background: var(--bg);
-}
-
-.page > * {
-  position: relative;
-  z-index: 1;
-}
-
-.page.solid-bg {
-  background: var(--bg);
-}
-
-.site-header {
-  position: sticky;
-  top: 24px;
-  z-index: 100;
-  display: flex;
-  justify-content: center;
-  padding: 0 16px;
-  margin-bottom: 48px;
-}
-
-.nav-shell {
-  width: min(66.666%, 960px);
-  min-width: 320px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 12px 20px;
-  border-radius: 999px;
-  background: rgba(15, 18, 34, 0.82);
-  border: 1px solid rgba(248, 250, 252, 0.14);
-  box-shadow: 0 18px 32px rgba(15, 18, 34, 0.25);
-  backdrop-filter: blur(14px);
-}
-
-.nav-brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: #f8fafc;
-}
-
-.nav-brand-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--green);
-  color: #132108;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-.nav-brand-text {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.nav-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  color: rgba(248, 250, 252, 0.72);
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.nav-link:hover,
-.nav-link:focus-visible {
-  background: rgba(248, 250, 252, 0.18);
-  color: #ffffff;
-  outline: none;
-}
-
-.nav-link.active {
-  background: rgba(248, 250, 252, 0.28);
-  color: #ffffff;
-}
-
-@media (max-width: 900px) {
-  .nav-shell {
-    width: min(90%, 720px);
-  }
-}
-
-@media (max-width: 640px) {
-  .site-header {
-    top: 16px;
-    margin-bottom: 32px;
-  }
-
-  .nav-shell {
-    width: 100%;
-    gap: 16px;
-    flex-direction: column;
-    align-items: stretch;
-    padding: 14px 18px;
-  }
-
-  .nav-links {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .nav-link {
-    flex: 1 1 45%;
-  }
-}
-
-.hero-simple {
-  background: var(--brand-dark);
-  color: #f8fafc;
-  padding: 96px 0 64px;
-}
-
-.hero-simple-container {
-  display: flex;
-  justify-content: center;
-  padding: 0 24px;
-}
-
-.hero-simple-content {
-  max-width: 720px;
-  text-align: center;
-}
-
-.hero-simple-title {
-  margin: 0;
-  font-size: clamp(36px, 6vw, 52px);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.hero-simple-subtitle {
-  margin: 12px 0 0;
-  font-size: 18px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(248, 250, 252, 0.72);
-}
+/*
+ * src/styles/layouts/job-skills-matcher.css
+ * -----------------------------------------------------------------------------
+ * Layout-specific rules for the EVA tools and detail panels. Base tokens, hero,
+ * navigation, and shared components live in /styles/base and /styles/components.
+ */
 
 .hero-status-card {
   margin: 0 0 32px;
@@ -356,11 +136,13 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-simple,
-  .nav-shell,
+  .hero,
+  .hero__animation,
   .hero-status-card,
+  .framework-functions__animation,
   .fun-banner {
     animation: none !important;
+    transition: none !important;
   }
 }
 
@@ -399,12 +181,7 @@ body {
 
 /* Utility: force white where explicitly requested */
 .white { color:#fff !important; }
-.container { max-width:1200px; margin:0 auto; padding:20px 24px; }
-.content { padding:28px 24px; }
-.row { display:flex; gap:10px; }
 .column { display:flex; flex-direction:column; }
-.space-between { justify-content:space-between; }
-.align-center { align-items:center; }
 .center { justify-content:center; align-items:center; }
 
 .icon-xs, .icon-sm, .icon-md, .icon-lg, .icon-xl { flex-shrink:0; }
@@ -921,3 +698,89 @@ img, video { max-width:100%; height:auto; }
 .kind-merck     { background: #f5f1ff; border-color: #d7cbff; }
 .kind-other     { background: #f8f9fc; }
 .kind-empty     { background: #ffffff; }
+
+/* =======================
+   Eva Room landing
+   ======================= */
+
+.eva-room {
+  background: linear-gradient(180deg, rgba(127, 77, 255, 0.08) 0%, rgba(255, 211, 77, 0.06) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.eva-room__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(127, 77, 255, 0.15);
+  color: var(--purple);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.eva-room__title {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  color: var(--text);
+  margin: 0;
+}
+
+.eva-room__lead {
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.eva-room__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.eva-room__card {
+  padding: 1.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(127, 77, 255, 0.18);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 18px 34px rgba(31, 15, 61, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.eva-room__card h2 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: var(--purple);
+}
+
+.eva-room__card p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.eva-room__icon {
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: 14px;
+  background: rgba(127, 77, 255, 0.12);
+  color: var(--purple);
+}
+
+.eva-room__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+@media (max-width: 900px) {
+  .eva-room__grid {
+    grid-template-columns: 1fr;
+  }
+}

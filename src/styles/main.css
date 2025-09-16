@@ -1,0 +1,14 @@
+/*
+ * Aggregate stylesheet that keeps our CSS modular while preserving the single
+ * import expectation from legacy components. The order follows SMACSS layers:
+ * base → components → layouts.
+ */
+
+@import './base/base.css';
+
+@import './components/buttons.css';
+@import './components/navigation.css';
+@import './components/hero.css';
+@import './components/function-showcase.css';
+
+@import './layouts/job-skills-matcher.css';

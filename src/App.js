@@ -9,6 +9,7 @@ import GuessRoleGame from './components/GuessRoleGame';
 import SkillDefinitionQuiz from './components/SkillDefinitionQuiz';
 import CareerBoardGame from './components/CareerBoardGame';
 import PathwayMatrixBoard from './components/PathwayMatrixBoard';
+import EvaRoomLanding from './components/EvaRoomLanding';
 
 export default function App(){
   return (
@@ -22,6 +23,7 @@ export default function App(){
         <Route path="/play-lab/skill-quiz" element={<SkillDefinitionQuiz/>} />
         <Route path="/play-lab/career-board" element={<CareerBoardGame/>} />
         <Route path="/play-lab/pathway-matrix" element={<PathwayMatrixBoard/>} />
+        <Route path="/eva-room" element={<EvaRoomLanding />} />
         <Route path="/game" element={<Navigate to="/play-lab/guess-skill" replace />} />
         <Route path="/games" element={<Navigate to="/play-lab" replace />} />
         <Route path="/games/guess-role" element={<Navigate to="/play-lab/guess-role" replace />} />

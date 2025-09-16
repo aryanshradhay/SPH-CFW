@@ -1,0 +1,152 @@
+/*
+ * Button system shared across classic .btn markup and the new BEM-friendly
+ * .button component. Keeping both selectors allows us to progressively migrate
+ * existing views without breaking behaviour.
+ */
+
+.button,
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.button:disabled,
+.btn:disabled,
+.button[aria-disabled='true'],
+.btn[aria-disabled='true'] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button--primary,
+.btn.primary {
+  background: var(--purple);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 12px 30px rgba(91, 46, 198, 0.25);
+}
+
+.button--primary:hover,
+.btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px rgba(31, 15, 61, 0.22);
+}
+
+.button--primary:focus-visible,
+.btn.primary:focus-visible {
+  outline: 3px solid rgba(127, 77, 255, 0.35);
+  outline-offset: 2px;
+}
+
+.button--secondary,
+.btn.secondary {
+  background: rgba(255, 211, 77, 0.15);
+  color: #5f3c00;
+  border-color: rgba(255, 211, 77, 0.45);
+}
+
+.button--secondary:hover,
+.btn.secondary:hover {
+  background: rgba(255, 211, 77, 0.35);
+}
+
+.button--ghost,
+.btn.ghost {
+  background: transparent;
+  color: var(--purple);
+  border-color: rgba(91, 46, 198, 0.35);
+}
+
+.button--ghost:hover,
+.btn.ghost:hover {
+  background: rgba(127, 77, 255, 0.08);
+}
+
+.button--fun,
+.btn.fun {
+  background: linear-gradient(135deg, var(--purple) 0%, #2d114f 100%);
+  color: #fff;
+  border: 0;
+  padding: 0.65rem 1.25rem;
+  box-shadow: 0 20px 36px rgba(31, 15, 61, 0.28);
+}
+
+.button--fun:hover,
+.btn.fun:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 48px rgba(31, 15, 61, 0.35);
+}
+
+.button--fun:focus-visible,
+.btn.fun:focus-visible {
+  outline: 3px solid rgba(255, 247, 222, 0.5);
+  outline-offset: 3px;
+}
+
+.button--full,
+.btn.full {
+  width: 100%;
+}
+
+.button--small,
+.btn.small {
+  padding: 0.375rem 0.75rem;
+  font-size: 0.8125rem;
+  border-radius: 12px;
+}
+
+.icon-button {
+  background: transparent;
+  color: var(--purple);
+  border: 1px solid rgba(91, 46, 198, 0.28);
+  padding: 0.375rem 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.icon-button:hover {
+  background: rgba(127, 77, 255, 0.1);
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.badge.green {
+  background: rgba(56, 212, 167, 0.22);
+  color: #0f6b4f;
+  border-color: rgba(56, 212, 167, 0.35);
+}
+
+.badge.yellow {
+  background: rgba(255, 211, 77, 0.32);
+  color: #5f3c00;
+  border-color: rgba(255, 211, 77, 0.4);
+}
+
+.badge.purple {
+  background: rgba(127, 77, 255, 0.22);
+  color: var(--purple);
+  border-color: rgba(91, 46, 198, 0.32);
+}

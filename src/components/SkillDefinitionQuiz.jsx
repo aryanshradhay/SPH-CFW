@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import { BookOpen, Trophy, Info, ArrowRight } from 'lucide-react';
-import './job-skills-matcher.css';
+import '../styles/main.css';
 import SiteHeader from './SiteHeader';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
