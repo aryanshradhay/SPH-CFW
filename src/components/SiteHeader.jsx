@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import '../styles/main.css';
 
 const navItems = [
-  { label: 'Home', to: '/', isActive: (pathname) => pathname === '/' },
   {
     label: 'SPH Career Explorer',
     to: '/career-explorer',
