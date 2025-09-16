@@ -1,5 +1,5 @@
 // src/components/JobSkillsMatcher.jsx
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   Search,
@@ -10,7 +10,6 @@ import {
   MapPin,
   Briefcase,
   Route,
-  Sparkles,
 } from 'lucide-react';
 import '../styles/main.css';
 import useJobDataset from '../hooks/useJobDataset';
@@ -46,13 +45,6 @@ const JobSkillsMatcher = () => {
 
   const [myPickerDivision, setMyPickerDivision] = useState('all');
   const [myPickerTitle, setMyPickerTitle] = useState('');
-
-  const myPositionRef = useRef(null);
-  const scrollToMyPosition = () => {
-    if (myPositionRef.current) {
-      myPositionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -216,16 +208,12 @@ const JobSkillsMatcher = () => {
     setMyPositionTitle(myPickerTitle);
   };
 
-  const startingRoleMessage = myPosition
-    ? myPosition.title
-    : 'Set a home position in “My Position” to personalise your roadmap.';
-
   return (
-    <div className="page solid-bg">
+    <div className="page solid-bg experience-page">
       <SiteHeader />
 
       {/* Content */}
-      <div className="container content">
+      <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">
             <div className="page-heading-icon" aria-hidden="true">
@@ -243,9 +231,9 @@ const JobSkillsMatcher = () => {
         
 
         {/* ========== SECTION: My Position ========== */}
-        <section ref={myPositionRef}>
+        <section>
           <h2 className="section-h2">My Position</h2>
-          <div className="card section" style={{ marginBottom: 16 }}>
+          <div className="card section">
             <div className="toolbar-grid">
               <div className="field">
                 <label className="text-sm muted">Function</label>
@@ -340,7 +328,7 @@ const JobSkillsMatcher = () => {
           <>
             <h2 className="section-h2">Recommendations</h2>
             {recommendationsForMyPosition.length > 0 ? (
-              <div className="card section" style={{ marginBottom: 16 }}>
+              <div className="card section">
                 <div className="grid-cards">
                   {recommendationsForMyPosition.map((job) => {
                     const badge = getSimilarityBadge(job.similarity);

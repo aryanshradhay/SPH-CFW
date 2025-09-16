@@ -7,10 +7,10 @@ import SiteHeader from './SiteHeader';
 
 export default function GamesHub() {
   return (
-    <div className="page solid-bg">
+    <div className="page solid-bg experience-page">
       <SiteHeader />
 
-      <div className="container content">
+      <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">
             <div className="page-heading-icon" aria-hidden="true">
@@ -23,91 +23,106 @@ export default function GamesHub() {
           </div>
         </div>
 
-        <div className="card section" style={{ marginBottom: 16 }}>
+        <div className="card section">
           <p className="hero-footnote" style={{ marginTop: 0 }}>
             These playful experiments reflect the game concepts we can build with the information available
             today. Expect the Play Lab to grow livelier as the SPH dataset uncovers more insights.
           </p>
-          <div className="grid-cards">
+          <div className="play-lab-grid">
             {/* Game: Job Explorer (guess a skill) */}
-            <div className="match match-good">
-              <div className="row space-between mb-6">
-                <h4 className="text-sm text-600 row align-center">
-                  <ListChecks className="icon-sm mr-8" /> Guess a Skill
-                </h4>
-                <span className="badge">Beginner</span>
+            <article className="match match-good play-lab-card">
+              <div className="play-lab-card-icon" aria-hidden="true">
+                <ListChecks className="icon-md" />
               </div>
-              <p className="text-xs muted mb-8">
-                For the displayed role, pick the correct skill from multiple choices. Quick rounds to build familiarity.
-              </p>
-              <Link to="/play-lab/guess-skill" className="btn primary full row center">
+              <div className="play-lab-card-content">
+                <div className="play-lab-card-heading">
+                  <h3 className="play-lab-card-title">Guess a Skill</h3>
+                  <span className="badge">Beginner</span>
+                </div>
+                <p className="play-lab-card-description text-xs muted">
+                  For the displayed role, pick the correct skill from multiple choices. Quick rounds to build familiarity.
+                </p>
+              </div>
+              <Link to="/play-lab/guess-skill" className="btn primary play-lab-card-cta">
                 Play
               </Link>
-            </div>
+            </article>
 
             {/* Game: Guess the Role */}
-            <div className="match match-fair">
-              <div className="row space-between mb-6">
-                <h4 className="text-sm text-600 row align-center">
-                  <Target className="icon-sm mr-8" /> Guess the Role
-                </h4>
-                <span className="badge solid yellow">Intermediate</span>
+            <article className="match match-fair play-lab-card">
+              <div className="play-lab-card-icon" aria-hidden="true">
+                <Target className="icon-md" />
               </div>
-              <p className="text-xs muted mb-8">
-                See top skills and the function; choose which role they describe. Great for learning role signatures.
-              </p>
-              <Link to="/play-lab/guess-role" className="btn primary full row center">
+              <div className="play-lab-card-content">
+                <div className="play-lab-card-heading">
+                  <h3 className="play-lab-card-title">Guess the Role</h3>
+                  <span className="badge solid yellow">Intermediate</span>
+                </div>
+                <p className="play-lab-card-description text-xs muted">
+                  See top skills and the function; choose which role they describe. Great for learning role signatures.
+                </p>
+              </div>
+              <Link to="/play-lab/guess-role" className="btn primary play-lab-card-cta">
                 Play
               </Link>
-            </div>
+            </article>
 
             {/* Game: Skill Definition Quiz */}
-            <div className="match match-excellent">
-              <div className="row space-between mb-6">
-                <h4 className="text-sm text-600 row align-center">
-                  <BookOpen className="icon-sm mr-8" /> Skill Definition Quiz
-                </h4>
-                <span className="badge solid green">Knowledge</span>
+            <article className="match match-excellent play-lab-card">
+              <div className="play-lab-card-icon" aria-hidden="true">
+                <BookOpen className="icon-md" />
               </div>
-              <p className="text-xs muted mb-8">
-                Read a skill definition and pick the correct skill name. Sharpens vocabulary and expectations.
-              </p>
-              <Link to="/play-lab/skill-quiz" className="btn primary full row center">
+              <div className="play-lab-card-content">
+                <div className="play-lab-card-heading">
+                  <h3 className="play-lab-card-title">Skill Definition Quiz</h3>
+                  <span className="badge solid green">Knowledge</span>
+                </div>
+                <p className="play-lab-card-description text-xs muted">
+                  Read a skill definition and pick the correct skill name. Sharpens vocabulary and expectations.
+                </p>
+              </div>
+              <Link to="/play-lab/skill-quiz" className="btn primary play-lab-card-cta">
                 Play
               </Link>
-            </div>
+            </article>
 
             {/* Game: Career Path Board */}
-            <div className="match match-good">
-              <div className="row space-between mb-6">
-                <h4 className="text-sm text-600 row align-center">
-                  <RouteIcon className="icon-sm mr-8" /> Career Path Board
-                </h4>
-                <span className="badge">Pathway</span>
+            <article className="match match-good play-lab-card">
+              <div className="play-lab-card-icon" aria-hidden="true">
+                <RouteIcon className="icon-md" />
               </div>
-              <p className="text-xs muted mb-8">
-                Follow a board-style path of roles to see how careers progress within a function. Roll to advance and view key skills at each step.
-              </p>
-              <Link to="/play-lab/career-board" className="btn primary full row center">
+              <div className="play-lab-card-content">
+                <div className="play-lab-card-heading">
+                  <h3 className="play-lab-card-title">Career Path Board</h3>
+                  <span className="badge">Pathway</span>
+                </div>
+                <p className="play-lab-card-description text-xs muted">
+                  Follow a board-style path of roles to see how careers progress within a function. Roll to advance and view key skills at each step.
+                </p>
+              </div>
+              <Link to="/play-lab/career-board" className="btn primary play-lab-card-cta">
                 Play
               </Link>
-            </div>
+            </article>
 
             {/* Game: Pathway Matrix Board */}
-            <div className="match match-fair">
-              <div className="row space-between mb-6">
-                <h4 className="text-sm text-600 row align-center">
-                  <Grid3x3 className="icon-sm mr-8" /> Pathway Matrix Board
-                </h4>
-                <span className="badge">Matrix</span>
+            <article className="match match-fair play-lab-card">
+              <div className="play-lab-card-icon" aria-hidden="true">
+                <Grid3x3 className="icon-md" />
               </div>
-              <p className="text-xs muted mb-8">
-                A grid of origin vs landing clusters. Roll or click to explore allowed transitions and see example roles in the destination.
-              </p>
-              <Link to="/play-lab/pathway-matrix" className="btn primary full row center">
+              <div className="play-lab-card-content">
+                <div className="play-lab-card-heading">
+                  <h3 className="play-lab-card-title">Pathway Matrix Board</h3>
+                  <span className="badge">Matrix</span>
+                </div>
+                <p className="play-lab-card-description text-xs muted">
+                  A grid of origin vs landing clusters. Roll or click to explore allowed transitions and see example roles in the destination.
+                </p>
+              </div>
+              <Link to="/play-lab/pathway-matrix" className="btn primary play-lab-card-cta">
                 Play
               </Link>
-            </div>
+            </article>
           </div>
         </div>
       </div>

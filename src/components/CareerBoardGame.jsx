@@ -253,10 +253,10 @@ export default function CareerBoardGame() {
   }, [current, previous, topSkills]);
 
   return (
-    <div className="page solid-bg">
+    <div className="page solid-bg experience-page">
       <SiteHeader />
 
-      <div className="container content">
+      <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">
             <div className="page-heading-icon" aria-hidden="true">
@@ -274,7 +274,7 @@ export default function CareerBoardGame() {
           </div>
         </div>
 
-        <div className="card section" style={{ marginBottom: 16 }}>
+        <div className="card section">
           {/* Controls */}
           <div className="toolbar-grid" style={{ marginBottom: 16 }}>
             <div className="field">
@@ -314,14 +314,30 @@ export default function CareerBoardGame() {
           </div>
 
           {/* Scoreboard */}
-          <div className="row space-between align-center wrap mb-12">
-            <div className="row align-center gap-12">
-              <Trophy className="icon-sm yellow" />
-              <div className="text-sm">
-                Progress: <span className="text-600">{Math.min(position + 1, boardJobs.length)} / {boardJobs.length || 0}</span>
+          <div className="stat-strip">
+            <div className="stat-strip__item">
+              <span className="stat-icon stat-icon--gold">
+                <Trophy className="icon-sm" />
+              </span>
+              <div>
+                <div className="stat-label">Progress</div>
+                <div className="stat-value">
+                  {Math.min(position + 1, boardJobs.length)}
+                  <span className="stat-divider">/</span>
+                  <span className="stat-total">{boardJobs.length || 0}</span>
+                </div>
               </div>
             </div>
-            <div className="text-sm muted">Turn {turn} / {MAX_TURNS}</div>
+            <div className="stat-strip__item stat-strip__item--muted">
+              <div>
+                <div className="stat-label">Turn</div>
+                <div className="stat-value">
+                  {turn}
+                  <span className="stat-divider">/</span>
+                  <span className="stat-total">{MAX_TURNS}</span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Board (serpentine grid) */}
