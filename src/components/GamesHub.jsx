@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Gamepad2, Target, BookOpen, ListChecks, Route as RouteIcon, Grid3x3 } from 'lucide-react';
-import './job-skills-matcher.css';
+import '../styles/main.css';
 import SiteHeader from './SiteHeader';
 
 export default function GamesHub() {

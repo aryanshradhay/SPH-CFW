@@ -17,7 +17,7 @@ import {
   classifyType,
   getTrainingRecommendations,
 } from '../utils/jobDataUtils';
-import './job-skills-matcher.css';
+import '../styles/main.css';
 import SiteHeader from './SiteHeader';
 
 const RoadmapDetails = ({ currentJob, targetJob }) => {
