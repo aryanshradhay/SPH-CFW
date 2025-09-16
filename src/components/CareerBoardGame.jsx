@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 import {
   Route as RouteIcon,
   Trophy,
-  Home,
   PlayCircle,
   Flag,
   HelpCircle,
   Shuffle,
 } from 'lucide-react';
 import './job-skills-matcher.css';
+import SiteHeader from './SiteHeader';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
 
@@ -254,30 +254,26 @@ export default function CareerBoardGame() {
 
   return (
     <div className="page solid-bg">
-      {/* Header */}
-      <div className="topbar">
-        <div className="container">
-          <div className="row space-between align-center wrap">
-            <div className="row align-center gap-12">
-                <Link to="/" className="brand-wordmark" aria-label="Home">MERCK</Link>
-                <RouteIcon className="icon-md" />
-                <div>
-                  <h1 className="brand-title">Career Path Board</h1>
-                  <p className="brand-sub muted">See how roles progress across the pathway</p>
-                </div>
-              </div>
-              <div className="row gap-12 align-center">
-                <Link to="/play-lab" className="btn">Games Hub</Link>
-                <Link to="/" className="btn">
-                  <Home className="icon-xs mr-6" /> Explorer
-                </Link>
-              </div>
+      <SiteHeader />
+
+      <div className="container content">
+        <div className="page-heading">
+          <div className="page-heading-main">
+            <div className="page-heading-icon" aria-hidden="true">
+              <RouteIcon className="icon-md" />
+            </div>
+            <div>
+              <h1 className="page-heading-title">Career Path Board</h1>
+              <p className="page-heading-subtitle">See how roles progress across the pathway</p>
+            </div>
+          </div>
+          <div className="page-heading-actions">
+            <Link to="/play-lab" className="btn ghost small">
+              Games Hub
+            </Link>
           </div>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
           {/* Controls */}
           <div className="toolbar-grid" style={{ marginBottom: 16 }}>

@@ -3,8 +3,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Route as RouteIcon,
-  Home,
-  Gamepad2,
   MapPin,
   Users,
   Filter,
@@ -20,6 +18,7 @@ import {
   getTrainingRecommendations,
 } from '../utils/jobDataUtils';
 import './job-skills-matcher.css';
+import SiteHeader from './SiteHeader';
 
 const RoadmapDetails = ({ currentJob, targetJob }) => {
   const [va, vb, names] = useMemo(
@@ -282,29 +281,21 @@ export default function CareerRoadmap() {
 
   return (
     <div className="page solid-bg">
-      <div className="topbar">
-        <div className="container">
-          <div className="row space-between align-center wrap">
-            <div className="row align-center gap-12">
+      <SiteHeader />
+
+      <div className="container content">
+        <div className="page-heading">
+          <div className="page-heading-main">
+            <div className="page-heading-icon" aria-hidden="true">
               <RouteIcon className="icon-md" />
-              <div>
-                <h1 className="brand-title">Explorer Roadmap</h1>
-                <p className="brand-sub muted">Merck Career Framework Planning</p>
-              </div>
             </div>
-            <div className="row gap-12 align-center">
-              <Link to="/" className="btn">
-                <Home className="icon-xs mr-6" /> Explore Careers
-              </Link>
-              <Link to="/play-lab" className="btn ghost">
-                <Gamepad2 className="icon-xs mr-6" /> Play Lab
-              </Link>
+            <div>
+              <h1 className="page-heading-title">Explorer Roadmap</h1>
+              <p className="page-heading-subtitle">Plan your next move across the SPH Career Framework</p>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
           <div className="row space-between align-start wrap" style={{ gap: 16 }}>
             <div className="column gap-8" style={{ flex: 1, minWidth: 260 }}>

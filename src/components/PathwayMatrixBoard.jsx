@@ -2,8 +2,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
-import { Grid3x3, Dice5, Home, Flag, Shuffle, HelpCircle, BookOpen } from 'lucide-react';
+import { Grid3x3, Dice5, Flag, Shuffle, HelpCircle, BookOpen } from 'lucide-react';
 import './job-skills-matcher.css';
+import SiteHeader from './SiteHeader';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
 const MATRIX_CSV_URL = (process.env.PUBLIC_URL || '') + '/pathway-matrix.csv';
@@ -353,29 +354,26 @@ export default function PathwayMatrixBoard() {
 
   return (
     <div className="page solid-bg">
-      {/* Header */}
-      <div className="topbar">
-        <div className="container">
-          <div className="row space-between align-center wrap">
-            <div className="row align-center gap-12">
+      <SiteHeader />
+
+      <div className="container content">
+        <div className="page-heading">
+          <div className="page-heading-main">
+            <div className="page-heading-icon" aria-hidden="true">
               <Grid3x3 className="icon-md" />
-              <div>
-                <h1 className="brand-title">Pathway Matrix Board</h1>
-                <p className="brand-sub muted">From origin cluster to landing cluster</p>
-              </div>
             </div>
-            <div className="row gap-12 align-center">
-              <Link to="/play-lab" className="btn">Games Hub</Link>
-              <Link to="/" className="btn">
-                <Home className="icon-xs mr-6" /> Explorer
-              </Link>
+            <div>
+              <h1 className="page-heading-title">Pathway Matrix Board</h1>
+              <p className="page-heading-subtitle">From origin cluster to landing cluster</p>
             </div>
           </div>
+          <div className="page-heading-actions">
+            <Link to="/play-lab" className="btn ghost small">
+              Games Hub
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
           {/* Controls */}
           <div className="row space-between align-center wrap mb-12">

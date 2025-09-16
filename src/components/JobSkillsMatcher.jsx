@@ -11,15 +11,11 @@ import {
   Briefcase,
   Route,
   Sparkles,
-  Star,
-  Compass,
-  Gamepad2,
-  ArrowRight,
-  Mail,
 } from 'lucide-react';
 import './job-skills-matcher.css';
 import useJobDataset from '../hooks/useJobDataset';
 import { alignVectors, classifyType } from '../utils/jobDataUtils';
+import SiteHeader from './SiteHeader';
 
 function getSimilarityColor(sim) {
   if (sim >= 70) return 'match match-excellent';
@@ -221,171 +217,45 @@ const JobSkillsMatcher = () => {
     setMyPositionTitle(myPickerTitle);
   };
 
-  const heroFeatureCards = [
-    {
-      title: 'EVA Room Vibes',
-      description:
-        'Ambient signals and warm welcomes keep the lounge feeling alive before you set off.',
-      icon: Sparkles,
-      accent: 'eva',
-      action: {
-        type: 'button',
-        label: 'Pin my role',
-        onClick: scrollToMyPosition,
-      },
-    },
-    {
-      title: 'Explorer Roadmap',
-      description:
-        'Plot your mission with animated skill comparisons and milestone cards tailored to you.',
-      icon: Compass,
-      accent: 'roadmap',
-      action: {
-        type: 'link',
-        label: 'Open roadmap',
-        to: '/roadmap',
-        state: roadmapLinkState,
-      },
-    },
-    {
-      title: 'Newsletter',
-      description: 'Catch wins and highlights from across the crew.',
-      icon: Mail,
-      accent: 'newsletter',
-    },
-    {
-      title: 'Growth Assignment Spotlight',
-      description: 'Discover missions that stretch, shine, and delight.',
-      icon: Sparkles,
-      accent: 'spotlight',
-    },
-  ];
-
-  const avatarPlaceholders = [
-    { icon: Users, label: 'Crew avatar placeholder' },
-    { icon: Sparkles, label: 'Mentor avatar placeholder' },
-    { icon: Star, label: 'Future teammate avatar placeholder' },
-  ];
-
-  const primaryPlannerLabel = myPosition
-    ? 'Continue Explorer Roadmap'
-    : 'Launch Explorer Roadmap';
-  const savedRoleCopy = myPosition
+  const startingRoleMessage = myPosition
     ? myPosition.title
     : 'Choose a position in “My Position” below to anchor your EVA Room.';
 
   return (
     <div className="page solid-bg">
-      {/* Header */}
+      <SiteHeader />
 
-      <div className="topbar hero-banner">
-        <div className="container hero-container">
-          <div className="hero-grid">
-            <div className="hero-left">
-              <div className="hero-brand row align-center gap-12">
-                <span className="brand-logo brand-wordmark"
-                  aria-label="Merck KGaA, Darmstadt, Germany"
-                  >
-                    Merck
-                  </span>
-                <div>
-                  <h1 className="brand-title">SPH EVA Room</h1>
-                  <p className="brand-sub muted">Explorer • Vibe • Adventure</p>
-                </div>
-
-              </div>
-              <div className="hero-main-card">
-                <span className="hero-chip">EVA Room</span>
-                <h2 className="hero-heading">Step into the Explorer Vibe Area</h2>
-                <p className="hero-text">
-                  The EVA Room is your playful launch bay—soak up the crew energy, align your roadmap,
-                  and hop into prototypes built with the data we have today. More surprises unlock as the
-                  lab grows.
-                </p>
-                <div className="hero-avatar-shelf" aria-hidden="true">
-                  {avatarPlaceholders.map(({ icon: Icon, label }, idx) => (
-                    <span key={label} className={`avatar-bubble avatar-${idx + 1}`} title={label}>
-                      <Icon className="icon-sm" />
-                    </span>
-                  ))}
-                  <span className="avatar-bubble avatar-open" title="Add your avatar">
-                    <span className="avatar-plus">+</span>
-                  </span>
-                </div>
-                <p className="hero-avatar-caption">
-                  Invite teammates, mentors, or future collaborators to these bubbles as your lounge
-                  comes alive.
-                </p>
-                <div className="hero-main-actions">
-                  <Link to="/roadmap" state={roadmapLinkState} className="btn primary">
-                    <Compass className="icon-xs mr-6" aria-hidden="true" />
-                    {primaryPlannerLabel}
-                  </Link>
-                  <button className="btn ghost" type="button" onClick={scrollToMyPosition}>
-                    <Users className="icon-xs mr-6" aria-hidden="true" />
-                    Set my starting role
-                  </button>
-                  <Link to="/play-lab" className="btn ghost">
-                    <Gamepad2 className="icon-xs mr-6" aria-hidden="true" />
-                    Visit Play Lab
-                  </Link>
-                </div>
-                <p className="hero-footnote">
-                  Games are lightweight prototypes for now—expect the gallery to expand as we unlock more
-                  insights.
-                </p>
-                <div className="hero-status-card">
-                  <div className="status-icon" aria-hidden="true">
-                    <MapPin className="icon-sm" />
-                  </div>
-                  <div>
-                    <div className="status-label">Starting role</div>
-                    <div className="status-value">{savedRoleCopy}</div>
-                  </div>
-                  {myPosition && (
-                    <button className="btn ghost small" onClick={() => setMyPositionTitle('')}>
-                      Clear
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="hero-right">
-              <div className="hero-feature-stack">
-                {heroFeatureCards.map(({ title, description, icon: Icon, accent, action }, idx) => (
-                  <div key={title} className={`feature-card feature-${accent}`}>
-                    <div className="feature-card-body">
-                      <div className="feature-icon" aria-hidden="true">
-                        <Icon className="icon-sm" />
-                      </div>
-                      <div>
-                        <div className="feature-title">{title}</div>
-                        {description && <p className="feature-subtitle">{description}</p>}
-                        {action && action.type === 'button' && (
-                          <button type="button" className="feature-cta" onClick={action.onClick}>
-                            {action.label}
-                            <ArrowRight className="icon-xs" aria-hidden="true" />
-                          </button>
-                        )}
-                        {action && action.type === 'link' && (
-                          <Link to={action.to} state={action.state} className="feature-cta">
-                            {action.label}
-                            <ArrowRight className="icon-xs" aria-hidden="true" />
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-                    <div className="feature-number">{String(idx + 1).padStart(2, '0')}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+      <section className="hero-simple">
+        <div className="container hero-simple-container">
+          <div className="hero-simple-content">
+            <h1 className="hero-simple-title">SPH Career Framework</h1>
+            <p className="hero-simple-subtitle">Why it</p>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Content */}
       <div className="container content">
+        <div className="hero-status-card hero-status-inline">
+          <div className="status-icon" aria-hidden="true">
+            <MapPin className="icon-sm" />
+          </div>
+          <div className="status-copy">
+            <div className="status-label">Starting role</div>
+            <div className="status-value">{startingRoleMessage}</div>
+          </div>
+          <div className="status-actions">
+            <button className="btn ghost small" type="button" onClick={scrollToMyPosition}>
+              Set my starting role
+            </button>
+            {myPosition && (
+              <button className="btn ghost small" type="button" onClick={() => setMyPositionTitle('')}>
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
+
         <div className="fun-banner">
           <div className="fun-banner-icon" aria-hidden="true">
             <Sparkles className="icon-sm" />
