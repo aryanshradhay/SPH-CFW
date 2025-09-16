@@ -613,7 +613,7 @@ const JobSkillsMatcher = () => {
         <div className="container">
           <div className="row space-between align-center">
             <div className="row align-center gap-12">
-              <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Brand" className="brand-logo" />
+              <Link to="/" className="brand-wordmark" aria-label="Home">MERCK</Link>
               <div>
                 <h1 className="brand-title">SPH Career Roadmap</h1>
                 <p className="brand-sub muted">Explore roles, skills & roadmaps</p>
@@ -644,6 +644,15 @@ const JobSkillsMatcher = () => {
 
       {/* Content */}
       <div className="container content">
+        {/* Hero */}
+        <div className="hero">
+          <h2 className="hero-title">Find your next move</h2>
+          <p className="hero-sub">Search positions, compare skills, and plan your roadmap across SPH functions.</p>
+          <div className="hero-actions">
+            <button className="btn primary" onClick={() => document.getElementById('browse')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Start exploring</button>
+            <Link to="/games" className="btn secondary">Play the games</Link>
+          </div>
+        </div>
 
         {/* ========== SECTION: My Position ========== */}
         <h2 className="section-h2">My Position</h2>
@@ -783,7 +792,7 @@ const JobSkillsMatcher = () => {
         )}
 
         {/* ========== SECTION: Browse Positions ========== */}
-        <h2 className="section-h2">Browse Positions</h2>
+        <h2 className="section-h2" id="browse">Browse Positions</h2>
         <div className="layout">
           {/* Left: groups */}
           <div className={selectedJob ? 'col main half' : 'col main full'}>

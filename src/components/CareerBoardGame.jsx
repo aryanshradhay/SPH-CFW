@@ -261,7 +261,7 @@ export default function CareerBoardGame() {
         <div className="container">
           <div className="row space-between align-center wrap">
             <div className="row align-center gap-12">
-                <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Brand" className="brand-logo" />
+                <Link to="/" className="brand-wordmark" aria-label="Home">MERCK</Link>
                 <RouteIcon className="icon-md" />
                 <div>
                   <h1 className="brand-title">Career Path Board</h1>

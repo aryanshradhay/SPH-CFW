@@ -17,10 +17,10 @@ html, body {
   font-family: Verdana, Geneva, sans-serif;
 }
 
-/* Headlines = Merck with Verdana fallback */
+/* Headlines use Verdana (keep Merck reserved for wordmark only) */
 h1, h2, h3, h4, h5, h6,
 .title-lg, .title-md, .title-sm {
-  font-family: 'Merck', Verdana, Geneva, sans-serif;
+  font-family: Verdana, Geneva, sans-serif;
 }
 
 /* =======================
@@ -50,6 +50,7 @@ body {
   margin:0;
   color:var(--text);
   background:var(--bg);
+  line-height: 1.6;
 }
 
 /* =======================
@@ -57,8 +58,26 @@ body {
    ======================= */
 
 .page { min-height:100vh; }
+/* Creative ambient background */
+.page::before {
+  content: "";
+  position: fixed;
+  inset: -20% -10% auto -10%;
+  height: 65vh;
+  background:
+    radial-gradient(at 10% 10%, rgba(165,205,80,0.18), transparent 60%),
+    radial-gradient(at 90% 20%, rgba(80,50,145,0.22), transparent 55%),
+    radial-gradient(at 30% 80%, rgba(255,200,50,0.15), transparent 60%);
+  filter: blur(48px);
+  z-index: 0;
+  pointer-events: none;
+}
+.page > * { position: relative; z-index: 1; }
 
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   background: var(--purple);
   color: #fff;
   border-bottom: 0;
@@ -79,10 +98,27 @@ body {
 .topbar .btn:hover { background: rgba(255,255,255,0.10); border-color:#fff; box-shadow:none; }
 .topbar .btn:focus-visible { outline: 3px solid rgba(255,255,255,0.55); outline-offset: 2px; }
 
+/* Brand title/sub in header */
+.brand-title { font-size:18px; font-weight:700; margin:0; }
+.brand-sub { font-size:13px; opacity:.95; margin:2px 0 0; }
+
 /* Utility: force white where explicitly requested */
 .white { color:#fff !important; }
 .container { max-width:1200px; margin:0 auto; padding:20px 24px; }
 .content { padding:28px 24px; }
+/* Hero section */
+.hero {
+  margin: 12px 0 24px;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,0.35);
+  background: linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.45));
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 28px rgba(15, 18, 34, .12);
+}
+.hero-title { font-size: 28px; margin: 0 0 6px; color: #271a53; }
+.hero-sub   { font-size: 14px; margin: 0 0 14px; color: #4b4f63; }
+.hero-actions { display:flex; gap:10px; flex-wrap: wrap; }
 
 .row { display:flex; gap:10px; }
 .column { display:flex; flex-direction:column; }
@@ -108,17 +144,30 @@ body {
 .mb-16 { margin-bottom:16px; }
 .mt-4 { margin-top:4px; }
 
-.title-lg { font-size:24px; font-weight:800; color: var(--purple); }
-.title-md { font-size:18px; font-weight:800; color: var(--purple); }
-.title-sm { font-size:15px; font-weight:700; color: var(--purple); }
-.section-h2 { font-size:22px; font-weight:800; color:var(--purple); margin:24px 0 12px; }
+.title-lg { font-size:26px; font-weight:700; color: var(--purple); }
+.title-md { font-size:20px; font-weight:700; color: var(--purple); }
+.title-sm { font-size:16px; font-weight:600; color: var(--purple); }
+.section-h2 { font-size:24px; font-weight:700; color:var(--purple); margin:24px 0 12px; }
 
 .text-600 { font-weight:600; }
 .text-xs { font-size:12px; }
-.text-sm { font-size:14px; }
+.text-sm { font-size:15px; }
+.text-md { font-size:16px; }
 .muted { color:var(--muted); }
 .lh { line-height:1.6; }
 
+/* Brand wordmark: typed MERCK using Merck font, not bold */
+.brand-wordmark {
+  font-family: 'Merck', Verdana, Geneva, sans-serif;
+  font-weight: 400 !important;
+  font-size: 36px;
+  line-height: 1;
+  color:#fff;
+  text-decoration: none;
+  display:inline-block;
+  margin-right: 8px;
+}
+/* Keep legacy logo sizing for compatibility if used elsewhere */
 .brand-logo { height:40px; width:auto; display:block; }
 
 /* Media helpers and defaults */
@@ -126,6 +175,14 @@ body {
 @media (min-width:768px){ .hide-mobile { display:initial; } }
 @media (max-width:767.98px){ .show-mobile { display:initial; } }
 @media (min-width:768px){ .show-mobile { display:none; } }
+/* Responsive scaling for wordmark */
+@media (max-width: 767.98px) {
+  .brand-wordmark { font-size: 28px; }
+}
+
+/* Global link style */
+a { color: var(--purple); text-decoration: none; transition: color .12s ease; }
+a:hover { text-decoration: underline; }
 
 /* Make media scale down on small screens */
 img, video { max-width:100%; height:auto; }
@@ -157,17 +214,19 @@ img, video { max-width:100%; height:auto; }
   width:100%;
   padding:10px 12px;
   border:1px solid var(--line);
-  border-radius:6px;
+  border-radius:8px;
   font-size:14px;
   outline:none;
   background: var(--surface);
   color: var(--text);
   transition: border-color .15s, box-shadow .15s;
 }
+.input:hover { border-color: #d0d3e2; }
 .input:focus {
   border-color: var(--purple);
   box-shadow: 0 0 0 3px rgba(80, 50, 145, 0.12);
 }
+.input::placeholder { color:#a3a7b7; }
 .abs-left { position:absolute; left:12px; top:50%; transform:translateY(-50%); }
 .pl { padding-left:40px; }
 
@@ -241,9 +300,9 @@ img, video { max-width:100%; height:auto; }
 .job-pill {
   text-align:center;
   border:1px solid var(--line);
-  background: var(--surface);
-  border-radius:8px;
-  padding:10px;
+  background: linear-gradient(180deg, #ffffff, #fafafb);
+  border-radius:12px;
+  padding:12px 14px;
   cursor:pointer;
   transition:.15s box-shadow,.15s border-color,.15s transform,.15s background;
   font-weight:700;
@@ -252,8 +311,7 @@ img, video { max-width:100%; height:auto; }
 .job-pill:hover { box-shadow:var(--shadow); transform: translateY(-1px); }
 .job-pill.selected {
   background: #f3f2f8;               /* light neutral with purple hint (no new color) */
-  border-color: var(--purple);
-  box-shadow: 0 0 0 3px rgba(80,50,145,0.15);
+  border-color: #cbc9dd;
 }
 
 /* =======================
@@ -284,22 +342,27 @@ img, video { max-width:100%; height:auto; }
    ======================= */
 
 .btn {
-  padding:8px 10px;
-  border-radius:8px;
+  padding:10px 14px;
+  border-radius:10px;
   border:1px solid var(--line);
   cursor:pointer;
-  font-weight:800;
+  font-weight:700;
   transition: transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease, border-color .12s ease;
 }
 
 /* Primary action = Green, with purple focus ring */
 .btn.primary {
-  background: var(--green);
+  background: linear-gradient(135deg, #a5cd50, #b9da6e);
   color:#122300;           /* dark text for contrast on light green */
-  border-color: var(--green);
+  border-color: #a5cd50;
 }
 .btn.primary:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
 .btn.primary:focus-visible { outline: 3px solid rgba(80,50,145,0.25); outline-offset: 2px; }
+
+.btn:disabled, .btn[aria-disabled="true"] {
+  opacity: .6;
+  cursor: not-allowed;
+}
 
 /* Secondary action = Yellow outline / subtle fill on hover */
 .btn.secondary {
@@ -356,7 +419,7 @@ img, video { max-width:100%; height:auto; }
   border-radius:8px;
   cursor:pointer;
   transition:.15s box-shadow,.15s transform,.15s border-color;
-  background: var(--surface);
+  background: linear-gradient(180deg, #ffffff, #fafafb);
 }
 .match:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
 
@@ -436,7 +499,7 @@ img, video { max-width:100%; height:auto; }
   padding:14px;
   margin-bottom:14px;
 }
-.panel-title { display:flex; align-items:center; font-weight:800; margin-bottom:8px; color: var(--purple); }
+.panel-title { display:flex; align-items:center; font-weight:700; margin-bottom:8px; color: var(--purple); }
 .panel-subtext { font-size:13px; margin-bottom:12px; color:var(--muted); }
 
 .border-green  { border-color: var(--green); }
@@ -480,7 +543,7 @@ img, video { max-width:100%; height:auto; }
   padding: 12px 12px 18px;
   border: 1px solid var(--line);
   border-radius: 10px;
-  background: var(--surface);
+  background: linear-gradient(180deg, #ffffff, #fafafb);
   box-shadow: var(--shadow);
 }
 .tile.grid { min-width: auto; max-width: none; width: 100%; }
