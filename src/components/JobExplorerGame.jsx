@@ -2,8 +2,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
-import { Gamepad2, Trophy, Lightbulb, ArrowRight, Home, HelpCircle } from 'lucide-react';
+import { Gamepad2, Trophy, Lightbulb, ArrowRight, HelpCircle } from 'lucide-react';
 import './job-skills-matcher.css';
+import SiteHeader from './SiteHeader';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
 
@@ -178,29 +179,26 @@ export default function JobExplorerGame() {
 
   return (
     <div className="page solid-bg">
-      {/* Header */}
-      <div className="topbar">
-        <div className="container">
-          <div className="row space-between align-center wrap">
-            <div className="row align-center gap-12">
+      <SiteHeader />
+
+      <div className="container content">
+        <div className="page-heading">
+          <div className="page-heading-main">
+            <div className="page-heading-icon" aria-hidden="true">
               <Gamepad2 className="icon-md" />
-              <div>
-                <h1 className="brand-title">Job Explorer Game</h1>
-                <p className="brand-sub muted">Learn roles through quick challenges</p>
-              </div>
             </div>
-            <div className="row gap-12 align-center">
-              <Link to="/play-lab" className="btn">Games Hub</Link>
-              <Link to="/" className="btn">
-                <Home className="icon-xs mr-6" /> Back to Explorer
-              </Link>
+            <div>
+              <h1 className="page-heading-title">Job Explorer Game</h1>
+              <p className="page-heading-subtitle">Learn roles through quick challenges</p>
             </div>
           </div>
+          <div className="page-heading-actions">
+            <Link to="/play-lab" className="btn ghost small">
+              Games Hub
+            </Link>
+          </div>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
           <div className="row space-between align-center wrap mb-12">
             <div className="row align-center gap-12">

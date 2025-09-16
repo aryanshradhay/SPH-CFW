@@ -1,34 +1,28 @@
 // src/components/GamesHub.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Gamepad2, Target, BookOpen, Home, ListChecks, Route as RouteIcon, Grid3x3 } from 'lucide-react';
+import { Gamepad2, Target, BookOpen, ListChecks, Route as RouteIcon, Grid3x3 } from 'lucide-react';
 import './job-skills-matcher.css';
+import SiteHeader from './SiteHeader';
 
 export default function GamesHub() {
   return (
     <div className="page solid-bg">
-      {/* Header */}
-      <div className="topbar">
-        <div className="container">
-          <div className="row space-between align-center wrap">
-            <div className="row align-center gap-12">
+      <SiteHeader />
+
+      <div className="container content">
+        <div className="page-heading">
+          <div className="page-heading-main">
+            <div className="page-heading-icon" aria-hidden="true">
               <Gamepad2 className="icon-md" />
-              <div>
-                <h1 className="brand-title">Merck Career Framework Play Lab</h1>
-                <p className="brand-sub muted">Prototype missions built with today's data</p>
-              </div>
             </div>
-            <div className="row gap-12 align-center">
-              <Link to="/" className="btn">
-                <Home className="icon-xs mr-6" /> Back to EVA Room
-              </Link>
+            <div>
+              <h1 className="page-heading-title">Play Lab</h1>
+              <p className="page-heading-subtitle">Prototype missions built with today's data</p>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Content */}
-      <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
           <p className="hero-footnote" style={{ marginTop: 0 }}>
             These playful experiments reflect the game concepts we can build with the information available
