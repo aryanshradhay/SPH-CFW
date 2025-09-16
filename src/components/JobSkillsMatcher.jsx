@@ -1,5 +1,6 @@
 // src/components/JobSkillsMatcher.jsx
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Papa from 'papaparse';
 import {
   Search,
@@ -16,8 +17,9 @@ import {
   BookOpen,
   Sparkles,
   Star,
-  Mail,
-  GraduationCap,
+  Compass,
+  Gamepad2,
+  ArrowRight,
 } from 'lucide-react';
 import './job-skills-matcher.css';
 
@@ -623,31 +625,37 @@ const JobSkillsMatcher = () => {
 
   const heroFeatureCards = [
     {
-      title: 'Who We Are',
-      description: 'Celebrate the people powering SPH career growth.',
-      icon: Users,
-      accent: 'intro',
+      title: 'EVA Room Vibes',
+      description:
+        'Ambient signals and warm welcomes keep the lounge feeling alive before you set off.',
+      icon: Sparkles,
+      accent: 'eva',
+      action: {
+        type: 'button',
+        label: 'Pin my role',
+        onClick: scrollToMyPosition,
+      },
     },
     {
-      title: 'SPH D&D Roadmap',
-      description: 'Trace playful routes through core roles and skills.',
-      icon: Route,
+      title: 'Explorer Roadmap',
+      description:
+        'Plot your mission with animated skill comparisons and milestone cards tailored to you.',
+      icon: Compass,
       accent: 'roadmap',
+      action: {
+        type: 'button',
+        label: 'Launch roadmap',
+        onClick: scrollToPlanner,
+      },
     },
     {
-      title: 'SPH Academy',
-      description: 'Level-up with guided quests and mentor moments.',
-      icon: GraduationCap,
-      accent: 'academy',
-    },
-    {
-      title: 'Games',
-      description: 'Play games',
+      title: 'Newsletter',
+      description: 'Catch wins and highlights from across the crew.',
       icon: Mail,
-      accent: 'Games',
+      accent: 'newsletter',
     },
     {
-      title: 'Career roadmap',
+      title: 'Growth Assignment Spotlight',
       description: 'Discover missions that stretch, shine, and delight.',
       icon: Sparkles,
       accent: 'spotlight',
@@ -660,10 +668,12 @@ const JobSkillsMatcher = () => {
     { icon: Star, label: 'Future teammate avatar placeholder' },
   ];
 
-  const primaryPlannerLabel = myPosition ? 'Continue my roadmap' : 'Start my roadmap';
+  const primaryPlannerLabel = myPosition
+    ? 'Continue Explorer Roadmap'
+    : 'Launch Explorer Roadmap';
   const savedRoleCopy = myPosition
     ? myPosition.title
-    : 'Choose a position in “My Position” below.';
+    : 'Choose a position in “My Position” below to anchor your EVA Room.';
 
   return (
     <div className="page solid-bg">
@@ -680,17 +690,18 @@ const JobSkillsMatcher = () => {
                     Merck
                   </span>
                 <div>
-                  <h1 className="brand-title">SPH Career Roadmap</h1>
-                  <p className="brand-sub muted">Explore roles, skills & roadmaps</p>
+                  <h1 className="brand-title">SPH EVA Room</h1>
+                  <p className="brand-sub muted">Explorer • Vibe • Adventure</p>
                 </div>
 
               </div>
               <div className="hero-main-card">
-                <span className="hero-chip">Who we are</span>
-                <h2 className="hero-heading">SPH Career Quest Hub</h2>
+                <span className="hero-chip">EVA Room</span>
+                <h2 className="hero-heading">Step into the Explorer Vibe Area</h2>
                 <p className="hero-text">
-                  Make career planning feel like a vibrant adventure board filled with bright quests,
-                  friendly faces, and highlights to explore.
+                  The EVA Room is your playful launch bay—soak up the crew energy, align your roadmap,
+                  and hop into prototypes built with the data we have today. More surprises unlock as the
+                  lab grows.
                 </p>
                 <div className="hero-avatar-shelf" aria-hidden="true">
                   {avatarPlaceholders.map(({ icon: Icon, label }, idx) => (
@@ -703,24 +714,33 @@ const JobSkillsMatcher = () => {
                   </span>
                 </div>
                 <p className="hero-avatar-caption">
-                  Reserve these spaces for teammates and mentors as you explore together.
+                  Invite teammates, mentors, or future collaborators to these bubbles as your lounge
+                  comes alive.
                 </p>
                 <div className="hero-main-actions">
                   <button className="btn primary" onClick={scrollToPlanner}>
-                    <Route className="icon-xs mr-6" aria-hidden="true" />
+                    <Compass className="icon-xs mr-6" aria-hidden="true" />
                     {primaryPlannerLabel}
                   </button>
                   <button className="btn ghost" type="button" onClick={scrollToMyPosition}>
                     <Users className="icon-xs mr-6" aria-hidden="true" />
-                    Save my role
+                    Set my starting role
                   </button>
+                  <Link to="/games" className="btn ghost">
+                    <Gamepad2 className="icon-xs mr-6" aria-hidden="true" />
+                    Visit Play Lab
+                  </Link>
                 </div>
+                <p className="hero-footnote">
+                  Games are lightweight prototypes for now—expect the gallery to expand as we unlock more
+                  insights.
+                </p>
                 <div className="hero-status-card">
                   <div className="status-icon" aria-hidden="true">
                     <MapPin className="icon-sm" />
                   </div>
                   <div>
-                    <div className="status-label">My saved role</div>
+                    <div className="status-label">Starting role</div>
                     <div className="status-value">{savedRoleCopy}</div>
                   </div>
                   {myPosition && (
@@ -733,7 +753,7 @@ const JobSkillsMatcher = () => {
             </div>
             <div className="hero-right">
               <div className="hero-feature-stack">
-                {heroFeatureCards.map(({ title, description, icon: Icon, accent }, idx) => (
+                {heroFeatureCards.map(({ title, description, icon: Icon, accent, action }, idx) => (
                   <div key={title} className={`feature-card feature-${accent}`}>
                     <div className="feature-card-body">
                       <div className="feature-icon" aria-hidden="true">
@@ -742,6 +762,18 @@ const JobSkillsMatcher = () => {
                       <div>
                         <div className="feature-title">{title}</div>
                         {description && <p className="feature-subtitle">{description}</p>}
+                        {action && action.type === 'button' && (
+                          <button type="button" className="feature-cta" onClick={action.onClick}>
+                            {action.label}
+                            <ArrowRight className="icon-xs" aria-hidden="true" />
+                          </button>
+                        )}
+                        {action && action.type === 'link' && (
+                          <Link to={action.to} className="feature-cta">
+                            {action.label}
+                            <ArrowRight className="icon-xs" aria-hidden="true" />
+                          </Link>
+                        )}
                       </div>
                     </div>
                     <div className="feature-number">{String(idx + 1).padStart(2, '0')}</div>
@@ -760,14 +792,14 @@ const JobSkillsMatcher = () => {
             <Sparkles className="icon-sm" />
           </div>
           <div className="fun-banner-copy">
-            <div className="fun-banner-title">Today's Skill Quest</div>
+            <div className="fun-banner-title">Explorer Roadmap Signal</div>
             <p className="fun-banner-text">
-              Pick a target role, line up the skills you want to spotlight, and invite teammates to fill
-              those avatar bubbles.
+              Line up your next mission, compare skills with animated insights, and decide where to splash
+              your energy next.
             </p>
           </div>
           <button className="btn secondary" onClick={scrollToPlanner}>
-            Start quest
+            Launch roadmap
           </button>
         </div>
 
