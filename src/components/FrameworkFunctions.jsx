@@ -23,8 +23,8 @@ const FrameworkFunctions = React.forwardRef(function FrameworkFunctions(
           </h2>
           <p className="framework-functions__subtitle">
             Each function pairs strategic intent with targeted capabilities. Use
-            these snapshots as a primer while EVA Room deep-dives give you
-            personalised recommendations.
+            these snapshots as a primer before diving into the Career Explorer
+            and Roadmap.
           </p>
         </header>
         <div className="framework-functions__grid">

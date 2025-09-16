@@ -26,7 +26,7 @@ export default function GamesHub() {
         <div className="card section" style={{ marginBottom: 16 }}>
           <p className="hero-footnote" style={{ marginTop: 0 }}>
             These playful experiments reflect the game concepts we can build with the information available
-            today. Expect the Play Lab to grow livelier as the EVA Room uncovers more insights.
+            today. Expect the Play Lab to grow livelier as the SPH dataset uncovers more insights.
           </p>
           <div className="grid-cards">
             {/* Game: Job Explorer (guess a skill) */}

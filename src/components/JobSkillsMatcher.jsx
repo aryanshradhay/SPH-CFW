@@ -16,9 +16,6 @@ import '../styles/main.css';
 import useJobDataset from '../hooks/useJobDataset';
 import { alignVectors, classifyType } from '../utils/jobDataUtils';
 import SiteHeader from './SiteHeader';
-import HeroSection from './HeroSection';
-import FrameworkFunctions from './FrameworkFunctions';
-import { frameworkFunctions } from '../data/frameworkFunctions';
 
 function getSimilarityColor(sim) {
   if (sim >= 70) return 'match match-excellent';
@@ -51,17 +48,9 @@ const JobSkillsMatcher = () => {
   const [myPickerTitle, setMyPickerTitle] = useState('');
 
   const myPositionRef = useRef(null);
-  const frameworkRef = useRef(null);
-
   const scrollToMyPosition = () => {
     if (myPositionRef.current) {
       myPositionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const scrollToFramework = () => {
-    if (frameworkRef.current) {
-      frameworkRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -229,18 +218,28 @@ const JobSkillsMatcher = () => {
 
   const startingRoleMessage = myPosition
     ? myPosition.title
-    : 'Set a home position in “My Position” to personalise your EVA Room.';
+    : 'Set a home position in “My Position” to personalise your roadmap.';
 
   return (
     <div className="page solid-bg">
       <SiteHeader />
 
-      <HeroSection onExplore={scrollToFramework} />
-
-      <FrameworkFunctions ref={frameworkRef} functions={frameworkFunctions} />
-
       {/* Content */}
       <div className="container content">
+        <div className="page-heading">
+          <div className="page-heading-main">
+            <div className="page-heading-icon" aria-hidden="true">
+              <Route className="icon-md" />
+            </div>
+            <div>
+              <h1 className="page-heading-title">SPH Career Explorer</h1>
+              <p className="page-heading-subtitle">
+                Explore SPH roles, compare skills, and shortlist next-step opportunities.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="hero-status-card hero-status-inline">
           <div className="status-icon" aria-hidden="true">
             <MapPin className="icon-sm" />
