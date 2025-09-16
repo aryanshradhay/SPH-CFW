@@ -240,41 +240,7 @@ const JobSkillsMatcher = () => {
           </div>
         </div>
 
-        <div className="hero-status-card hero-status-inline">
-          <div className="status-icon" aria-hidden="true">
-            <MapPin className="icon-sm" />
-          </div>
-          <div className="status-copy">
-            <div className="status-label">Starting role</div>
-            <div className="status-value">{startingRoleMessage}</div>
-          </div>
-          <div className="status-actions">
-            <button className="btn ghost small" type="button" onClick={scrollToMyPosition}>
-              Set my starting role
-            </button>
-            {myPosition && (
-              <button className="btn ghost small" type="button" onClick={() => setMyPositionTitle('')}>
-                Clear
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="fun-banner">
-          <div className="fun-banner-icon" aria-hidden="true">
-            <Sparkles className="icon-sm" />
-          </div>
-          <div className="fun-banner-copy">
-            <div className="fun-banner-title">Explorer Roadmap Signal</div>
-            <p className="fun-banner-text">
-              Line up your next mission, compare skills with animated insights, and decide where to splash
-              your energy next.
-            </p>
-          </div>
-          <Link to="/roadmap" state={roadmapLinkState} className="btn secondary">
-            Launch roadmap
-          </Link>
-        </div>
+        
 
         {/* ========== SECTION: My Position ========== */}
         <section ref={myPositionRef}>

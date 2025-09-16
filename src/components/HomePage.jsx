@@ -24,25 +24,6 @@ export default function HomePage() {
         secondaryCta={{ label: 'Browse SPH functions', onClick: handleExplore, variant: 'ghost' }}
       />
 
-      <div className="container content">
-        <section className="card section">
-          <h2 className="section-h2">Plan your next move</h2>
-          <p className="muted">
-            Use the SPH career tools to understand each function, explore roles, and build transition roadmaps.
-          </p>
-          <div className="row gap-12 wrap" style={{ marginTop: 12 }}>
-            <Link to="/career-explorer" className="btn primary">
-              Start exploring roles
-            </Link>
-            <Link to="/roadmap" className="btn ghost">
-              Visit the roadmap
-            </Link>
-            <Link to="/play-lab" className="btn ghost">
-              Enter the Play Lab
-            </Link>
-          </div>
-        </section>
-      </div>
 
       <FrameworkFunctions ref={functionsRef} functions={frameworkFunctions} />
     </div>

@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: 'Merck';
-  src: url('/fonts/merck.ttf') format('truetype');
+  src: url('../../../public/fonts/merck.ttf') format('truetype');
   font-display: swap;
 }
 
