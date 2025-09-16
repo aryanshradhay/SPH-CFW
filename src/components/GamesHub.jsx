@@ -14,7 +14,7 @@ export default function GamesHub() {
             <div className="row align-center gap-12">
               <Gamepad2 className="icon-md" />
               <div>
-                <h1 className="brand-title">SPH Play Lab</h1>
+                <h1 className="brand-title">Merck Career Framework Play Lab</h1>
                 <p className="brand-sub muted">Prototype missions built with today's data</p>
               </div>
             </div>
@@ -46,7 +46,7 @@ export default function GamesHub() {
               <p className="text-xs muted mb-8">
                 For the displayed role, pick the correct skill from multiple choices. Quick rounds to build familiarity.
               </p>
-              <Link to="/game" className="btn primary full row center">
+              <Link to="/play-lab/guess-skill" className="btn primary full row center">
                 Play
               </Link>
             </div>
@@ -62,7 +62,7 @@ export default function GamesHub() {
               <p className="text-xs muted mb-8">
                 See top skills and the function; choose which role they describe. Great for learning role signatures.
               </p>
-              <Link to="/games/guess-role" className="btn primary full row center">
+              <Link to="/play-lab/guess-role" className="btn primary full row center">
                 Play
               </Link>
             </div>
@@ -78,7 +78,7 @@ export default function GamesHub() {
               <p className="text-xs muted mb-8">
                 Read a skill definition and pick the correct skill name. Sharpens vocabulary and expectations.
               </p>
-              <Link to="/games/skill-quiz" className="btn primary full row center">
+              <Link to="/play-lab/skill-quiz" className="btn primary full row center">
                 Play
               </Link>
             </div>
@@ -94,7 +94,7 @@ export default function GamesHub() {
               <p className="text-xs muted mb-8">
                 Follow a board-style path of roles to see how careers progress within a function. Roll to advance and view key skills at each step.
               </p>
-              <Link to="/games/career-board" className="btn primary full row center">
+              <Link to="/play-lab/career-board" className="btn primary full row center">
                 Play
               </Link>
             </div>
@@ -110,7 +110,7 @@ export default function GamesHub() {
               <p className="text-xs muted mb-8">
                 A grid of origin vs landing clusters. Roll or click to explore allowed transitions and see example roles in the destination.
               </p>
-              <Link to="/games/pathway-matrix" className="btn primary full row center">
+              <Link to="/play-lab/pathway-matrix" className="btn primary full row center">
                 Play
               </Link>
             </div>

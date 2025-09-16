@@ -278,7 +278,7 @@ export default function PathwayMatrixBoard() {
             if (list.length) {
               list.sort();
               setClusters(list);
-              if (!list.includes(origin)) setOrigin(list[0]);
+              setOrigin((prev) => (list.includes(prev) ? prev : list[0]));
             }
           }
         } catch (e) {
@@ -365,7 +365,7 @@ export default function PathwayMatrixBoard() {
               </div>
             </div>
             <div className="row gap-12 align-center">
-              <Link to="/games" className="btn">Games Hub</Link>
+              <Link to="/play-lab" className="btn">Games Hub</Link>
               <Link to="/" className="btn">
                 <Home className="icon-xs mr-6" /> Explorer
               </Link>

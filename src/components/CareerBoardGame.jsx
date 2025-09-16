@@ -196,8 +196,6 @@ export default function CareerBoardGame() {
     return () => window.removeEventListener('resize', updateCols);
   }, []);
 
-  const cells = boardJobs.length;
-  const rows = Math.max(1, Math.ceil(cells / cols));
   const indexToGrid = (i) => {
     const r = Math.floor(i / cols);
     const cInRow = i % cols;
@@ -269,7 +267,7 @@ export default function CareerBoardGame() {
                 </div>
               </div>
               <div className="row gap-12 align-center">
-                <Link to="/games" className="btn">Games Hub</Link>
+                <Link to="/play-lab" className="btn">Games Hub</Link>
                 <Link to="/" className="btn">
                   <Home className="icon-xs mr-6" /> Explorer
                 </Link>

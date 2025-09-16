@@ -118,7 +118,7 @@ export default function SkillDefinitionQuiz() {
               </div>
             </div>
             <div className="row gap-12 align-center">
-              <Link to="/games" className="btn">Games Hub</Link>
+              <Link to="/play-lab" className="btn">Games Hub</Link>
               <Link to="/" className="btn"><Home className="icon-xs mr-6" /> Explorer</Link>
             </div>
           </div>
@@ -144,7 +144,7 @@ export default function SkillDefinitionQuiz() {
               <p className="muted">Your score: {score} / {TOTAL_ROUNDS}</p>
               <div className="row gap-12">
                 <button className="btn primary" onClick={resetGame}>Play Again</button>
-                <Link to="/games" className="btn">Games Hub</Link>
+                <Link to="/play-lab" className="btn">Games Hub</Link>
               </div>
             </div>
           )}

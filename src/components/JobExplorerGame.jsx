@@ -190,7 +190,7 @@ export default function JobExplorerGame() {
               </div>
             </div>
             <div className="row gap-12 align-center">
-              <Link to="/games" className="btn">Games Hub</Link>
+              <Link to="/play-lab" className="btn">Games Hub</Link>
               <Link to="/" className="btn">
                 <Home className="icon-xs mr-6" /> Back to Explorer
               </Link>
