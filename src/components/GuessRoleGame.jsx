@@ -167,7 +167,7 @@ export default function GuessRoleGame() {
               </div>
             </div>
             <div className="row gap-12 align-center">
-              <Link to="/games" className="btn">
+              <Link to="/play-lab" className="btn">
                 Back to Games
               </Link>
               <Link to="/" className="btn">
@@ -197,7 +197,7 @@ export default function GuessRoleGame() {
               <p className="muted">Your score: {score} / {TOTAL_ROUNDS}</p>
               <div className="row gap-12">
                 <button className="btn primary" onClick={resetGame}>Play Again</button>
-                <Link to="/games" className="btn">Games Hub</Link>
+                <Link to="/play-lab" className="btn">Games Hub</Link>
               </div>
             </div>
           )}

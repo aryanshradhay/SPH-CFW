@@ -1,7 +1,6 @@
 // src/components/JobSkillsMatcher.jsx
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Papa from 'papaparse';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Search,
   Filter,
@@ -11,462 +10,76 @@ import {
   MapPin,
   Briefcase,
   Route,
-  CheckCircle,
-  AlertCircle,
-  XCircle,
-  BookOpen,
   Sparkles,
   Star,
   Compass,
   Gamepad2,
   ArrowRight,
+  Mail,
 } from 'lucide-react';
 import './job-skills-matcher.css';
+import useJobDataset from '../hooks/useJobDataset';
+import { alignVectors, classifyType } from '../utils/jobDataUtils';
 
-/** CSV location (served from /public)
- * Use PUBLIC_URL so it works in dev and GitHub Pages subpath.
- */
-const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
-
-/* ------------------------- Utils ------------------------- */
-const normKey = (s) => String(s || '').trim();
-const getCI = (row, ...candidates) => {
-  for (const c of candidates) {
-    for (const k of Object.keys(row)) {
-      if (k.toLowerCase() === c.toLowerCase()) {
-        const v = row[k];
-        return typeof v === 'string' ? v.trim() : v;
-      }
-    }
-  }
-  return '';
-};
-const clamp01to5 = (n) => (n < 0 ? 0 : n > 5 ? 5 : n);
-
-// Normalize skill type labels from CSV
-function classifyType(typeRaw) {
-  const s = String(typeRaw || '').toLowerCase();
-  if (/functional/.test(s)) return 'functional';
-  if (/soft/.test(s)) return 'soft';
-  return 'unknown';
-}
-
-function parseProficiency(row) {
-  const rawValue = getCI(row, 'Proficiency Value');
-  const rawLevel = getCI(row, 'Required Proficiency Level');
-
-  if (rawValue !== '') {
-    const n = Number(rawValue);
-    if (Number.isFinite(n)) return clamp01to5(n);
-  }
-  if (rawLevel !== '') {
-    const n = Number(rawLevel);
-    if (Number.isFinite(n)) return clamp01to5(n);
-    const s = rawLevel.toLowerCase();
-    if (/^none|not required$/.test(s)) return 0;
-    if (/^basic|beginner|familiar$/.test(s)) return 1;
-    if (/^low$/.test(s)) return 2;
-    if (/^intermediate|medium|moderate$/.test(s)) return 3;
-    if (/^advanced|high$/.test(s)) return 4;
-    if (/^expert|master$/.test(s)) return 5;
-  }
-  return 0;
-}
-
-function alignVectors(jobA, jobB) {
-  const names = Array.from(new Set([...(jobA.skillOrder || []), ...(jobB.skillOrder || [])]));
-  const va = names.map((n) => jobA.skillMap?.[n] ?? 0);
-  const vb = names.map((n) => jobB.skillMap?.[n] ?? 0);
-  return [va, vb, names];
-}
-// Similarity helpers (coloring/badges)
 function getSimilarityColor(sim) {
   if (sim >= 70) return 'match match-excellent';
   if (sim >= 60) return 'match match-good';
   if (sim >= 50) return 'match match-fair';
   return 'match match-low';
 }
+
 function getSimilarityBadge(sim) {
   if (sim >= 90) return { label: 'Excellent', color: 'badge solid green' };
   if (sim >= 80) return { label: 'Good', color: 'badge solid yellow' };
   if (sim >= 70) return { label: 'Fair', color: 'badge solid orange' };
   return { label: 'Low', color: 'badge solid gray' };
 }
-function getTrainingRecommendations(skillName, typeOrGuess, gap) {
-  const soft = [
-    'Executive communication workshop',
-    'Stakeholder influence & negotiation',
-    'Cross-cultural collaboration',
-  ];
-  const functional = [
-    'Advanced domain certification',
-    'Tools & systems deep-dive',
-    'Mentored project-based learning',
-  ];
-  const pool = /soft/i.test(typeOrGuess) ? soft : functional;
-  const count = Math.min(3, Math.max(1, Math.ceil(gap || 1)));
-  return pool.slice(0, count);
-}
-
-/* ------------------------- Roadmap inline block ------------------------- */
-const RoadmapInline = ({ currentJob, targetJob }) => {
-  const [va, vb, names] = useMemo(
-    () => (currentJob && targetJob ? alignVectors(currentJob, targetJob) : [[], [], []]),
-    [currentJob, targetJob]
-  );
-
-  // Build a quick type lookup for each skill name using target > current fallback
-  const typeByName = useMemo(() => {
-    const map = {};
-    names.forEach((n) => {
-      const tRaw = targetJob?.skillTypeByName?.[n] ?? currentJob?.skillTypeByName?.[n] ?? '';
-      map[n] = classifyType(tRaw);
-    });
-    return map;
-  }, [names, currentJob, targetJob]);
-
-const groups = useMemo(() => {
-  const g = { similar: [], fair: [], needWork: [] };
-
-  names.forEach((n, i) => {
-    const cur = va[i] ?? 0;
-    const tar = vb[i] ?? 0;
-
-    // Only consider POSITIVE gaps for development buckets
-    if (tar <= cur) {
-      // Already meets or exceeds target â€” treat as similar/strong
-      g.similar.push({ name: n, current: cur, target: tar, gap: 0 });
-      return;
-    }
-
-    const posGap = tar - cur; // strictly positive here
-    const item = { name: n, current: cur, target: tar, gap: posGap };
-
-    if (posGap <= 1) g.similar.push(item);
-    else if (posGap <= 2) g.fair.push(item);
-    else g.needWork.push(item);
-  });
-
-  return g;
-}, [va, vb, names]);
-
-  // Split groups into functional vs soft vs unknown
-  const groupsByType = useMemo(() => {
-    const mk = () => ({ similar: [], fair: [], needWork: [] });
-    const out = { functional: mk(), soft: mk(), unknown: mk() };
-    const add = (bucket, arr) => {
-      arr.forEach((s) => {
-        const t = typeByName[s.name] || 'unknown';
-        out[t][bucket].push({ ...s, type: t });
-      });
-    };
-    add('similar', groups.similar);
-    add('fair', groups.fair);
-    add('needWork', groups.needWork);
-    return out;
-  }, [groups, typeByName]);
-
-
-  const Group = ({ title, icon, color, items }) => {
-    if (!items.length) return null;
-    return (
-      <div className={`panel panel-${color}`}>
-        <h3 className="panel-title">{icon}{title} ({items.length})</h3>
-        <div className="grid-two">
-          {items.map((s, i) => {
-            const recs = getTrainingRecommendations(s.name, s.type || typeByName[s.name] || '', Math.abs(s.gap));
-            return (
-              <div key={i} className={`card border-${color}`}>
-                <div className="row space-between align-center mb-8">
-                  <h4 className="text-600">{s.name}</h4>
-                  <div className="row gap-8 text-sm">
-                    <span className={`text-${color}`}>Current: {s.current}/5</span>
-                    <span className="muted" aria-hidden="true">to</span>
-                    <span className="text-blue">Target: {s.target}/5</span>
-                  </div>
-                </div>
-                <div className="mb-8">
-                  <div className={`text-xs text-${color} mb-4`}>
-                    Gap: {s.gap > 0 ? '+' : ''}{s.gap} levels
-                  </div>
-                  <div className="bar">
-                    <div className={`bar-fill ${color}`} style={{ width: (s.current / 5) * 100 + '%' }}>
-                      <div
-                        className={`bar-planned ${color}`}
-                        style={{ width: Math.max(0, ((s.target - s.current) / 5) * 100) + '%' }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="text-sm muted mb-8">Recommended training:</div>
-                  {recs.map((t, idx) => (
-                    <div key={idx} className="row text-xs muted">
-                      <BookOpen className={`icon-xs mr-6 text-${color}`} />
-                      {t}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    );
-  };
-
-  if (!currentJob || !targetJob) return null;
-
-  return (
-    <div className="card" style={{ padding: 16 }}>
-      <div className="row align-center gap-12 mb-16">
-        <Route className="icon-sm" />
-        <h2 className="title-md">Career Transition Roadmap</h2>
-      </div>
-
-      <div className="panel">
-        <div className="row space-between">
-          <div>
-            <div className="text-sm muted">Current</div>
-            <div className="text-600">{currentJob.title}</div>
-          </div>
-          <div>
-            <div className="text-sm muted">Target</div>
-            <div className="text-600">{targetJob.title}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Functional skills buckets */}
-      <div className="panel">
-        <h3 className="panel-title">Functional Skills</h3>
-        <Group
-          title="Already Strong"
-          icon={<CheckCircle className="icon-sm mr-8" />}
-          color="green"
-          items={groupsByType.functional.similar}
-        />
-        <Group
-          title="Needs Some Development"
-          icon={<AlertCircle className="icon-sm mr-8" />}
-          color="yellow"
-          items={groupsByType.functional.fair}
-        />
-        <Group
-          title="Needs Significant Development"
-          icon={<XCircle className="icon-sm mr-8" />}
-          color="red"
-          items={groupsByType.functional.needWork}
-        />
-      </div>
-
-      {/* Soft skills buckets */}
-      <div className="panel">
-        <h3 className="panel-title">Soft Skills</h3>
-        <Group
-          title="Already Strong"
-          icon={<CheckCircle className="icon-sm mr-8" />}
-          color="green"
-          items={groupsByType.soft.similar}
-        />
-        <Group
-          title="Needs Some Development"
-          icon={<AlertCircle className="icon-sm mr-8" />}
-          color="yellow"
-          items={groupsByType.soft.fair}
-        />
-        <Group
-          title="Needs Significant Development"
-          icon={<XCircle className="icon-sm mr-8" />}
-          color="red"
-          items={groupsByType.soft.needWork}
-        />
-      </div>
-
-      {/* Unknown/Other skills (if any) */}
-      {(groupsByType.unknown.similar.length || groupsByType.unknown.fair.length || groupsByType.unknown.needWork.length) > 0 && (
-        <div className="panel">
-          <h3 className="panel-title">Other Skills</h3>
-          <Group
-            title="Already Strong"
-            icon={<CheckCircle className="icon-sm mr-8" />}
-            color="green"
-            items={groupsByType.unknown.similar}
-          />
-          <Group
-            title="Needs Some Development"
-            icon={<AlertCircle className="icon-sm mr-8" />}
-            color="yellow"
-            items={groupsByType.unknown.fair}
-          />
-          <Group
-            title="Needs Significant Development"
-            icon={<XCircle className="icon-sm mr-8" />}
-            color="red"
-            items={groupsByType.unknown.needWork}
-          />
-        </div>
-      )}
-
-      </div>
-  );
-};
 
 /* ------------------------- Main Component (Single Page) ------------------------- */
 const JobSkillsMatcher = () => {
-  const [jobs, setJobs] = useState([]);
-  const [divisions, setDivisions] = useState([]);
-  const [skillIDF, setSkillIDF] = useState({});
+  const navigate = useNavigate();
+  const { jobs, divisions, skillIDF } = useJobDataset();
   const [selectedJob, setSelectedJob] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDivision, setSelectedDivision] = useState('all');
 
-  // Saved "My Position" (one of the existing positions)
-  const [myPositionTitle, setMyPositionTitle] = useState('');
+  const [myPositionTitle, setMyPositionTitle] = useState(() => {
+    if (typeof window === 'undefined') return '';
+    return window.localStorage.getItem('eva-my-position') || '';
+  });
 
-  // "My Position" picker (separate section)
   const [myPickerDivision, setMyPickerDivision] = useState('all');
   const [myPickerTitle, setMyPickerTitle] = useState('');
 
-  // Planner state (bottom section)
-  const [plannerDivision, setPlannerDivision] = useState('all');
-  const [plannerCurrentTitle, setPlannerCurrentTitle] = useState('');
-  const [plannerTargetTitle, setPlannerTargetTitle] = useState('');
-
-  const plannerRef = useRef(null);
   const myPositionRef = useRef(null);
-  const scrollToPlanner = () => {
-    if (plannerRef.current) {
-      plannerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
+
   const scrollToMyPosition = () => {
     if (myPositionRef.current) {
       myPositionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
-  // Load CSV â†’ build jobs
   useEffect(() => {
-    Papa.parse(CSV_URL, {
-      download: true,
-      header: true,
-      dynamicTyping: false,
-      skipEmptyLines: true,
-      complete: ({ data }) => {
-        const rows = (data || []).map((r) =>
-          Object.fromEntries(
-            Object.entries(r).map(([k, v]) => [normKey(k), typeof v === 'string' ? v.trim() : v])
-          )
-        );
-
-        const byTitle = new Map();
-        rows.forEach((row) => {
-          const title = getCI(row, 'Core Position');
-          const division = getCI(row, 'Function');
-          const cluster = getCI(row, 'Core Position Cluster');
-          const clusterDef = getCI(row, 'Core Position Cluster Definition');
-          const objective = getCI(row, 'Core Position Main Objective');
-          const skillName = getCI(row, 'Skill');
-          const skillDef = getCI(row, 'Skill Definition');
-          const skillType = getCI(
-            row,
-            'Functional / Soft Skill',
-            'Functional/Soft Skill',
-            'Functional or Softskill?'
-          );
-          if (!title) return;
-
-          if (!byTitle.has(title)) {
-            byTitle.set(title, {
-              title,
-              division,
-              cluster,
-              clusterDef,
-              objective,
-              skillOrder: [],
-              skillMap: {},
-              skillDefByName: {},
-              skillTypeByName: {},
-            });
-          }
-          const job = byTitle.get(title);
-          job.division = job.division || division;
-          job.cluster = job.cluster || cluster;
-          job.clusterDef = job.clusterDef || clusterDef;
-          job.objective = job.objective || objective;
-
-          if (skillName) {
-            const level = parseProficiency(row);
-            if (!job.skillOrder.includes(skillName)) job.skillOrder.push(skillName);
-            job.skillMap[skillName] = Math.max(job.skillMap[skillName] || 0, level);
-            if (skillDef) job.skillDefByName[skillName] = skillDef;
-            if (skillType) job.skillTypeByName[skillName] = skillType;
-          }
-        });
-
-        let id = 1;
-        const jobsArray = Array.from(byTitle.values()).map((j) => {
-          const skills = j.skillOrder.map((s) => j.skillMap[s] ?? 0);
-          const description = j.objective
-            ? j.objective
-            : j.clusterDef
-            ? j.clusterDef
-            : `Responsibilities for ${j.title}.`;
-          return {
-            id: id++,
-            title: j.title,
-            division: j.division || 'Unknown Division',
-            skills,
-            skillOrder: j.skillOrder,
-            skillMap: j.skillMap,
-            skillDefByName: j.skillDefByName,
-            skillTypeByName: j.skillTypeByName,
-            description,
-            requirements: [
-            ],
-          };
-        });
-
-        jobsArray.sort(
-          (a, b) =>
-            (a.division || '').localeCompare(b.division || '') ||
-            a.title.localeCompare(b.title)
-        );
-
-        // Compute global skill IDF (rarer skills weigh slightly more)
-        const N = jobsArray.length || 1;
-        const df = new Map();
-        jobsArray.forEach((job) => {
-          const seen = new Set(job.skillOrder || []);
-          seen.forEach((name) => df.set(name, (df.get(name) || 0) + 1));
-        });
-        const idfObj = {};
-        df.forEach((count, name) => {
-          // 1 + ln((N+1)/(df+1)) keeps it ~[1,2]; clamp to avoid extremes
-          const raw = 1 + Math.log((N + 1) / (count + 1));
-          idfObj[name] = Math.max(0.85, Math.min(1.35, raw));
-        });
-
-        setJobs(jobsArray);
-        setSkillIDF(idfObj);
-        setDivisions(Array.from(new Set(jobsArray.map((j) => j.division))));
-      },
-    });
-  }, []);
-
+    if (typeof window === 'undefined') return;
+    if (myPositionTitle) {
+      window.localStorage.setItem('eva-my-position', myPositionTitle);
+    } else {
+      window.localStorage.removeItem('eva-my-position');
+    }
+  }, [myPositionTitle]);
   // Derive job objects
   const myPosition = useMemo(
     () => jobs.find((j) => j.title === myPositionTitle) || null,
     [jobs, myPositionTitle]
   );
 
-  // When user sets "My Position", default the planner's Current to it
-  useEffect(() => {
-    if (myPosition?.title) {
-      setPlannerCurrentTitle(myPosition.title);
-    }
-  }, [myPosition?.title]);
+  const roadmapLinkState = myPosition?.title ? { currentTitle: myPosition.title } : undefined;
+  const selectedJobRoadmapState = selectedJob
+    ? {
+        ...(myPosition?.title ? { currentTitle: myPosition.title } : {}),
+        targetTitle: selectedJob.title,
+      }
+    : undefined;
 
   /* ---------- Top list filtering ---------- */
   const filteredJobs = useMemo(() => {
@@ -608,21 +221,6 @@ const JobSkillsMatcher = () => {
     setMyPositionTitle(myPickerTitle);
   };
 
-  /* ---------- Planner section (bottom) ---------- */
-  const plannerJobsFiltered = useMemo(() => {
-    if (plannerDivision === 'all') return jobs;
-    return jobs.filter((j) => j.division === plannerDivision);
-  }, [jobs, plannerDivision]);
-
-  const plannerCurrentJob = useMemo(
-    () => jobs.find((j) => j.title === plannerCurrentTitle),
-    [jobs, plannerCurrentTitle]
-  );
-  const plannerTargetJob = useMemo(
-    () => jobs.find((j) => j.title === plannerTargetTitle),
-    [jobs, plannerTargetTitle]
-  );
-
   const heroFeatureCards = [
     {
       title: 'EVA Room Vibes',
@@ -643,9 +241,10 @@ const JobSkillsMatcher = () => {
       icon: Compass,
       accent: 'roadmap',
       action: {
-        type: 'button',
-        label: 'Launch roadmap',
-        onClick: scrollToPlanner,
+        type: 'link',
+        label: 'Open roadmap',
+        to: '/roadmap',
+        state: roadmapLinkState,
       },
     },
     {
@@ -718,15 +317,15 @@ const JobSkillsMatcher = () => {
                   comes alive.
                 </p>
                 <div className="hero-main-actions">
-                  <button className="btn primary" onClick={scrollToPlanner}>
+                  <Link to="/roadmap" state={roadmapLinkState} className="btn primary">
                     <Compass className="icon-xs mr-6" aria-hidden="true" />
                     {primaryPlannerLabel}
-                  </button>
+                  </Link>
                   <button className="btn ghost" type="button" onClick={scrollToMyPosition}>
                     <Users className="icon-xs mr-6" aria-hidden="true" />
                     Set my starting role
                   </button>
-                  <Link to="/games" className="btn ghost">
+                  <Link to="/play-lab" className="btn ghost">
                     <Gamepad2 className="icon-xs mr-6" aria-hidden="true" />
                     Visit Play Lab
                   </Link>
@@ -769,7 +368,7 @@ const JobSkillsMatcher = () => {
                           </button>
                         )}
                         {action && action.type === 'link' && (
-                          <Link to={action.to} className="feature-cta">
+                          <Link to={action.to} state={action.state} className="feature-cta">
                             {action.label}
                             <ArrowRight className="icon-xs" aria-hidden="true" />
                           </Link>
@@ -798,9 +397,9 @@ const JobSkillsMatcher = () => {
               your energy next.
             </p>
           </div>
-          <button className="btn secondary" onClick={scrollToPlanner}>
+          <Link to="/roadmap" state={roadmapLinkState} className="btn secondary">
             Launch roadmap
-          </button>
+          </Link>
         </div>
 
         {/* ========== SECTION: My Position ========== */}
@@ -850,10 +449,11 @@ const JobSkillsMatcher = () => {
               {myPosition && (
                 <button
                   className="btn"
-                  onClick={() => {
-                    setPlannerCurrentTitle(myPosition.title);
-                    scrollToPlanner();
-                  }}
+                  onClick={() =>
+                    navigate('/roadmap', {
+                      state: { currentTitle: myPosition.title },
+                    })
+                  }
                 >
                   Plan from My Position
                 </button>
@@ -926,11 +526,11 @@ const JobSkillsMatcher = () => {
                         )}
                         <button
                           className="btn primary full row center"
-                          onClick={() => {
-                            setPlannerCurrentTitle(myPosition.title);
-                            setPlannerTargetTitle(job.title);
-                            scrollToPlanner();
-                          }}
+                          onClick={() =>
+                            navigate('/roadmap', {
+                              state: { currentTitle: myPosition.title, targetTitle: job.title },
+                            })
+                          }
                           title="Plan this move in the roadmap"
                         >
                           <Route className="icon-xs mr-6 white" />
@@ -1042,20 +642,25 @@ const JobSkillsMatcher = () => {
                     </button>
                     <button
                       className="btn"
-                      onClick={() => {
-                        setPlannerCurrentTitle(selectedJob.title);
-                        scrollToPlanner();
-                      }}
+                      onClick={() =>
+                        navigate('/roadmap', {
+                          state: { currentTitle: selectedJob.title },
+                        })
+                      }
                       title="Use this as your Current job in roadmap"
                     >
                       Use as Current
                     </button>
                     <button
                       className="btn"
-                      onClick={() => {
-                        setPlannerTargetTitle(selectedJob.title);
-                        scrollToPlanner();
-                      }}
+                      onClick={() =>
+                        navigate('/roadmap', {
+                          state: {
+                            ...(myPosition?.title ? { currentTitle: myPosition.title } : {}),
+                            targetTitle: selectedJob.title,
+                          },
+                        })
+                      }
                       title="Use this as your Target job in roadmap"
                     >
                       Use as Target
@@ -1166,12 +771,12 @@ const JobSkillsMatcher = () => {
                               <div className="row gap-12">
                                 <button
                                   className="btn primary full row center"
-                                  onClick={() => {
-                                    setPlannerCurrentTitle(selectedJob.title);
-                                    setPlannerTargetTitle(job.title);
-                                    scrollToPlanner();
-                                  }}
-                                  title="Scroll to bottom planner and prefill current/target"
+                                  onClick={() =>
+                                    navigate('/roadmap', {
+                                      state: { currentTitle: selectedJob.title, targetTitle: job.title },
+                                    })
+                                  }
+                                  title="Open roadmap with these roles"
                                 >
                                   <Route className="icon-xs mr-6 white" />
                                   Plan in Roadmap
@@ -1194,85 +799,35 @@ const JobSkillsMatcher = () => {
           )}
         </div>
 
-        {/* ========== SECTION: Roadmap Planner ========== */}
-        <h2 className="section-h2">Roadmap Planner</h2>
-        <div ref={plannerRef} className="card section" style={{ marginTop: 8 }}>
-          <div className="toolbar-grid" style={{ marginBottom: 16 }}>
-            <div className="field">
-              <label className="text-sm muted">Filter by Function</label>
-              <select
-                className="input"
-                value={plannerDivision}
-                onChange={(e) => {
-                  setPlannerDivision(e.target.value);
-                  setPlannerCurrentTitle(myPosition?.title || '');
-                  setPlannerTargetTitle('');
-                }}
+        {/* Roadmap call-to-action */}
+        <h2 className="section-h2">Explorer Roadmap Planner</h2>
+        <div className="card section" style={{ marginTop: 8 }}>
+          <p className="muted text-sm">
+            Build your transition plan on the dedicated roadmap page. We'll carry over your saved starting role
+            and any selected targets so you can see the full skill story.
+          </p>
+          <div className="row gap-12 wrap" style={{ marginTop: 12 }}>
+            <Link to="/roadmap" state={roadmapLinkState} className="btn primary">
+              <Route className="icon-xs mr-6 white" />
+              Open roadmap planner
+            </Link>
+            {selectedJob && (
+              <Link
+                to="/roadmap"
+                state={selectedJobRoadmapState}
+                className="btn ghost"
               >
-                <option value="all">All Functions</option>
-                {divisions.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="field" />
+                <Route className="icon-xs mr-6" />
+                Plan with {selectedJob.title}
+              </Link>
+            )}
           </div>
-
-          <div className="grid-two">
-            <div className="column gap-8">
-              <label className="text-sm muted">Current Job</label>
-              <select
-                className="input"
-                value={plannerCurrentTitle}
-                onChange={(e) => setPlannerCurrentTitle(e.target.value)}
-              >
-                <option value="">
-                  {myPosition ? `My Position: ${myPosition.title}` : 'Select current job...'}
-                </option>
-                {plannerJobsFiltered.map((j) => (
-                  <option key={j.id} value={j.title}>
-                    {j.title} - {j.division}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="column gap-8">
-              <label className="text-sm muted">Target Job</label>
-              <select
-                className="input"
-                value={plannerTargetTitle}
-                onChange={(e) => setPlannerTargetTitle(e.target.value)}
-              >
-                <option value="">Select target job...</option>
-                {plannerJobsFiltered.map((j) => (
-                  <option key={j.id} value={j.title}>
-                    {j.title} - {j.division}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-
-          {plannerCurrentJob && plannerTargetJob ? (
-            <div style={{ marginTop: 16 }}>
-              <RoadmapInline
-                currentJob={plannerCurrentJob}
-                targetJob={plannerTargetJob}
-              />
-            </div>
-          ) : (
-            <div className="empty" style={{ padding: 16 }}>
-              <p className="muted">
-                Pick both a current and a target job to view the roadmap.
-              </p>
-            </div>
+          {!myPosition && (
+            <p className="muted text-xs" style={{ marginTop: 12 }}>
+              Tip: Save your current role in the My Position section above to prefill the planner automatically.
+            </p>
           )}
         </div>
-        {/* ========== /Roadmap Planner ========== */}
       </div>
     </div>
   );
