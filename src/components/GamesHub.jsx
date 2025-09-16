@@ -14,13 +14,13 @@ export default function GamesHub() {
             <div className="row align-center gap-12">
               <Gamepad2 className="icon-md" />
               <div>
-                <h1 className="brand-title">Career Games</h1>
-                <p className="brand-sub muted">Learn roles, skills, and pathways</p>
+                <h1 className="brand-title">SPH Play Lab</h1>
+                <p className="brand-sub muted">Prototype missions built with today's data</p>
               </div>
             </div>
             <div className="row gap-12 align-center">
               <Link to="/" className="btn">
-                <Home className="icon-xs mr-6" /> Back to Explorer
+                <Home className="icon-xs mr-6" /> Back to EVA Room
               </Link>
             </div>
           </div>
@@ -30,6 +30,10 @@ export default function GamesHub() {
       {/* Content */}
       <div className="container content">
         <div className="card section" style={{ marginBottom: 16 }}>
+          <p className="hero-footnote" style={{ marginTop: 0 }}>
+            These playful experiments reflect the game concepts we can build with the information available
+            today. Expect the Play Lab to grow livelier as the EVA Room uncovers more insights.
+          </p>
           <div className="grid-cards">
             {/* Game: Job Explorer (guess a skill) */}
             <div className="match match-good">
