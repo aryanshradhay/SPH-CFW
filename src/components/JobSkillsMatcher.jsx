@@ -1,10 +1,23 @@
 // src/components/JobSkillsMatcher.jsx
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Papa from 'papaparse';
 import {
-  Search, Filter, Users, X, TrendingUp, MapPin,
-  Briefcase, Route, CheckCircle, AlertCircle, XCircle, BookOpen
+  Search,
+  Filter,
+  Users,
+  X,
+  TrendingUp,
+  MapPin,
+  Briefcase,
+  Route,
+  CheckCircle,
+  AlertCircle,
+  XCircle,
+  BookOpen,
+  Sparkles,
+  Star,
+  Mail,
+  GraduationCap,
 } from 'lucide-react';
 import './job-skills-matcher.css';
 
@@ -319,9 +332,15 @@ const JobSkillsMatcher = () => {
   const [plannerTargetTitle, setPlannerTargetTitle] = useState('');
 
   const plannerRef = useRef(null);
+  const myPositionRef = useRef(null);
   const scrollToPlanner = () => {
     if (plannerRef.current) {
-      plannerRef.current.scrollIntoView({behavior: 'smooth', block: 'start' });
+      plannerRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+  const scrollToMyPosition = () => {
+    if (myPositionRef.current) {
+      myPositionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -602,37 +621,129 @@ const JobSkillsMatcher = () => {
     [jobs, plannerTargetTitle]
   );
 
+  const heroFeatureCards = [
+    {
+      title: 'Who We Are',
+      description: 'Celebrate the people powering SPH career growth.',
+      icon: Users,
+      accent: 'intro',
+    },
+    {
+      title: 'SPH D&D Roadmap',
+      description: 'Trace playful routes through core roles and skills.',
+      icon: Route,
+      accent: 'roadmap',
+    },
+    {
+      title: 'SPH Academy',
+      description: 'Level-up with guided quests and mentor moments.',
+      icon: GraduationCap,
+      accent: 'academy',
+    },
+    {
+      title: 'Newsletter',
+      description: 'Catch wins and highlights from across the crew.',
+      icon: Mail,
+      accent: 'newsletter',
+    },
+    {
+      title: 'Growth Assignment Spotlight',
+      description: 'Discover missions that stretch, shine, and delight.',
+      icon: Sparkles,
+      accent: 'spotlight',
+    },
+  ];
+
+  const avatarPlaceholders = [
+    { icon: Users, label: 'Crew avatar placeholder' },
+    { icon: Sparkles, label: 'Mentor avatar placeholder' },
+    { icon: Star, label: 'Future teammate avatar placeholder' },
+  ];
+
+  const primaryPlannerLabel = myPosition ? 'Continue my roadmap' : 'Start my roadmap';
+  const savedRoleCopy = myPosition
+    ? myPosition.title
+    : 'Choose a position in “My Position” below.';
+
   return (
     <div className="page solid-bg">
       {/* Header */}
-      <div className="topbar">
-        <div className="container">
-          <div className="row space-between align-center">
-            <div className="row align-center gap-12">
-              <Link to="/" className="brand-wordmark" aria-label="Home">MERCK</Link>
-              <div>
-                <h1 className="brand-title">SPH Career Roadmap</h1>
-                <p className="brand-sub muted">Explore roles, skills & roadmaps</p>
+
+      <div className="topbar hero-banner">
+        <div className="container hero-container">
+          <div className="hero-grid">
+            <div className="hero-left">
+              <div className="hero-brand row align-center gap-12">
+                <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Brand" className="brand-logo" />
+                <div>
+                  <h1 className="brand-title">SPH Career Roadmap</h1>
+                  <p className="brand-sub muted">Explore roles, skills & roadmaps</p>
+                </div>
+
               </div>
-            </div>
-            <div className="row gap-12 align-center">
-              <div className="text-sm">
-                <div className="muted">My Position</div>
-                <div className="row gap-12 align-center">
-                  <div className="text-600">{myPosition ? myPosition.title : 'None'}</div>
+              <div className="hero-main-card">
+                <span className="hero-chip">Who we are</span>
+                <h2 className="hero-heading">SPH Career Quest Hub</h2>
+                <p className="hero-text">
+                  Make career planning feel like a vibrant adventure board filled with bright quests,
+                  friendly faces, and highlights to explore.
+                </p>
+                <div className="hero-avatar-shelf" aria-hidden="true">
+                  {avatarPlaceholders.map(({ icon: Icon, label }, idx) => (
+                    <span key={label} className={`avatar-bubble avatar-${idx + 1}`} title={label}>
+                      <Icon className="icon-sm" />
+                    </span>
+                  ))}
+                  <span className="avatar-bubble avatar-open" title="Add your avatar">
+                    <span className="avatar-plus">+</span>
+                  </span>
+                </div>
+                <p className="hero-avatar-caption">
+                  Reserve these spaces for teammates and mentors as you explore together.
+                </p>
+                <div className="hero-main-actions">
+                  <button className="btn primary" onClick={scrollToPlanner}>
+                    <Route className="icon-xs mr-6" aria-hidden="true" />
+                    {primaryPlannerLabel}
+                  </button>
+                  <button className="btn ghost" type="button" onClick={scrollToMyPosition}>
+                    <Users className="icon-xs mr-6" aria-hidden="true" />
+                    Save my role
+                  </button>
+                </div>
+                <div className="hero-status-card">
+                  <div className="status-icon" aria-hidden="true">
+                    <MapPin className="icon-sm" />
+                  </div>
+                  <div>
+                    <div className="status-label">My saved role</div>
+                    <div className="status-value">{savedRoleCopy}</div>
+                  </div>
                   {myPosition && (
-                    <button className="btn" onClick={() => setMyPositionTitle('')}>Clear</button>
+                    <button className="btn ghost small" onClick={() => setMyPositionTitle('')}>
+                      Clear
+                    </button>
                   )}
                 </div>
               </div>
-              <div className="circle brand">
-                <Users className="icon-md brand" />
+            </div>
+            <div className="hero-right">
+              <div className="hero-feature-stack">
+                {heroFeatureCards.map(({ title, description, icon: Icon, accent }, idx) => (
+                  <div key={title} className={`feature-card feature-${accent}`}>
+                    <div className="feature-card-body">
+                      <div className="feature-icon" aria-hidden="true">
+                        <Icon className="icon-sm" />
+                      </div>
+                      <div>
+                        <div className="feature-title">{title}</div>
+                        {description && <p className="feature-subtitle">{description}</p>}
+                      </div>
+                    </div>
+                    <div className="feature-number">{String(idx + 1).padStart(2, '0')}</div>
+                  </div>
+                ))}
               </div>
-              <div className="text-sm muted">
-                <div className="text-600">{jobs.length} Positions</div>
-                <div>{divisions.length} Divisions</div>
-              </div>
-              <Link to="/games" className="btn primary">Play Games</Link>
             </div>
           </div>
         </div>
@@ -640,67 +751,80 @@ const JobSkillsMatcher = () => {
 
       {/* Content */}
       <div className="container content">
-        {/* Hero */}
-        <div className="hero">
-          <h2 className="hero-title">Find your next move</h2>
-          <p className="hero-sub">Search positions, compare skills, and plan your roadmap across SPH functions.</p>
-          <div className="hero-actions">
-            <button className="btn primary" onClick={() => document.getElementById('browse')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Start exploring</button>
-            <Link to="/games" className="btn secondary">Play the games</Link>
+        <div className="fun-banner">
+          <div className="fun-banner-icon" aria-hidden="true">
+            <Sparkles className="icon-sm" />
           </div>
+          <div className="fun-banner-copy">
+            <div className="fun-banner-title">Today's Skill Quest</div>
+            <p className="fun-banner-text">
+              Pick a target role, line up the skills you want to spotlight, and invite teammates to fill
+              those avatar bubbles.
+            </p>
+          </div>
+          <button className="btn secondary" onClick={scrollToPlanner}>
+            Start quest
+          </button>
         </div>
 
         {/* ========== SECTION: My Position ========== */}
-        <h2 className="section-h2">My Position</h2>
-        <div className="card section" style={{ marginBottom: 16 }}>
-          <div className="toolbar-grid">
-            <div className="field">
-              <label className="text-sm muted">Function</label>
-              <select
-                className="input"
-                value={myPickerDivision}
-                onChange={(e) => { setMyPickerDivision(e.target.value); setMyPickerTitle(''); }}
-              >
-                <option value="all">All Functions</option>
-                {divisions.map((d) => (
-                  <option key={d} value={d}>{d}</option>
-                ))}
-              </select>
+        <section ref={myPositionRef}>
+          <h2 className="section-h2">My Position</h2>
+          <div className="card section" style={{ marginBottom: 16 }}>
+            <div className="toolbar-grid">
+              <div className="field">
+                <label className="text-sm muted">Function</label>
+                <select
+                  className="input"
+                  value={myPickerDivision}
+                  onChange={(e) => {
+                    setMyPickerDivision(e.target.value);
+                    setMyPickerTitle('');
+                  }}
+                >
+                  <option value="all">All Functions</option>
+                  {divisions.map((d) => (
+                    <option key={d} value={d}>
+                      {d}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="field">
+                <label className="text-sm muted">Position</label>
+                <select
+                  className="input"
+                  value={myPickerTitle}
+                  onChange={(e) => setMyPickerTitle(e.target.value)}
+                >
+                  <option value="">Select your position...</option>
+                  {myPickerJobs.map((j) => (
+                    <option key={j.id} value={j.title}>
+                      {j.title} - {j.division}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
-            <div className="field">
-              <label className="text-sm muted">Position</label>
-              <select
-                className="input"
-                value={myPickerTitle}
-                onChange={(e) => setMyPickerTitle(e.target.value)}
-              >
-                <option value="">Select your position...</option>
-                {myPickerJobs.map((j) => (
-                  <option key={j.id} value={j.title}>
-                    {j.title} - {j.division}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
 
-          <div className="row gap-12" style={{ marginTop: 12 }}>
-            <button className="btn primary" onClick={setMyPositionFromPicker} disabled={!myPickerTitle}>
-              Set as My Position
-            </button>
-            {myPosition && (
-              <button
-                className="btn"
-                onClick={() => {
-                  setPlannerCurrentTitle(myPosition.title);
-                  scrollToPlanner();
-                }}
-              >
-                Plan from My Position
+            <div className="row gap-12" style={{ marginTop: 12 }}>
+              <button className="btn primary" onClick={setMyPositionFromPicker} disabled={!myPickerTitle}>
+                Set as My Position
               </button>
-            )}
+              {myPosition && (
+                <button
+                  className="btn"
+                  onClick={() => {
+                    setPlannerCurrentTitle(myPosition.title);
+                    scrollToPlanner();
+                  }}
+                >
+                  Plan from My Position
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        </section>
 
         {/* Filters for browsing */}
         <div className="toolbar card">
