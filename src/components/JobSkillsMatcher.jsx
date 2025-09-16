@@ -672,6 +672,7 @@ const JobSkillsMatcher = () => {
   return (
     <div className="page solid-bg">
       {/* Header */}
+
       <div className="topbar hero-banner">
         <div className="container hero-container">
           <div className="hero-grid">
@@ -682,6 +683,7 @@ const JobSkillsMatcher = () => {
                   <h1 className="brand-title">SPH Career Roadmap</h1>
                   <p className="brand-sub muted">Explore roles, skills & roadmaps</p>
                 </div>
+
               </div>
               <div className="hero-main-card">
                 <span className="hero-chip">Who we are</span>
@@ -914,7 +916,7 @@ const JobSkillsMatcher = () => {
         )}
 
         {/* ========== SECTION: Browse Positions ========== */}
-        <h2 className="section-h2">Browse Positions</h2>
+        <h2 className="section-h2" id="browse">Browse Positions</h2>
         <div className="layout">
           {/* Left: groups */}
           <div className={selectedJob ? 'col main half' : 'col main full'}>
