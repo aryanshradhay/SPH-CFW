@@ -8,6 +8,12 @@
  * any new additions; legacy selectors remain available via the layout bundle.
  */
 
+@font-face {
+  font-family: 'Merck';
+  src: url('/fonts/merck.ttf') format('truetype');
+  font-display: swap;
+}
+
 :root {
   --color-purple-900: #1f0f3d;
   --color-purple-700: #5b2ec6;
@@ -46,7 +52,7 @@ body,
 
 body {
   margin: 0;
-  font-family: 'Inter', 'Segoe UI', 'Verdana', 'Geneva', sans-serif;
+  font-family: 'Verdana', 'Merck';
   color: var(--text);
   background: linear-gradient(180deg, rgba(255, 247, 222, 0.45) 0%, var(--bg) 36%, #ffffff 100%);
   line-height: 1.6;
@@ -60,7 +66,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Inter', 'Segoe UI', 'Verdana', 'Geneva', sans-serif;
+  font-family: 'Merck', 'Verdana';
   color: var(--text);
   margin: 0;
 }
@@ -107,7 +113,7 @@ img {
 }
 
 .content {
-  padding: 2.5rem 0 6rem;
+  padding: 5.5rem 0 6rem;
 }
 
 .section-h2 {
