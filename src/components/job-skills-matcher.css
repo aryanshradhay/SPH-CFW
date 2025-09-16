@@ -788,8 +788,8 @@ img, video { max-width:100%; height:auto; }
    Sidebar
    ======================= */
 
-.scroll-300 { max-height:384px; overflow:auto; }
-.scroll-180 { max-height:200px; overflow:auto; }
+.scroll-300 { max-height: none; overflow: visible;}
+.scroll-180{ max-height: none; overflow: visible;}
 .list { list-style:none; margin:0; padding:0; }
 .dot { width:6px; height:6px; border-radius:50%; display:inline-block; margin-top:8px; margin-right:8px; background:var(--purple); }
 

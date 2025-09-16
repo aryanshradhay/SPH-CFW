@@ -641,13 +641,13 @@ const JobSkillsMatcher = () => {
       accent: 'academy',
     },
     {
-      title: 'Newsletter',
-      description: 'Catch wins and highlights from across the crew.',
+      title: 'Games',
+      description: 'Play games',
       icon: Mail,
-      accent: 'newsletter',
+      accent: 'Games',
     },
     {
-      title: 'Growth Assignment Spotlight',
+      title: 'Career roadmap',
       description: 'Discover missions that stretch, shine, and delight.',
       icon: Sparkles,
       accent: 'spotlight',
@@ -674,7 +674,11 @@ const JobSkillsMatcher = () => {
           <div className="hero-grid">
             <div className="hero-left">
               <div className="hero-brand row align-center gap-12">
-                <img src={`${process.env.PUBLIC_URL}/logo.png`} alt="Brand" className="brand-logo" />
+                <span className="brand-logo brand-wordmark"
+                  aria-label="Merck KGaA, Darmstadt, Germany"
+                  >
+                    Merck
+                  </span>
                 <div>
                   <h1 className="brand-title">SPH Career Roadmap</h1>
                   <p className="brand-sub muted">Explore roles, skills & roadmaps</p>
