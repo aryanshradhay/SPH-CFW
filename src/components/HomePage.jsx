@@ -4,9 +4,11 @@ import SiteHeader from './SiteHeader';
 import HeroSection from './HeroSection';
 import FrameworkFunctions from './FrameworkFunctions';
 import { frameworkFunctions } from '../data/frameworkFunctions';
+import useRevealOnScroll from '../hooks/useRevealOnScroll';
 
 export default function HomePage() {
   const functionsRef = useRef(null);
+  useRevealOnScroll();
 
   const handleExplore = () => {
     if (functionsRef.current) {

@@ -82,6 +82,23 @@
   outline-offset: 2px;
 }
 
+.button--inverse {
+  background: var(--color-text-inverse);
+  color: var(--color-rich-purple);
+  border-color: transparent;
+  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28);
+}
+
+.button--inverse:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.3);
+}
+
+.button--inverse:focus-visible {
+  outline: 3px solid var(--color-vibrant-cyan);
+  outline-offset: 2px;
+}
+
 .button--fun,
 .btn.fun {
   background: var(--color-rich-red);
