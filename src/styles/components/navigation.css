@@ -31,6 +31,14 @@
   font-family: 'Merck', 'Verdana';
 }
 
+.top-bar__brand--active{
+  color: var(--color-vibrant-magenta);
+}
+
+.top-bar__brand:hover{
+  color: var(--color-vibrant-magenta);
+}
+
 /* Menu in middle */
 .top-bar__menu {
   display: flex;
@@ -43,7 +51,7 @@
   color: var(--color-rich-purple);
   text-decoration: none;
   padding: 0.25rem 0;
-  transition: color 0.2s ease, border-bottom 0.2s ease;
+  transition: color 0.25s ease, border-bottom 0.2s ease;
 }
 
 .top-bar__link:hover,
@@ -52,6 +60,7 @@
 }
 
 .top-bar__link--active {
+  color : var(--color-vibrant-magenta);
   border-bottom: 2px solid var(--color-vibrant-magenta);
 }
 
