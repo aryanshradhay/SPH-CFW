@@ -1,4 +1,4 @@
-/* Glass bar at top-left, auto width */
+/* Glass bar at top-left, refreshed with solid brand colors */
 .top-bar {
   position: fixed;
   top: 1rem;
@@ -9,12 +9,12 @@
   gap: 1.5rem;
 
   height: 56px;
-  padding: 0 1rem;
+  padding: 0 1.25rem;
 
-  border: 1px solid rgba(127, 77, 255, 0.25);
-  background: rgba(23, 7, 56, 0.08);
-  backdrop-filter: blur(18px);
+  border: 2px solid var(--color-rich-purple);
+  background: var(--color-sensitive-blue);
   border-radius: 14px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
   z-index: 1000;
 
   width: auto;              /* shrink-wrap content */
@@ -25,7 +25,7 @@
 .top-bar__brand {
   font-size: 1rem;
   font-weight: 700;
-  color: #2d114f;
+  color: var(--color-rich-purple);
   text-decoration: none;
   white-space: nowrap;
   font-family: 'Merck', 'Verdana';
@@ -40,18 +40,19 @@
 .top-bar__link {
   font-size: 0.9rem;
   font-weight: 600;
-  color: var(--purple, #503291);
+  color: var(--color-rich-purple);
   text-decoration: none;
   padding: 0.25rem 0;
   transition: color 0.2s ease, border-bottom 0.2s ease;
 }
 
-.top-bar__link:hover {
-  color: #000;
+.top-bar__link:hover,
+.top-bar__link:focus-visible {
+  color: var(--color-rich-blue);
 }
 
 .top-bar__link--active {
-  border-bottom: 2px solid var(--purple, #503291);
+  border-bottom: 2px solid var(--color-vibrant-magenta);
 }
 
 /* CTA on the far right */
@@ -59,10 +60,11 @@
   font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
-  color: #2d114f;
-  background: linear-gradient(140deg, #ffdf6b 0%, #ffc83d 100%);
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 211, 77, 0.55);
+  color: var(--color-rich-purple);
+  background: var(--color-vibrant-yellow);
+  padding: 0.4rem 0.9rem;
+  border-radius: 10px;
+  border: 2px solid var(--color-rich-purple);
   white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
 }
