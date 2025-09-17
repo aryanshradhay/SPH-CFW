@@ -37,7 +37,6 @@ export default function GamesHub() {
               <div className="play-lab-card-content">
                 <div className="play-lab-card-heading">
                   <h3 className="play-lab-card-title">Guess a Skill</h3>
-                  <span className="badge">Beginner</span>
                 </div>
                 <p className="play-lab-card-description text-xs muted">
                   For the displayed role, pick the correct skill from multiple choices. Quick rounds to build familiarity.
@@ -56,7 +55,6 @@ export default function GamesHub() {
               <div className="play-lab-card-content">
                 <div className="play-lab-card-heading">
                   <h3 className="play-lab-card-title">Guess the Role</h3>
-                  <span className="badge solid yellow">Intermediate</span>
                 </div>
                 <p className="play-lab-card-description text-xs muted">
                   See top skills and the function; choose which role they describe. Great for learning role signatures.
@@ -75,7 +73,6 @@ export default function GamesHub() {
               <div className="play-lab-card-content">
                 <div className="play-lab-card-heading">
                   <h3 className="play-lab-card-title">Skill Definition Quiz</h3>
-                  <span className="badge solid green">Knowledge</span>
                 </div>
                 <p className="play-lab-card-description text-xs muted">
                   Read a skill definition and pick the correct skill name. Sharpens vocabulary and expectations.
@@ -94,7 +91,6 @@ export default function GamesHub() {
               <div className="play-lab-card-content">
                 <div className="play-lab-card-heading">
                   <h3 className="play-lab-card-title">Career Path Board</h3>
-                  <span className="badge">Pathway</span>
                 </div>
                 <p className="play-lab-card-description text-xs muted">
                   Follow a board-style path of roles to see how careers progress within a function. Roll to advance and view key skills at each step.
@@ -113,7 +109,6 @@ export default function GamesHub() {
               <div className="play-lab-card-content">
                 <div className="play-lab-card-heading">
                   <h3 className="play-lab-card-title">Pathway Matrix Board</h3>
-                  <span className="badge">Matrix</span>
                 </div>
                 <p className="play-lab-card-description text-xs muted">
                   A grid of origin vs landing clusters. Roll or click to explore allowed transitions and see example roles in the destination.

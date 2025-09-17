@@ -23,7 +23,7 @@
 
 /* Brand text on left */
 .top-bar__brand {
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 700;
   color: var(--color-rich-purple);
   text-decoration: none;
@@ -48,7 +48,7 @@
 
 .top-bar__link:hover,
 .top-bar__link:focus-visible {
-  color: var(--color-rich-blue);
+  color: var(--color-vibrant-magenta);
 }
 
 .top-bar__link--active {

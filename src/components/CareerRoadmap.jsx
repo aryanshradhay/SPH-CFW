@@ -315,7 +315,7 @@ export default function CareerRoadmap() {
                     <div className="status-label">Saved starting role</div>
                     <div className="status-value">{myPosition.title}</div>
                   </div>
-                  <Link to="/" className="btn ghost small">
+                  <Link to="/career-explorer" className="btn ghost small">
                     Update
                   </Link>
                 </div>
