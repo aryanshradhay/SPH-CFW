@@ -1,6 +1,6 @@
 /*
- * Showcase grid summarising the SPH functions. Each block includes a looping
- * animation placeholder whose styling can be swapped once bespoke assets exist.
+ * Showcase grid summarising the SPH functions. Each block uses the refreshed
+ * Merck palette without gradients to create bold yet balanced compositions.
  */
 
 .framework-functions {
@@ -19,11 +19,12 @@
   justify-content: center;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: rgba(127, 77, 255, 0.12);
-  color: var(--purple);
+  background: var(--color-sensitive-blue);
+  color: var(--color-rich-blue);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  border: 2px solid var(--color-rich-blue);
 }
 
 .framework-functions__title {
@@ -48,9 +49,9 @@
   gap: 1.25rem;
   padding: 1.75rem 1.5rem;
   border-radius: 24px;
-  border: 1px solid rgba(127, 77, 255, 0.18);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(244, 240, 255, 0.7) 100%);
-  box-shadow: 0 24px 40px rgba(31, 15, 61, 0.12);
+  border: 2px solid var(--color-border-soft);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
 .framework-functions__animation {
@@ -59,7 +60,8 @@
   border-radius: 20px;
   position: relative;
   overflow: hidden;
-  background: rgba(127, 77, 255, 0.08);
+  background: var(--color-sensitive-green);
+  border: 4px solid var(--color-rich-green);
 }
 
 .framework-functions__animation::before,
@@ -67,12 +69,12 @@
   content: '';
   position: absolute;
   border-radius: 50%;
-  opacity: 0.65;
 }
 
 .framework-functions__animation--orbit::before {
   inset: 18% 32% 20% 6%;
-  border: 1px dashed rgba(127, 77, 255, 0.45);
+  border: 4px solid var(--color-vibrant-magenta);
+  border-radius: 40px;
   animation: showcaseOrbit 11s infinite linear;
 }
 
@@ -81,27 +83,29 @@
   height: 68px;
   top: 18%;
   right: 18%;
-  background: radial-gradient(circle, #ffd34d 0%, rgba(255, 211, 77, 0) 72%);
+  background: var(--color-vibrant-yellow);
+  border-radius: 20px;
   animation: showcaseFloat 7s infinite ease-in-out;
 }
 
 .framework-functions__animation--pulse::before {
   inset: 18% 20% 18% 20%;
-  background: radial-gradient(circle at center, rgba(255, 211, 77, 0.55) 0%, rgba(255, 211, 77, 0) 70%);
-  filter: blur(8px);
+  border-radius: 26px;
+  border: 4px solid var(--color-vibrant-green);
   animation: showcasePulse 6s infinite ease-in-out;
 }
 
 .framework-functions__animation--pulse::after {
-  inset: 28% 34% 24% 34%;
+  inset: 26% 34% 24% 34%;
   border-radius: 18px;
-  border: 1px solid rgba(127, 77, 255, 0.4);
+  background: var(--color-vibrant-magenta);
   animation: showcaseOrbit 9s infinite ease-in-out;
 }
 
 .framework-functions__animation--wave::before {
-  inset: 8% -15% 32% -12%;
-  background: linear-gradient(120deg, rgba(127, 77, 255, 0.65) 0%, rgba(255, 211, 77, 0.5) 100%);
+  inset: 8% -10% 36% -16%;
+  background: var(--color-vibrant-cyan);
+  border-radius: 28px;
   transform: rotate(6deg);
   animation: showcaseDrift 12s infinite ease-in-out;
 }
@@ -111,14 +115,15 @@
   height: 56px;
   bottom: 14%;
   right: 12%;
-  background: radial-gradient(circle, rgba(127, 77, 255, 0.85) 0%, rgba(127, 77, 255, 0) 70%);
+  background: var(--color-rich-blue);
+  border-radius: 18px;
   animation: showcaseFloat 9s infinite ease-in-out;
 }
 
 .framework-functions__name {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--purple);
+  color: var(--color-rich-purple);
 }
 
 .framework-functions__description {
@@ -157,11 +162,9 @@
 @keyframes showcasePulse {
   0%,
   100% {
-    opacity: 0.55;
     transform: scale(0.92);
   }
   50% {
-    opacity: 0.9;
     transform: scale(1.05);
   }
 }

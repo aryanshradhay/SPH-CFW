@@ -2,10 +2,8 @@
  * src/styles/base/base.css
  * -----------------------------------------------------------------------------
  * Provides variables, resets, and shared utility classes for the SPH Career
- * Framework experience. The palette leans into the refreshed purple and yellow
- * scheme while keeping compatibility variables (e.g. --purple) that existing
- * components already use. Classes follow a BEM-friendly naming convention for
- * any new additions; legacy selectors remain available via the layout bundle.
+ * Framework experience. The palette follows Merck's "World of Science" color
+ * world with rich, vibrant, and sensitive tones.
  */
 
 @font-face {
@@ -15,29 +13,56 @@
 }
 
 :root {
-  --color-purple-900: #1f0f3d;
-  --color-purple-700: #5b2ec6;
-  --color-purple-500: #7f4dff;
-  --color-purple-300: #b39dff;
-  --color-yellow-500: #ffd34d;
-  --color-yellow-400: #ffe079;
-  --color-iris-100: #f4f0ff;
-  --color-iris-50: #faf8ff;
+  /* Rich tones */
+  --color-rich-purple: #503291; /* passionate */
+  --color-rich-blue: #0f69af;   /* cool */
+  --color-rich-green: #149b5f;  /* positive */
+  --color-rich-red: #e61e50;    /* warm */
+
+  /* Vibrant tones */
+  --color-vibrant-magenta: #eb3c96;
+  --color-vibrant-cyan: #2dbecd;
+  --color-vibrant-green: #a5cd50;
+  --color-vibrant-yellow: #ffc832;
+
+  /* Sensitive tones */
+  --color-sensitive-pink: #e1c3cd;
+  --color-sensitive-blue: #96d7d2;
+  --color-sensitive-green: #b4dc96;
+  --color-sensitive-yellow: #ffdcb9;
+
+  /* Neutrals */
+  --color-neutral-white: #ffffff;
+  --color-neutral-ink: #1a1133;
+
+  /* Thematic tokens */
+  --color-background: var(--color-sensitive-yellow);
+  --color-surface: var(--color-neutral-white);
+  --color-surface-alt: var(--color-sensitive-blue);
+
+  --color-text: var(--color-neutral-ink);
+  --color-text-strong: var(--color-rich-purple);
+  --color-text-inverse: #ffffff;
+  --color-muted: #3f2f68;
+
+  --color-border-strong: var(--color-rich-purple);
+  --color-border-soft: var(--color-sensitive-pink);
+
+  --shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
+  --radius: 16px;
 
   /* Legacy tokens mapped to refreshed palette */
-  --purple: var(--color-purple-700);
-  --green: #38d4a7;
-  --yellow: var(--color-yellow-500);
-  --blue: #4e5dff;
+  --purple: var(--color-rich-purple);
+  --green: var(--color-rich-green);
+  --yellow: var(--color-vibrant-yellow);
+  --blue: var(--color-rich-blue);
 
-  --bg: var(--color-iris-50);
-  --surface: #ffffff;
-  --surface-2: var(--color-iris-100);
-  --text: #1a1133;
-  --muted: #645a82;
-  --line: rgba(95, 77, 142, 0.22);
-  --shadow: 0 24px 48px rgba(31, 15, 61, 0.12);
-  --radius: 16px;
+  --bg: var(--color-background);
+  --surface: var(--color-surface);
+  --surface-2: var(--color-surface-alt);
+  --text: var(--color-text);
+  --muted: var(--color-muted);
+  --line: var(--color-border-soft);
 }
 
 * {
@@ -53,8 +78,8 @@ body,
 body {
   margin: 0;
   font-family: 'Verdana', 'Merck';
-  color: var(--text);
-  background: linear-gradient(180deg, rgba(255, 247, 222, 0.45) 0%, var(--bg) 36%, #ffffff 100%);
+  color: var(--color-text);
+  background: var(--color-background);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -67,7 +92,7 @@ h4,
 h5,
 h6 {
   font-family: 'Merck', 'Verdana';
-  color: var(--text);
+  color: var(--color-text-strong);
   margin: 0;
 }
 
@@ -76,12 +101,14 @@ p {
 }
 
 a {
-  color: inherit;
+  color: var(--color-rich-purple);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover,
 a:focus-visible {
+  color: var(--color-rich-blue);
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
@@ -103,7 +130,7 @@ img {
 }
 
 .page.solid-bg {
-  background: var(--bg);
+  background: var(--color-sensitive-blue);
 }
 
 .container {
@@ -119,7 +146,7 @@ img {
 .section-h2 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--purple);
+  color: var(--color-rich-purple);
   margin: 2rem 0 0.75rem;
 }
 
@@ -128,7 +155,27 @@ img {
 }
 
 .muted {
-  color: var(--muted);
+  color: var(--color-muted);
+}
+
+.green {
+  color: var(--color-rich-green);
+}
+
+.yellow {
+  color: var(--color-vibrant-yellow);
+}
+
+.red {
+  color: var(--color-rich-red);
+}
+
+.blue {
+  color: var(--color-rich-blue);
+}
+
+.purple {
+  color: var(--color-rich-purple);
 }
 
 .row {
@@ -148,9 +195,13 @@ img {
   align-items: center;
 }
 
+.align-start {
+  align-items: flex-start;
+}
+
 .card {
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 2px solid var(--color-border-soft);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
@@ -163,8 +214,8 @@ img {
   height: 2px;
   border: 0;
   margin: 1rem 0;
-  background: var(--purple);
-  opacity: 0.16;
+  background: var(--color-rich-purple);
+  opacity: 0.25;
 }
 
 .tag {
@@ -173,9 +224,10 @@ img {
   gap: 0.5rem;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  background: var(--color-iris-100);
-  color: var(--purple);
+  background: var(--color-sensitive-blue);
+  color: var(--color-rich-blue);
   font-weight: 600;
+  border: 1px solid var(--color-rich-blue);
 }
 
 @media (max-width: 768px) {

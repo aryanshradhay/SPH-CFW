@@ -1,7 +1,7 @@
 /*
  * Button system shared across classic .btn markup and the new BEM-friendly
- * .button component. Keeping both selectors allows us to progressively migrate
- * existing views without breaking behaviour.
+ * .button component. Updated to reflect Merck's rich, vibrant, and sensitive
+ * palette without gradients or tints.
  */
 
 .button,
@@ -12,7 +12,7 @@
   gap: 0.5rem;
   padding: 0.625rem 1rem;
   border-radius: 14px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--color-border-soft);
   cursor: pointer;
   font-weight: 700;
   font-size: 0.9375rem;
@@ -20,7 +20,7 @@
   transition: transform 0.15s ease, box-shadow 0.15s ease,
     background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
   background: var(--surface);
-  color: var(--text);
+  color: var(--color-text);
 }
 
 .button:disabled,
@@ -33,66 +33,73 @@
 
 .button--primary,
 .btn.primary {
-  background: var(--purple);
-  color: #fff;
-  border-color: transparent;
-  box-shadow: 0 12px 30px rgba(91, 46, 198, 0.25);
+  background: var(--color-rich-purple);
+  color: var(--color-text-inverse);
+  border-color: var(--color-rich-purple);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
 }
 
 .button--primary:hover,
 .btn.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 18px 42px rgba(31, 15, 61, 0.22);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
 }
 
 .button--primary:focus-visible,
 .btn.primary:focus-visible {
-  outline: 3px solid rgba(127, 77, 255, 0.35);
+  outline: 3px solid var(--color-vibrant-cyan);
   outline-offset: 2px;
 }
 
 .button--secondary,
 .btn.secondary {
-  background: rgba(255, 211, 77, 0.15);
-  color: #5f3c00;
-  border-color: rgba(255, 211, 77, 0.45);
+  background: var(--color-vibrant-yellow);
+  color: var(--color-rich-purple);
+  border-color: var(--color-rich-purple);
 }
 
 .button--secondary:hover,
 .btn.secondary:hover {
-  background: rgba(255, 211, 77, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 .button--ghost,
 .btn.ghost {
   background: transparent;
-  color: var(--purple);
-  border-color: rgba(91, 46, 198, 0.35);
+  color: var(--color-rich-purple);
+  border-color: var(--color-rich-purple);
 }
 
 .button--ghost:hover,
 .btn.ghost:hover {
-  background: rgba(127, 77, 255, 0.08);
+  background: var(--color-sensitive-pink);
+}
+
+.button--ghost:focus-visible,
+.btn.ghost:focus-visible {
+  outline: 3px solid var(--color-vibrant-cyan);
+  outline-offset: 2px;
 }
 
 .button--fun,
 .btn.fun {
-  background: linear-gradient(135deg, var(--purple) 0%, #2d114f 100%);
-  color: #fff;
+  background: var(--color-rich-red);
+  color: var(--color-text-inverse);
   border: 0;
   padding: 0.65rem 1.25rem;
-  box-shadow: 0 20px 36px rgba(31, 15, 61, 0.28);
+  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.25);
 }
 
 .button--fun:hover,
 .btn.fun:hover {
   transform: translateY(-2px);
-  box-shadow: 0 24px 48px rgba(31, 15, 61, 0.35);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32);
 }
 
 .button--fun:focus-visible,
 .btn.fun:focus-visible {
-  outline: 3px solid rgba(255, 247, 222, 0.5);
+  outline: 3px solid var(--color-vibrant-yellow);
   outline-offset: 3px;
 }
 
@@ -109,9 +116,9 @@
 }
 
 .icon-button {
-  background: transparent;
-  color: var(--purple);
-  border: 1px solid rgba(91, 46, 198, 0.28);
+  background: var(--color-sensitive-blue);
+  color: var(--color-rich-purple);
+  border: 1px solid var(--color-rich-purple);
   padding: 0.375rem 0.5rem;
   border-radius: 12px;
   cursor: pointer;
@@ -119,14 +126,14 @@
 }
 
 .icon-button:hover {
-  background: rgba(127, 77, 255, 0.1);
+  background: var(--color-sensitive-green);
 }
 
 .badge {
   font-size: 0.75rem;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--color-border-soft);
   font-weight: 700;
   display: inline-flex;
   align-items: center;
@@ -134,19 +141,43 @@
 }
 
 .badge.green {
-  background: rgba(56, 212, 167, 0.22);
-  color: #0f6b4f;
-  border-color: rgba(56, 212, 167, 0.35);
+  background: var(--color-sensitive-green);
+  color: var(--color-rich-green);
+  border-color: var(--color-rich-green);
 }
 
 .badge.yellow {
-  background: rgba(255, 211, 77, 0.32);
-  color: #5f3c00;
-  border-color: rgba(255, 211, 77, 0.4);
+  background: var(--color-sensitive-yellow);
+  color: var(--color-rich-purple);
+  border-color: var(--color-vibrant-yellow);
 }
 
 .badge.purple {
-  background: rgba(127, 77, 255, 0.22);
-  color: var(--purple);
-  border-color: rgba(91, 46, 198, 0.32);
+  background: var(--color-rich-purple);
+  color: var(--color-text-inverse);
+  border-color: var(--color-rich-purple);
+}
+
+.badge.solid {
+  border-width: 0;
+}
+
+.badge.solid.green {
+  background: var(--color-rich-green);
+  color: var(--color-text-inverse);
+}
+
+.badge.solid.yellow {
+  background: var(--color-vibrant-yellow);
+  color: var(--color-rich-purple);
+}
+
+.badge.solid.orange {
+  background: var(--color-vibrant-magenta);
+  color: var(--color-text-inverse);
+}
+
+.badge.solid.gray {
+  background: var(--color-sensitive-pink);
+  color: var(--color-rich-purple);
 }
