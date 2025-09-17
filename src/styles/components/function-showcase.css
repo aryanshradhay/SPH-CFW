@@ -1,6 +1,6 @@
 /*
- * Showcase grid summarising the SPH functions. Each block uses the refreshed
- * Merck palette without gradients to create bold yet balanced compositions.
+ * Function showcase panels displayed as scroll-activated stories. Information
+ * lives on the left with supporting motion artwork on the right.
  */
 
 .framework-functions {
@@ -10,7 +10,7 @@
 .framework-functions__header {
   text-align: center;
   max-width: 720px;
-  margin: 0 auto 2.5rem;
+  margin: 0 auto 3rem;
 }
 
 .framework-functions__eyebrow {
@@ -37,48 +37,128 @@
   font-size: 1.05rem;
 }
 
-.framework-functions__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
-}
-
-.framework-functions__card {
+.framework-functions__list {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  padding: 1.75rem 1.5rem;
-  border-radius: 24px;
-  border: 2px solid var(--color-border-soft);
+  gap: 2.75rem;
+}
+
+.function-showcase {
+  border-radius: 32px;
+  border: 1px solid var(--color-border-soft);
   background: var(--surface);
   box-shadow: var(--shadow);
+  padding: 2.5rem;
 }
 
-.framework-functions__animation {
-  width: 100%;
-  aspect-ratio: 5 / 3;
-  border-radius: 20px;
+.function-showcase__layout {
+  display: flex;
+  align-items: stretch;
+  gap: 2.5rem;
+}
+
+.function-showcase__copy {
+  flex: 1 1 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.function-showcase__code {
+  align-self: flex-start;
+}
+
+.function-showcase__name {
+  font-size: clamp(1.9rem, 3vw, 2.5rem);
+  color: var(--color-rich-purple);
+  margin: 0;
+}
+
+.function-showcase__about {
+  color: var(--text);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.function-showcase__focus {
+  margin-top: 0.5rem;
+}
+
+.function-showcase__focus-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.function-showcase__focus-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.function-showcase__focus-item {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.function-showcase__focus-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--color-sensitive-green);
+}
+
+.function-showcase__focus-heading {
+  display: block;
+  font-weight: 700;
+  color: var(--color-rich-blue);
+}
+
+.function-showcase__focus-description {
+  margin: 0.25rem 0 0;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.function-showcase__visual {
+  flex: 1 1 320px;
+  max-width: 400px;
+  border-radius: 28px;
   position: relative;
   overflow: hidden;
-  background: var(--color-sensitive-green);
   border: 4px solid var(--color-rich-green);
+  background: var(--color-sensitive-green);
+  min-height: 320px;
 }
 
-.framework-functions__animation::before,
-.framework-functions__animation::after {
+.function-showcase__visual::before,
+.function-showcase__visual::after {
   content: '';
   position: absolute;
   border-radius: 50%;
 }
 
-.framework-functions__animation--orbit::before {
+.function-showcase__visual--orbit {
+  border-color: var(--color-rich-green);
+  background: var(--color-sensitive-green);
+}
+
+.function-showcase__visual--orbit::before {
   inset: 18% 32% 20% 6%;
   border: 4px solid var(--color-vibrant-magenta);
   border-radius: 40px;
   animation: showcaseOrbit 11s infinite linear;
 }
 
-.framework-functions__animation--orbit::after {
+.function-showcase__visual--orbit::after {
   width: 68px;
   height: 68px;
   top: 18%;
@@ -88,21 +168,31 @@
   animation: showcaseFloat 7s infinite ease-in-out;
 }
 
-.framework-functions__animation--pulse::before {
+.function-showcase__visual--pulse {
+  border-color: var(--color-rich-purple);
+  background: var(--color-sensitive-pink);
+}
+
+.function-showcase__visual--pulse::before {
   inset: 18% 20% 18% 20%;
   border-radius: 26px;
   border: 4px solid var(--color-vibrant-green);
   animation: showcasePulse 6s infinite ease-in-out;
 }
 
-.framework-functions__animation--pulse::after {
+.function-showcase__visual--pulse::after {
   inset: 26% 34% 24% 34%;
   border-radius: 18px;
   background: var(--color-vibrant-magenta);
   animation: showcaseOrbit 9s infinite ease-in-out;
 }
 
-.framework-functions__animation--wave::before {
+.function-showcase__visual--wave {
+  border-color: var(--color-rich-blue);
+  background: var(--color-sensitive-blue);
+}
+
+.function-showcase__visual--wave::before {
   inset: 8% -10% 36% -16%;
   background: var(--color-vibrant-cyan);
   border-radius: 28px;
@@ -110,7 +200,7 @@
   animation: showcaseDrift 12s infinite ease-in-out;
 }
 
-.framework-functions__animation--wave::after {
+.function-showcase__visual--wave::after {
   width: 56px;
   height: 56px;
   bottom: 14%;
@@ -118,26 +208,6 @@
   background: var(--color-rich-blue);
   border-radius: 18px;
   animation: showcaseFloat 9s infinite ease-in-out;
-}
-
-.framework-functions__name {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--color-rich-purple);
-}
-
-.framework-functions__description {
-  color: var(--text);
-  line-height: 1.7;
-}
-
-.framework-functions__meta {
-  margin-top: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: var(--muted);
-  font-size: 0.85rem;
 }
 
 @keyframes showcaseOrbit {
@@ -180,8 +250,18 @@
 }
 
 @media (max-width: 1024px) {
-  .framework-functions__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .function-showcase {
+    padding: 2rem;
+  }
+
+  .function-showcase__layout {
+    flex-direction: column;
+  }
+
+  .function-showcase__visual {
+    max-width: none;
+    width: 100%;
+    min-height: 260px;
   }
 }
 
@@ -190,7 +270,16 @@
     padding: 3.5rem 0 1.5rem;
   }
 
-  .framework-functions__grid {
-    grid-template-columns: 1fr;
+  .function-showcase {
+    padding: 1.75rem;
+  }
+
+  .function-showcase__focus-item {
+    padding-left: 1rem;
+  }
+
+  .function-showcase__focus-item::before {
+    top: 0.2rem;
+    bottom: 0.2rem;
   }
 }
