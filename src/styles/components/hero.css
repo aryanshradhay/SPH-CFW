@@ -25,7 +25,7 @@
   height: 420px;
   top: -200px;
   right: -160px;
-  background: var(--color-sensitive-blue);
+  background: var(--color-vibrant-yellow);
 }
 
 .hero::after {
@@ -33,7 +33,7 @@
   height: 360px;
   bottom: -200px;
   left: -160px;
-  background: var(--color-sensitive-pink);
+  background: var(--color-vibrant-yellow);
 }
 
 .hero__inner {
@@ -56,7 +56,7 @@
   gap: 0.5rem;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: var(--color-sensitive-yellow);
+  background: var(--color-vibrant-yellow);
   color: var(--color-rich-purple);
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -73,7 +73,6 @@
 
 .hero__text {
   font-size: 1.05rem;
-  color: var(--color-sensitive-yellow);
   margin-bottom: 2rem;
 }
 

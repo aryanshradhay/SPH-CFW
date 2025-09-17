@@ -290,39 +290,6 @@ const JobSkillsMatcher = () => {
           </div>
         </section>
 
-        {/* Filters for browsing */}
-        <div className="toolbar card">
-          <div className="toolbar-grid">
-            <div className="field">
-              <Search className="icon-sm muted abs-left" />
-              <input
-                type="text"
-                placeholder="Search jobs by title or division..."
-                className="input pl"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                aria-label="Search jobs"
-              />
-            </div>
-            <div className="field">
-              <Filter className="icon-sm muted abs-left" />
-              <select
-                className="input pl"
-                value={selectedDivision}
-                onChange={(e) => setSelectedDivision(e.target.value)}
-                aria-label="Filter by division"
-              >
-                <option value="all">All Divisions</option>
-                {divisions.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-
         {/* ========== SECTION: Recommendations for My Position ========== */}
         {myPosition && (
           <>
