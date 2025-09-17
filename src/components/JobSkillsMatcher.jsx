@@ -238,7 +238,6 @@ const JobSkillsMatcher = () => {
           </div>
         </section>
 
-    codex/improve-career-roadmap-design-and-animations
         <section className="explorer-results-shell" data-animate="fade-stagger">
           <div className={`explorer-layout ${selectedJob ? 'explorer-layout--split' : ''}`}>
             <div className="explorer-results">
