@@ -130,7 +130,7 @@ img {
 }
 
 .page.solid-bg {
-  background: var(--color-sensitive-blue);
+  background: var(--color-text-inverse);
 }
 
 .container {
