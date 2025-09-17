@@ -34,7 +34,7 @@ export default function HeroSection({ onExplore = () => {}, primaryCta, secondar
   return (
     <section className="hero" aria-labelledby="hero-title">
       <div className="container hero__inner">
-        <div className="hero__content">
+        <div className="hero__content" data-animate="fade-slide">
           <span className="hero__eyebrow">Shape your next move</span>
           <h1 id="hero-title" className="hero__title">
             SPH Career Framework
@@ -49,7 +49,7 @@ export default function HeroSection({ onExplore = () => {}, primaryCta, secondar
             {renderAction(secondaryAction, 'ghost')}
           </div>
         </div>
-        <div className="hero__media" aria-hidden="true">
+        <div className="hero__media" aria-hidden="true" data-animate="fade-up">
           <div className="hero__animation">
             <div className="hero__orbit" />
             <div className="hero__spark" />

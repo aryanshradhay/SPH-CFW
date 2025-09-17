@@ -61,6 +61,95 @@ export function alignVectors(jobA, jobB) {
   return [va, vb, names];
 }
 
+export function computeTransitionSimilarity(currentJob, targetJob, skillIDF = {}) {
+  if (!currentJob || !targetJob) return 0;
+  if (currentJob.id === targetJob.id) return 100;
+
+  const [va, vb, names] = alignVectors(currentJob, targetJob);
+  if (!names.length) return 0;
+
+  const weights = names.map((name) => {
+    const importance = targetJob.skillMap?.[name] ?? 0;
+    const typeRaw = (
+      targetJob?.skillTypeByName?.[name] || currentJob?.skillTypeByName?.[name] || ''
+    ).toLowerCase();
+    const typeWeight = /functional/.test(typeRaw) ? 1.15 : /soft/.test(typeRaw) ? 0.95 : 1.0;
+    const base = 0.5 + (Math.max(0, Math.min(5, importance)) / 5) * 0.5;
+    const idf = skillIDF?.[name] ?? 1.0;
+    return base * typeWeight * idf;
+  });
+
+  let numerator = 0;
+  let denomA = 0;
+  let denomB = 0;
+  let weightSum = 0;
+
+  for (let i = 0; i < names.length; i++) {
+    const weight = weights[i] || 1;
+    const a = va[i] || 0;
+    const b = vb[i] || 0;
+    numerator += weight * a * b;
+    denomA += weight * a * a;
+    denomB += weight * b * b;
+    weightSum += weight;
+  }
+
+  if (denomA <= 0 || denomB <= 0) return 0;
+
+  const cosine = numerator / (Math.sqrt(denomA) * Math.sqrt(denomB));
+
+  let gapPenalty = 0;
+  for (let i = 0; i < names.length; i++) {
+    const weight = weights[i] || 1;
+    const a = va[i] || 0;
+    const b = vb[i] || 0;
+    if (b > a) {
+      const gap = (b - a) / 5;
+      gapPenalty += weight * gap * gap;
+    }
+  }
+
+  const gapNorm = weightSum > 0 ? Math.min(0.35, gapPenalty / weightSum) : 0;
+  const score01 = Math.max(0, Math.min(1, cosine - 0.5 * gapNorm));
+
+  return Math.round(score01 * 100);
+}
+
+export function summarizeTransition(currentJob, targetJob, maxItems = 3) {
+  if (!currentJob || !targetJob) return { strengths: [], gaps: [] };
+
+  const [va, vb, names] = alignVectors(currentJob, targetJob);
+  const diffs = names.map((name, index) => ({
+    name,
+    current: va[index] || 0,
+    target: vb[index] || 0,
+    gap: (vb[index] || 0) - (va[index] || 0),
+    type: classifyType(
+      (targetJob?.skillTypeByName?.[name] ?? currentJob?.skillTypeByName?.[name]) || ''
+    ),
+  }));
+
+  const strengths = diffs
+    .filter((diff) => diff.gap <= 0 && diff.target > 0)
+    .sort((a, b) => b.target - a.target)
+    .slice(0, maxItems);
+
+  const gaps = diffs
+    .filter((diff) => diff.gap > 0)
+    .sort((a, b) => b.gap - a.gap)
+    .slice(0, maxItems);
+
+  return { strengths, gaps };
+}
+
+export function getSimilarityBadge(score) {
+  if (score >= 90) return { label: 'Excellent', color: 'badge solid green' };
+  if (score >= 80) return { label: 'Great', color: 'badge solid yellow' };
+  if (score >= 70) return { label: 'Good', color: 'badge solid orange' };
+  if (score >= 60) return { label: 'Emerging', color: 'badge solid purple' };
+  return { label: 'Early Match', color: 'badge solid gray' };
+}
+
 export function getTrainingRecommendations(skillName, typeOrGuess, gap) {
   const soft = [
     'Executive communication workshop',
