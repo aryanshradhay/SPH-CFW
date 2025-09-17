@@ -126,10 +126,10 @@ const JobSkillsMatcher = () => {
   );
 
   return (
-    <div className="page solid-bg experience-page">
+    <div className="page solid-bg experience-page experience-page--explorer">
       <SiteHeader />
 
-      <div className="container content experience-content">
+      <div className="container content experience-content experience-content--wide">
         <section className="experience-hero experience-hero--explorer" data-animate="fade-slide">
           <div className="experience-hero__header">
             <div className="experience-hero__icon" aria-hidden="true">
@@ -185,43 +185,43 @@ const JobSkillsMatcher = () => {
           </div>
         </section>
 
-        <section id="career-explorer-filters" className="explorer-panel" data-animate="fade-up">
-          <div className="explorer-panel__header">
+        <section id="career-explorer-filters" className="explorer-toolbar" data-animate="fade-up">
+          <div className="explorer-toolbar__header">
             <div>
               <h2 className="section-h2">Browse positions</h2>
-              <p className="muted text-sm">
+              <p className="explorer-toolbar__subtext">
                 Use search and filters to surface roles across the SPH framework. Open a card to view its skill DNA.
               </p>
             </div>
-            {myPosition && <span className="chip chip--outline">Benchmarking vs {myPosition.title}</span>}
+            {myPosition && <span className="chip chip--outline chip--inverse">Benchmarking vs {myPosition.title}</span>}
           </div>
-          <div className="explorer-filter-grid">
-            <div className="field field--elevated">
-              <label className="field__label" htmlFor="explorer-search">
+          <div className="explorer-toolbar__controls">
+            <div className="toolbar-control">
+              <label className="toolbar-control__label" htmlFor="explorer-search">
                 Search positions
               </label>
-              <div className="field__control">
-                <Search className="icon-sm field__icon" />
+              <div className="toolbar-control__field">
+                <Search className="toolbar-control__icon" />
                 <input
                   id="explorer-search"
                   type="text"
-                  placeholder="Search by title or division..."
-                  className="input input--elevated"
+                  placeholder="Search by title or division"
+                  className="toolbar-control__input"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   aria-label="Search jobs"
                 />
               </div>
             </div>
-            <div className="field field--elevated">
-              <label className="field__label" htmlFor="explorer-division">
+            <div className="toolbar-control">
+              <label className="toolbar-control__label" htmlFor="explorer-division">
                 Division filter
               </label>
-              <div className="field__control">
-                <Filter className="icon-sm field__icon" />
+              <div className="toolbar-control__field toolbar-control__field--select">
+                <Filter className="toolbar-control__icon" />
                 <select
                   id="explorer-division"
-                  className="input input--elevated"
+                  className="toolbar-control__input toolbar-control__input--select"
                   value={selectedDivision}
                   onChange={(e) => setSelectedDivision(e.target.value)}
                   aria-label="Filter by division"
