@@ -157,6 +157,7 @@ const JobSkillsMatcher = () => {
               <span className="explorer-hero__status-label">Personalise your view</span>
               <p className="explorer-hero__status-text">
                 Save your current role in the roadmap planner to unlock tailored comparisons here.
+
               </p>
               <Link to="/roadmap" className="explorer-hero__status-link">
                 Go to roadmap planner
@@ -222,6 +223,7 @@ const JobSkillsMatcher = () => {
                     </select>
                   </div>
                 </div>
+
               </div>
             </div>
           </div>
