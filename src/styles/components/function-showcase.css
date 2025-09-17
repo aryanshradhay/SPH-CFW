@@ -145,6 +145,7 @@
   min-height: clamp(320px, 34vw, 520px);
 }
 
+
 .function-showcase__visual::before,
 .function-showcase__visual::after {
   content: '';
