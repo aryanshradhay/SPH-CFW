@@ -9,7 +9,7 @@
 }
 
 .explorer-hero__status-card {
-  background: rgba(10, 4, 35, 0.55);
+  background: var(--color-rich-purple);
   border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: 24px;
   padding: 1.75rem;

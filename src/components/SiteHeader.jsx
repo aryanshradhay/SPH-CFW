@@ -4,12 +4,12 @@ import '../styles/main.css';
 
 const navItems = [
   {
-    label: 'SPH Career Explorer',
+    label: 'Explorer',
     to: '/career-explorer',
     isActive: (pathname) => pathname.startsWith('/career-explorer'),
   },
   {
-    label: 'SPH Career Roadmap',
+    label: 'Roadmap',
     to: '/roadmap',
     isActive: (pathname) => pathname.startsWith('/roadmap'),
   },
