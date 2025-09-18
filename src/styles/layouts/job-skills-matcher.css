@@ -141,7 +141,7 @@
   width: fit-content;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(136, 19, 19, 0.14);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.7rem;
@@ -452,7 +452,7 @@
   border-radius: 28px;
   border: 2px solid rgba(255, 255, 255, 0.18);
   overflow: hidden;
-  background: var(--color-rich-purple);
+  background: var(--color-vibrant-magenta);
   color: var(--color-text-inverse);
   box-shadow: 0 30px 80px rgba(28, 12, 68, 0.35);
 }
@@ -483,7 +483,7 @@
 }
 
 .experience-hero--explorer {
-  background: linear-gradient(145deg, var(--color-rich-purple), #2d0c50 65%, #401c7a 100%);
+  background: var(--color-rich-purple);
 }
 
 .experience-hero__header {
@@ -510,6 +510,7 @@
   font-size: clamp(2rem, 3.2vw, 3rem);
   margin: 0;
   letter-spacing: -0.01em;
+  color: var(--color-vibrant-magenta);
 }
 
 .experience-hero__subtitle {
@@ -531,7 +532,7 @@
 
 .experience-page--explorer .experience-hero {
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: linear-gradient(140deg, #17092f 0%, #351263 48%, #5a2b9c 100%);
+  background: var(--color-rich-purple);
   box-shadow: 0 34px 90px rgba(9, 4, 32, 0.55);
   overflow: hidden;
 }
