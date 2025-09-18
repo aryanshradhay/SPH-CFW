@@ -10,6 +10,7 @@ import {
   MapPin,
   Briefcase,
   Compass,
+  ChevronDown,
 } from 'lucide-react';
 import '../styles/main.css';
 import useJobDataset from '../hooks/useJobDataset';
@@ -37,7 +38,11 @@ const JobSkillsMatcher = () => {
   const [selectedJob, setSelectedJob] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDivision, setSelectedDivision] = useState('all');
+  const [myPickerDivision, setMyPickerDivision] = useState('all');
+  const [myPickerTitle, setMyPickerTitle] = useState('');
   const filtersRef = useRef(null);
+  const recommendationsRef = useRef(null);
+  const resultsRef = useRef(null);
 
   const [myPositionTitle, setMyPositionTitle] = useState(() => {
     if (typeof window === 'undefined') return '';
@@ -57,6 +62,11 @@ const JobSkillsMatcher = () => {
     () => jobs.find((j) => j.title === myPositionTitle) || null,
     [jobs, myPositionTitle]
   );
+
+  const myPickerJobs = useMemo(() => {
+    if (myPickerDivision === 'all') return jobs;
+    return jobs.filter((j) => j.division === myPickerDivision);
+  }, [jobs, myPickerDivision]);
 
   const roadmapLinkState = myPosition?.title ? { currentTitle: myPosition.title } : undefined;
   /* ---------- Top list filtering ---------- */
@@ -119,16 +129,81 @@ const JobSkillsMatcher = () => {
     return { functional, soft, unknown };
   }, [selectedJob]);
 
+  const recommendationsForMyPosition = useMemo(() => {
+    if (!myPosition) return [];
+    return jobs
+      .filter((job) => job.id !== myPosition.id)
+      .map((job) => ({
+        ...job,
+        similarity: simScore(myPosition, job),
+        summary: summarizeTransition(myPosition, job, 2),
+      }))
+      .filter((job) => job.similarity >= 60)
+      .sort((a, b) => b.similarity - a.similarity)
+      .slice(0, 6);
+  }, [jobs, myPosition, simScore]);
+
+  useEffect(() => {
+    if (myPosition && !myPickerTitle) {
+      setMyPickerDivision(myPosition.division || 'all');
+      setMyPickerTitle(myPosition.title);
+    }
+  }, [myPosition, myPickerTitle]);
+
+  useEffect(() => {
+    if (!myPickerJobs.some((job) => job.title === myPickerTitle)) {
+      setMyPickerTitle('');
+    }
+  }, [myPickerJobs, myPickerTitle]);
+
   useRevealOnScroll(
     selectedJob ? selectedJob.id : 0,
     filteredJobs.length,
     matchingJobsForSelected.length,
-    myPosition ? myPosition.id : 0
+    myPosition ? myPosition.id : 0,
+    recommendationsForMyPosition.length
   );
 
   const handleBrowseRoles = () => {
     if (filtersRef.current) {
       filtersRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleViewRecommendations = () => {
+    if (recommendationsRef.current) {
+      recommendationsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleSaveMyPosition = React.useCallback(() => {
+    if (!myPickerTitle) return;
+    setMyPositionTitle(myPickerTitle);
+    const job = jobs.find((j) => j.title === myPickerTitle);
+    if (job) {
+      setSelectedDivision('all');
+      setSearchTerm('');
+      setSelectedJob(job);
+    }
+  }, [jobs, myPickerTitle]);
+
+  const handleHeroSubmit = (event) => {
+    event.preventDefault();
+    handleSaveMyPosition();
+  };
+
+  const handleClearMyPosition = () => {
+    setMyPositionTitle('');
+    setMyPickerTitle('');
+    setSelectedJob(null);
+  };
+
+  const handleOpenRecommendation = (job) => {
+    setSelectedDivision('all');
+    setSearchTerm(job.title);
+    setSelectedJob(job);
+    if (resultsRef.current) {
+      resultsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -150,42 +225,221 @@ const JobSkillsMatcher = () => {
             </div>
           </div>
           <div className="experience-hero__grid">
-            <div className="experience-hero__status-card explorer-hero__status">
-              {myPosition ? (
-                <>
-                  <span className="experience-hero__status-label explorer-hero__status-label">Saved starting role</span>
-                  <span className="experience-hero__status-value explorer-hero__status-value">{myPosition.title}</span>
+            <div className="experience-hero__status-card explorer-hero__status-card">
+              <div className="explorer-hero__status-heading">
+                <span className="experience-hero__status-label explorer-hero__status-label">
+                  Personalise your explorer
+                </span>
+                {myPosition ? (
+                  <>
+                    <span className="experience-hero__status-value explorer-hero__status-value">
+                      {myPosition.title}
+                    </span>
+                    <span className="explorer-hero__status-pill">
+                      <MapPin className="icon-xs" aria-hidden="true" />
+                      {myPosition.division}
+                    </span>
+                  </>
+                ) : (
+                  <p className="experience-hero__status-text explorer-hero__status-text">
+                    Save your current role to unlock curated recommendations and smarter comparisons.
+                  </p>
+                )}
+              </div>
+              <form className="explorer-hero__form" onSubmit={handleHeroSubmit}>
+                <div className="explorer-hero__field">
+                  <label className="explorer-hero__field-label" htmlFor="explorer-hero-division">
+                    Division
+                  </label>
+                  <div className="explorer-hero__select-wrapper">
+                    <select
+                      id="explorer-hero-division"
+                      className="explorer-hero__select"
+                      value={myPickerDivision}
+                      onChange={(event) => setMyPickerDivision(event.target.value)}
+                    >
+                      <option value="all">All divisions</option>
+                      {divisions.map((division) => (
+                        <option key={division} value={division}>
+                          {division}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="explorer-hero__chevron" aria-hidden="true" />
+                  </div>
+                </div>
+                <div className="explorer-hero__field">
+                  <label className="explorer-hero__field-label" htmlFor="explorer-hero-role">
+                    Role
+                  </label>
+                  <div className="explorer-hero__select-wrapper">
+                    <select
+                      id="explorer-hero-role"
+                      className="explorer-hero__select"
+                      value={myPickerTitle}
+                      onChange={(event) => setMyPickerTitle(event.target.value)}
+                    >
+                      <option value="">Select role...</option>
+                      {myPickerJobs.map((job) => (
+                        <option key={job.id} value={job.title}>
+                          {job.title} – {job.division}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown className="explorer-hero__chevron" aria-hidden="true" />
+                  </div>
+                </div>
+                <p className="explorer-hero__helper">
+                  Saving updates your roadmap baseline and unlocks tailored recommendations below.
+                </p>
+                <div className="explorer-hero__form-actions">
+                  <button
+                    type="submit"
+                    className="button button--inverse button--small"
+                    disabled={!myPickerTitle}
+                  >
+                    Save my position
+                  </button>
+                  {myPosition && (
+                    <button
+                      type="button"
+                      className="button button--ghost button--small"
+                      onClick={handleClearMyPosition}
+                    >
+                      Clear saved role
+                    </button>
+                  )}
                   <Link
                     to="/roadmap"
                     state={roadmapLinkState}
-                    className="chip chip--inverse explorer-hero__status-link"
+                    className="button button--ghost button--small explorer-hero__roadmap"
                   >
                     Manage in roadmap
                   </Link>
-                </>
-              ) : (
-                <>
-                  <span className="experience-hero__status-label explorer-hero__status-label">
-                    Personalise your view
-                  </span>
-                  <p className="experience-hero__status-text explorer-hero__status-text">
-                    Save your current role in the roadmap planner to unlock tailored comparisons here.
-                  </p>
-                  <Link to="/roadmap" className="chip-link explorer-hero__status-link">
-                    Go to roadmap planner
-                  </Link>
-                </>
-              )}
+                </div>
+              </form>
             </div>
-            <div className="experience-hero__actions">
-              <Link to="/roadmap" className="button button--inverse">
-                Open roadmap planner
-              </Link>
-              <button type="button" className="button button--ghost" onClick={handleBrowseRoles}>
-                Browse roles
+            <div className="experience-hero__status-card explorer-hero__status-card explorer-hero__metrics">
+              <div className="explorer-hero__metric">
+                <span className="explorer-hero__metric-value">{jobs.length}</span>
+                <span className="explorer-hero__metric-label">roles mapped</span>
+              </div>
+              <div className="explorer-hero__metric">
+                <span className="explorer-hero__metric-value">{divisions.length}</span>
+                <span className="explorer-hero__metric-label">divisions covered</span>
+              </div>
+              <div className="explorer-hero__metric">
+                <span className="explorer-hero__metric-value">
+                  {myPosition ? recommendationsForMyPosition.length : '—'}
+                </span>
+                <span className="explorer-hero__metric-label">personalised moves</span>
+              </div>
+            </div>
+            <div className="experience-hero__actions explorer-hero__actions">
+              <button type="button" className="button button--inverse" onClick={handleBrowseRoles}>
+                Browse all roles
               </button>
+              <button
+                type="button"
+                className="button button--secondary"
+                onClick={handleViewRecommendations}
+                disabled={!myPosition}
+              >
+                View recommendations
+              </button>
+              <Link to="/roadmap" className="button button--ghost">
+                Plan my roadmap
+              </Link>
             </div>
           </div>
+        </section>
+
+        <section ref={recommendationsRef} className="explorer-recommendations" data-animate="fade-up">
+          <div className="explorer-recommendations__header">
+            <div>
+              <h2 className="section-h2">Recommended next moves</h2>
+              <p className="muted text-sm">
+                {myPosition
+                  ? `Based on ${myPosition.title}, explore adjacent roles that build on your strengths and stretch your capabilities.`
+                  : 'Save your current role above to unlock personalised role suggestions.'}
+              </p>
+            </div>
+            {myPosition && (
+              <button
+                type="button"
+                className="button button--ghost button--small"
+                onClick={handleBrowseRoles}
+              >
+                Explore all roles
+              </button>
+            )}
+          </div>
+
+          {myPosition ? (
+            recommendationsForMyPosition.length > 0 ? (
+              <div className="explorer-recommendations__grid">
+                {recommendationsForMyPosition.map((job) => {
+                  const badge = getSimilarityBadge(job.similarity);
+                  const toneClass = getSimilarityTone(job.similarity);
+                  const strengths = job.summary.strengths.map((s) => s.name).join(', ');
+                  const gaps = job.summary.gaps.map((g) => `${g.name} (+${g.gap})`).join(', ');
+                  return (
+                    <article key={job.id} className={`explorer-recommendation ${toneClass}`}>
+                      <header className="explorer-recommendation__header">
+                        <div>
+                          <h3>{job.title}</h3>
+                          <span className="explorer-recommendation__meta">{job.division}</span>
+                        </div>
+                        <span className={badge.color}>{badge.label}</span>
+                      </header>
+                      {(strengths || gaps) && (
+                        <div className="explorer-recommendation__summary">
+                          {strengths && (
+                            <div>
+                              <strong>Strengths:</strong> {strengths}
+                            </div>
+                          )}
+                          {gaps && (
+                            <div>
+                              <strong>Gaps:</strong> {gaps}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      <div className="explorer-recommendation__actions">
+                        <button
+                          type="button"
+                          className="button button--inverse button--small"
+                          onClick={() => handleOpenRecommendation(job)}
+                        >
+                          Inspect role
+                        </button>
+                        <button
+                          type="button"
+                          className="button button--ghost button--small"
+                          onClick={() =>
+                            navigate('/roadmap', {
+                              state: { currentTitle: myPosition.title, targetTitle: job.title },
+                            })
+                          }
+                        >
+                          Plan transition
+                        </button>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="explorer-empty explorer-empty--inline">
+                <p>We are analysing your saved role for recommendations. Try adjusting the division filter.</p>
+              </div>
+            )
+          ) : (
+            <div className="explorer-empty explorer-empty--inline">
+              <p>Save your current position to view personalised role recommendations.</p>
+            </div>
+          )}
         </section>
 
         <main className="explorer">
@@ -248,7 +502,7 @@ const JobSkillsMatcher = () => {
             </div>
           </section>
 
-          <section className="explorer-results-shell">
+          <section ref={resultsRef} className="explorer-results-shell">
             <div className={`explorer-layout ${selectedJob ? 'explorer-layout--split' : ''}`} data-animate="fade-stagger">
               <div className="explorer-results">
                 {Object.keys(groupedJobs).length ? (
