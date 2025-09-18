@@ -103,43 +103,171 @@
   padding-bottom: 5rem;
 }
 
-.explorer-hero__status {
+.explorer-hero__status-card {
+  background: rgba(10, 4, 35, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 24px;
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  backdrop-filter: blur(14px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.explorer-hero__status-heading {
   display: grid;
-  gap: 0.65rem;
-  max-width: 420px;
+  gap: 0.6rem;
 }
 
-.explorer-hero__status-label {
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  font-weight: 700;
-  color: var(--color-rich-purple);
+.explorer-hero__status-card .experience-hero__status-label {
+  color: rgba(255, 255, 255, 0.72);
 }
 
-.explorer-hero__status-value {
-  font-size: 1.35rem;
-  font-weight: 700;
+.explorer-hero__status-card .experience-hero__status-value {
   color: var(--color-vibrant-yellow);
+  font-size: clamp(1.4rem, 2.4vw, 1.6rem);
 }
 
-.explorer-hero__status-text {
-  margin: 0;
-  color: var(--color-rich-purple);
-  line-height: 1.55;
+.explorer-hero__status-card .experience-hero__status-text {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.6;
 }
 
-.explorer-hero__status-link {
+.explorer-hero__status-pill {
   display: inline-flex;
   align-items: center;
-  width: fit-content;
   gap: 0.35rem;
-  font-weight: 700;
+  width: fit-content;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
   text-transform: uppercase;
-  font-size: 0.75rem;
   letter-spacing: 0.08em;
-  text-decoration: none;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-neutral-white);
+}
+
+.explorer-hero__form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.explorer-hero__field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.explorer-hero__field-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.explorer-hero__select-wrapper {
+  position: relative;
+}
+
+.explorer-hero__select {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(8, 3, 28, 0.68);
+  color: var(--color-neutral-white);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  appearance: none;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.explorer-hero__select:hover {
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.explorer-hero__select:focus {
+  outline: none;
+  border-color: var(--color-vibrant-cyan);
+  box-shadow: 0 0 0 3px rgba(86, 229, 255, 0.32);
+}
+
+.explorer-hero__chevron {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.explorer-hero__helper {
+  margin: 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.explorer-hero__form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.explorer-hero__form-actions .button {
+  flex: 1 1 160px;
+}
+
+@media (max-width: 720px) {
+  .explorer-hero__form-actions .button {
+    flex: 1 1 100%;
+  }
+}
+
+.explorer-hero__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.25rem;
+}
+
+.explorer-hero__metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.explorer-hero__metric-value {
+  font-size: clamp(1.8rem, 2.4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-neutral-white);
+}
+
+.explorer-hero__metric-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.explorer-hero__actions {
+  display: grid;
+  gap: 0.8rem;
+  align-content: start;
+}
+
+.explorer-hero__actions .button {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .explorer-hero__actions {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
 }
 
 .explorer {
@@ -400,42 +528,53 @@
   z-index: 1;
 }
 
+
 .experience-page--explorer .experience-hero {
-  border: none;
-  background: var(--color-rich-purple);
-  box-shadow: 0 32px 72px rgba(16, 11, 48, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: linear-gradient(140deg, #17092f 0%, #351263 48%, #5a2b9c 100%);
+  box-shadow: 0 34px 90px rgba(9, 4, 32, 0.55);
+  overflow: hidden;
 }
 
 .experience-page--explorer .experience-hero::before,
 .experience-page--explorer .experience-hero::after {
-  display: none;
+  display: block;
+  filter: none;
+  opacity: 0.55;
+}
+
+.experience-page--explorer .experience-hero::before {
+  width: 520px;
+  height: 520px;
+  top: -220px;
+  right: -160px;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 72%);
+  animation-duration: 16s;
+}
+
+.experience-page--explorer .experience-hero::after {
+  width: 560px;
+  height: 560px;
+  bottom: -280px;
+  left: -200px;
+  background: radial-gradient(circle at center, rgba(118, 197, 255, 0.48) 0%, rgba(255, 255, 255, 0) 74%);
+  animation-delay: 0.6s;
 }
 
 .experience-page--explorer .experience-hero__icon {
-  background: var(--color-rich-blue);
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 18px 44px rgba(8, 3, 26, 0.42);
 }
 
 .experience-page--explorer .experience-hero__subtitle {
-  color: var(--color-neutral-white);
-  opacity: 0.9;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .experience-page--explorer .experience-hero__status-card {
-  background: var(--color-rich-blue);
-  border: 3px solid var(--color-neutral-white);
-  box-shadow: none;
+  background: rgba(10, 4, 35, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
   color: var(--color-neutral-white);
-}
-
-.experience-page--explorer .experience-hero__status-label,
-.experience-page--explorer .experience-hero__status-value,
-.experience-page--explorer .experience-hero__status-text {
-  color: var(--color-neutral-white);
-}
-
-.experience-page--explorer .experience-hero__status-text {
-  opacity: 0.85;
 }
 
 .experience-page--explorer .experience-hero__actions {
@@ -1208,6 +1347,94 @@
 
 .roadmap-results {
   margin-top: 2.75rem;
+}
+
+.explorer-recommendations {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.explorer-recommendations__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+@media (min-width: 768px) {
+  .explorer-recommendations__header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.explorer-recommendations__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.explorer-recommendation {
+  border-radius: 22px;
+  border: 2px solid rgba(120, 112, 210, 0.2);
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.97), rgba(238, 235, 255, 0.92));
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 18px 42px rgba(18, 20, 65, 0.16);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.explorer-recommendation__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.explorer-recommendation__meta {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--color-rich-blue);
+}
+
+.explorer-recommendation__summary {
+  font-size: 0.85rem;
+  color: var(--color-rich-purple);
+  display: grid;
+  gap: 0.35rem;
+}
+
+.explorer-recommendation__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.explorer-recommendation__actions .button {
+  flex: 1 1 150px;
+}
+
+.explorer-recommendation.tone-green {
+  border-color: var(--color-rich-green);
+}
+
+.explorer-recommendation.tone-yellow {
+  border-color: var(--color-vibrant-yellow);
+}
+
+.explorer-recommendation.tone-lilac {
+  border-color: var(--color-vibrant-magenta);
+}
+
+.explorer-recommendation.tone-blue {
+  border-color: var(--color-rich-blue);
+}
+
+.explorer-recommendation.tone-red {
+  border-color: var(--color-rich-red);
 }
 
 .roadmap-recommendations {
