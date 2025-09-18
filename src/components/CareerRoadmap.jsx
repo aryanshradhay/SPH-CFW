@@ -26,6 +26,7 @@ import {
   getSimilarityBadge,
 } from '../utils/jobDataUtils';
 import '../styles/main.css';
+import '../styles/layouts/career-roadmap.css';
 import SiteHeader from './SiteHeader';
 
 const RoadmapDetails = ({ currentJob, targetJob }) => {

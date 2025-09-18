@@ -13,6 +13,7 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import '../styles/main.css';
+import '../styles/layouts/career-explorer.css';
 import useJobDataset from '../hooks/useJobDataset';
 import {
   classifyType,
