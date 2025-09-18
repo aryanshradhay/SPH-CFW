@@ -356,10 +356,10 @@ export default function CareerRoadmap() {
   );
 
   return (
-    <div className="page solid-bg experience-page">
+    <div className="page solid-bg experience-page experience-page--roadmap">
       <SiteHeader />
 
-      <div className="container content experience-content">
+      <div className="content experience-content experience-content--wide">
         <section className="experience-hero experience-hero--explorer" data-animate="fade-slide">
           <div className="experience-hero__header">
             <div className="experience-hero__icon" aria-hidden="true">
