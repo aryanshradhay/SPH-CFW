@@ -104,12 +104,6 @@
 }
 
 .explorer-hero__status {
-  margin-top: 1.75rem;
-  padding: 1.5rem 1.75rem;
-  border-radius: 24px;
-  border: 3px solid var(--color-rich-purple);
-  background: var(--color-neutral-white);
-  color: var(--color-rich-purple);
   display: grid;
   gap: 0.65rem;
   max-width: 420px;
@@ -140,23 +134,12 @@
   align-items: center;
   width: fit-content;
   gap: 0.35rem;
-  padding: 0.4rem 1rem;
-  border-radius: 999px;
-  border: 2px solid var(--color-rich-blue);
-  color: var(--color-rich-blue);
   font-weight: 700;
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.08em;
   text-decoration: none;
-  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
-}
-
-.explorer-hero__status-link:hover,
-.explorer-hero__status-link:focus-visible {
-  background: var(--color-rich-blue);
-  color: var(--color-neutral-white);
-  transform: translateY(-2px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 
 .explorer {
@@ -320,6 +303,19 @@
 
 .experience-content--wide {
   width: 100%;
+  max-width: none;
+  margin: 0 auto;
+  padding-left: clamp(1.5rem, 5vw, 4rem);
+  padding-right: clamp(1.5rem, 5vw, 4rem);
+}
+
+.experience-page--explorer {
+  background: var(--color-neutral-white);
+}
+
+.experience-page--explorer::before,
+.experience-page--explorer::after {
+  display: none;
 }
 
 .experience-hero {

@@ -9,6 +9,7 @@ import {
   TrendingUp,
   MapPin,
   Briefcase,
+  Compass,
 } from 'lucide-react';
 import '../styles/main.css';
 import useJobDataset from '../hooks/useJobDataset';
@@ -19,7 +20,6 @@ import {
   getSimilarityBadge,
 } from '../utils/jobDataUtils';
 import SiteHeader from './SiteHeader';
-import HeroSection from './HeroSection';
 import useRevealOnScroll from '../hooks/useRevealOnScroll';
 
 function getSimilarityTone(sim) {
@@ -133,43 +133,63 @@ const JobSkillsMatcher = () => {
   };
 
   return (
-    <div className="page solid-bg explorer-page">
+    <div className="page solid-bg experience-page experience-page--explorer explorer-page">
       <SiteHeader />
 
-      <HeroSection
-        eyebrow="Career Explorer"
-        title="Discover your next SPH role"
-        description="Search the SPH Career Framework, compare role skill DNA, and shortlist your next moves."
-        primaryCta={{ label: 'Open roadmap planner', to: '/roadmap', variant: 'primary' }}
-        secondaryCta={{ label: 'Browse roles', onClick: handleBrowseRoles, variant: 'ghost' }}
-      >
-        <div className="explorer-hero__status">
-          {myPosition ? (
-            <>
-              <span className="explorer-hero__status-label">Saved starting role</span>
-              <span className="explorer-hero__status-value">{myPosition.title}</span>
-              <Link to="/roadmap" state={roadmapLinkState} className="explorer-hero__status-link">
-                Manage in roadmap
-              </Link>
-            </>
-          ) : (
-            <>
-              <span className="explorer-hero__status-label">Personalise your view</span>
-              <p className="explorer-hero__status-text">
-                Save your current role in the roadmap planner to unlock tailored comparisons here.
-
+      <div className="content experience-content experience-content--wide">
+        <section className="experience-hero experience-hero--explorer" data-animate="fade-slide">
+          <div className="experience-hero__header">
+            <div className="experience-hero__icon" aria-hidden="true">
+              <Compass className="icon-lg" />
+            </div>
+            <div>
+              <h1 className="experience-hero__title">Discover your next SPH role</h1>
+              <p className="experience-hero__subtitle">
+                Search the SPH Career Framework, compare role skill DNA, and shortlist your next moves.
               </p>
-              <Link to="/roadmap" className="explorer-hero__status-link">
-                Go to roadmap planner
+            </div>
+          </div>
+          <div className="experience-hero__grid">
+            <div className="experience-hero__status-card explorer-hero__status">
+              {myPosition ? (
+                <>
+                  <span className="experience-hero__status-label explorer-hero__status-label">Saved starting role</span>
+                  <span className="experience-hero__status-value explorer-hero__status-value">{myPosition.title}</span>
+                  <Link
+                    to="/roadmap"
+                    state={roadmapLinkState}
+                    className="chip chip--inverse explorer-hero__status-link"
+                  >
+                    Manage in roadmap
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <span className="experience-hero__status-label explorer-hero__status-label">
+                    Personalise your view
+                  </span>
+                  <p className="experience-hero__status-text explorer-hero__status-text">
+                    Save your current role in the roadmap planner to unlock tailored comparisons here.
+                  </p>
+                  <Link to="/roadmap" className="chip-link explorer-hero__status-link">
+                    Go to roadmap planner
+                  </Link>
+                </>
+              )}
+            </div>
+            <div className="experience-hero__actions">
+              <Link to="/roadmap" className="button button--inverse">
+                Open roadmap planner
               </Link>
-            </>
-          )}
-        </div>
-      </HeroSection>
+              <button type="button" className="button button--ghost" onClick={handleBrowseRoles}>
+                Browse roles
+              </button>
+            </div>
+          </div>
+        </section>
 
-      <main className="explorer">
-        <section ref={filtersRef} id="career-explorer-filters" className="explorer__filters">
-          <div className="container">
+        <main className="explorer">
+          <section ref={filtersRef} id="career-explorer-filters" className="explorer__filters">
             <div className="explorer-panel" data-animate="fade-up">
               <div className="explorer-panel__header">
                 <div>
@@ -226,11 +246,9 @@ const JobSkillsMatcher = () => {
 
               </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="explorer-results-shell">
-          <div className="container">
+          <section className="explorer-results-shell">
             <div className={`explorer-layout ${selectedJob ? 'explorer-layout--split' : ''}`} data-animate="fade-stagger">
               <div className="explorer-results">
                 {Object.keys(groupedJobs).length ? (
@@ -457,9 +475,9 @@ const JobSkillsMatcher = () => {
                 </aside>
               )}
             </div>
-          </div>
-        </section>
-      </main>
+          </section>
+        </main>
+      </div>
     </div>
   );
 
