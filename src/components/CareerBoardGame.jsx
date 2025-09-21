@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import '../styles/main.css';
 import SiteHeader from './SiteHeader';
+import { inferSeniorityRank } from '../utils/jobDataUtils';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
 
@@ -49,20 +50,6 @@ function parseProficiency(row) {
   }
   return 0;
 }
-function seniorityRank(title) {
-  const s = String(title || '').toLowerCase();
-  let base = 2;
-  if (/intern|assistant|junior/.test(s)) base = 1;
-  else if (/associate|analyst|officer|executive/.test(s)) base = 2;
-  else base = 3; // default individual contributor
-  let bonus = 0;
-  if (/senior/.test(s)) bonus += 1;
-  if (/lead|manager/.test(s)) bonus += 2;
-  if (/principal/.test(s)) bonus += 3;
-  if (/director|head/.test(s)) bonus += 4;
-  return base + bonus; // ~1..10
-}
-
 export default function CareerBoardGame() {
   const [jobs, setJobs] = useState([]);
   const [divisions, setDivisions] = useState([]);
@@ -146,7 +133,7 @@ export default function CareerBoardGame() {
 
     const withScore = filtered.map((j) => {
       const sum = j.skillOrder.reduce((acc, n) => acc + (j.skillMap[n] || 0), 0);
-      const rank = seniorityRank(j.title);
+      const rank = inferSeniorityRank(j.title);
       // slight noise based on seed to break ties (stable per seed)
       const nudge = ((j.title.charCodeAt(0) + seed) % 7) * 0.01;
       return { ...j, levelScore: sum + rank * 5 + nudge };
@@ -201,6 +188,19 @@ export default function CareerBoardGame() {
     const cInRow = i % cols;
     const c = r % 2 === 0 ? cInRow : cols - 1 - cInRow;
     return { r, c };
+  };
+
+  const directionToNext = (idx) => {
+    if (idx >= boardJobs.length - 1) return null;
+    const current = indexToGrid(idx);
+    const next = indexToGrid(idx + 1);
+    if (current.r === next.r) {
+      return next.c > current.c ? 'right' : 'left';
+    }
+    if (next.r > current.r) {
+      return 'down';
+    }
+    return null;
   };
 
   // Animated movement across tiles
@@ -357,6 +357,10 @@ export default function CareerBoardGame() {
                 const { r, c } = indexToGrid(idx);
                 const isStart = idx === 0;
                 const isFinish = idx === boardJobs.length - 1;
+                const direction = directionToNext(idx);
+                const hasVisited = idx < position;
+                const isCurrent = idx === position;
+                const shouldShowDirection = direction && (hasVisited || (isCurrent && !isFinish));
                 return (
                   <div
                     key={j.id}
@@ -377,6 +381,14 @@ export default function CareerBoardGame() {
                     <div className="tile-title">{j.title}</div>
                     <div className="tile-division text-xs muted">{j.division}</div>
                     {active && <div className="token" aria-hidden />}
+                    {shouldShowDirection && (
+                      <div
+                        className={`tile-direction tile-direction--${direction} ${
+                          hasVisited ? 'active' : 'pending'
+                        }`}
+                        aria-hidden
+                      />
+                    )}
                   </div>
                 );
               })}

@@ -30,6 +30,31 @@ export function classifyType(typeRaw) {
   return 'unknown';
 }
 
+export function inferSeniorityRank(title) {
+  const s = String(title || '').toLowerCase();
+
+  if (/(intern|apprentice|fellow)/.test(s)) return 1;
+  if (/(junior|assistant|trainee)/.test(s)) return 2;
+  if (/(support|coordinator|\bpc\b|administrator)/.test(s)) return 2;
+  if (/(associate|analyst|officer)/.test(s)) return 3;
+
+  if (/(vice president|\bvp\b|\bsvp\b|\bevp\b)/.test(s)) return 8;
+  if (/(head of|^head\b)/.test(s)) return 8;
+  if (/(chief)/.test(s) && !/(manager|director|lead|leader)/.test(s)) return 8;
+
+  if (/(executive director)/.test(s)) return 8;
+  if (/(director|medical director|principal)/.test(s)) {
+    return /senior/.test(s) ? 8 : 7;
+  }
+
+  if (/(senior).*(manager|lead|leader)/.test(s)) return 7;
+  if (/(manager|lead|leader)/.test(s)) return 6;
+  if (/senior/.test(s)) return 5;
+  if (/(specialist|consultant|scientist|advisor|expert)/.test(s)) return 4;
+
+  return 4;
+}
+
 export function parseProficiency(row) {
   const rawValue = getCI(row, 'Proficiency Value');
   const rawLevel = getCI(row, 'Required Proficiency Level');
@@ -163,7 +188,8 @@ export function getTrainingRecommendations(skillName, typeOrGuess, gap) {
   ];
   const pool = /soft/i.test(typeOrGuess) ? soft : functional;
   const count = Math.min(3, Math.max(1, Math.ceil(gap || 1)));
-  return pool.slice(0, count);
+  const prefix = 'SPH Academy • ';
+  return pool.slice(0, count).map((item) => `${prefix}${item}`);
 }
 
 export function transformRowsToJobs(rows) {
@@ -226,6 +252,7 @@ export function transformRowsToJobs(rows) {
       id: id++,
       title: job.title,
       division: job.division || 'Unknown Division',
+      seniorityRank: inferSeniorityRank(job.title),
       skills,
       skillOrder: job.skillOrder,
       skillMap: job.skillMap,

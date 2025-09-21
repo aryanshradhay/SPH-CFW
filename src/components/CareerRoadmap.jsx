@@ -121,7 +121,7 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
                   </div>
                 </div>
                 <div className="roadmap-card__footer">
-                  <span className="roadmap-card__label">Recommended training</span>
+                  <span className="roadmap-card__label">Recommended training from SPH Academy</span>
                   {recs.map((t, idx) => (
                     <div key={idx} className="roadmap-card__training">
                       <BookOpen className="icon-xs" />
@@ -298,6 +298,7 @@ export default function CareerRoadmap() {
 
   const recommendationsForMyPosition = useMemo(() => {
     if (!myPosition) return [];
+    const myRank = myPosition.seniorityRank ?? null;
     return jobs
       .filter((job) => job.id !== myPosition.id)
       .map((job) => ({
@@ -305,6 +306,11 @@ export default function CareerRoadmap() {
         similarity: simScore(myPosition, job),
         summary: summarizeTransition(myPosition, job, 2),
       }))
+      .filter((job) => {
+        if (myRank == null) return true;
+        if (job.seniorityRank == null) return true;
+        return job.seniorityRank >= myRank;
+      })
       .filter((job) => job.similarity >= 60)
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 8);
