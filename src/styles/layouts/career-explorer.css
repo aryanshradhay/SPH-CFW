@@ -2,9 +2,9 @@
 
 .explorer-page {
   background: var(--color-rich-purple);
-  --explorer-card-surface: #efe7ff;
-  --explorer-card-surface-strong: #e1d8ff;
-  --explorer-card-border: rgba(80, 50, 145, 0.35);
+  --explorer-card-surface: var(--color-sensitive-yellow);
+  --explorer-card-surface-strong: var(--color-sensitive-blue);
+  --explorer-card-border: var(--color-rich-purple);
 }
 
 .explorer-page .hero {
@@ -20,7 +20,6 @@
   flex-direction: column;
   gap: 1.1rem;
   backdrop-filter: blur(14px);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .explorer-hero__status-heading {
@@ -90,7 +89,7 @@
   letter-spacing: 0.01em;
   appearance: none;
   backdrop-filter: blur(8px);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease;
 }
 
 .explorer-hero__select:hover {
@@ -98,9 +97,9 @@
 }
 
 .explorer-hero__select:focus {
-  outline: none;
+  outline: 3px solid var(--color-vibrant-cyan);
+  outline-offset: 2px;
   border-color: var(--color-vibrant-cyan);
-  box-shadow: 0 0 0 3px rgba(86, 229, 255, 0.32);
 }
 
 .explorer-hero__chevron {
@@ -190,12 +189,11 @@
 .explorer-panel {
   position: relative;
   background: var(--explorer-card-surface);
-  border: 1px solid rgba(80, 50, 145, 0.22);
+  border: 1px solid var(--color-rich-purple);
   border-radius: 32px;
   padding: clamp(1.8rem, 3vw, 2.75rem);
   display: grid;
   gap: 2rem;
-  box-shadow: 0 28px 70px rgba(24, 14, 60, 0.2);
   overflow: hidden;
 }
 
@@ -213,9 +211,9 @@
   gap: 0.5rem;
   padding: 0.3rem 0.85rem;
   border-radius: 999px;
-  background: rgba(80, 50, 145, 0.12);
+  background: var(--color-sensitive-pink);
   color: var(--color-rich-purple);
-  border: 1px solid rgba(80, 50, 145, 0.25);
+  border: 1px solid var(--color-rich-purple);
   text-transform: uppercase;
   font-size: 0.75rem;
   letter-spacing: 0.08em;
@@ -242,13 +240,13 @@
   gap: 0.35rem;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid rgba(80, 50, 145, 0.3);
+  border: 1px solid var(--color-rich-purple);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-rich-purple);
-  background: rgba(80, 50, 145, 0.08);
+  background: var(--color-sensitive-blue);
 }
 
 .explorer-panel__controls {
@@ -267,7 +265,7 @@
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: rgba(80, 50, 145, 0.85);
+  color: var(--color-rich-purple);
 }
 
 .explorer-control__field {
@@ -276,15 +274,13 @@
   gap: 0.75rem;
   padding: 0.75rem 1rem;
   border-radius: 20px;
-  border: 1px solid rgba(80, 50, 145, 0.22);
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 16px 34px rgba(30, 41, 80, 0.12);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  border: 1px solid var(--color-rich-purple);
+  background: var(--color-neutral-white);
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .explorer-control__field:focus-within {
-  border-color: rgba(45, 190, 205, 0.65);
-  box-shadow: 0 18px 40px rgba(45, 190, 205, 0.25);
+  border-color: var(--color-vibrant-cyan);
   transform: translateY(-1px);
 }
 
@@ -361,7 +357,6 @@
   display: block;
   opacity: 1;
   background: rgba(255, 255, 255, 0.12);
-  box-shadow: 0 0 140px rgba(255, 255, 255, 0.12);
 }
 
 .experience-page--explorer::before {
@@ -387,7 +382,6 @@
 .experience-page--explorer .experience-hero {
   border: 1px solid rgba(255, 255, 255, 0.3);
   background: var(--color-rich-purple);
-  box-shadow: 0 46px 110px rgba(16, 10, 40, 0.55);
   overflow: hidden;
 }
 
@@ -419,7 +413,6 @@
 
 .experience-page--explorer .experience-hero__icon {
   background: rgba(255, 255, 255, 0.22);
-  box-shadow: 0 22px 50px rgba(16, 10, 40, 0.45);
 }
 
 .experience-page--explorer .experience-hero__title {
@@ -433,7 +426,6 @@
 .experience-page--explorer .experience-hero__status-card {
   background: rgba(255, 255, 255, 0.16);
   border: 1px solid rgba(255, 255, 255, 0.32);
-  box-shadow: 0 24px 54px rgba(16, 10, 40, 0.45);
   color: var(--color-neutral-white);
   backdrop-filter: blur(12px);
 }
@@ -452,31 +444,31 @@
   flex-wrap: wrap;
 }
 
+
 .experience-page--explorer .experience-hero__actions .button--inverse {
   background: var(--color-neutral-white);
   color: var(--color-rich-purple);
-  border-color: rgba(255, 255, 255, 0.4);
+  border-color: var(--color-neutral-white);
 }
 
 .experience-page--explorer .experience-hero__actions .button--ghost {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: var(--color-sensitive-blue);
+  border-color: var(--color-neutral-white);
   color: var(--color-neutral-white);
 }
 
 .experience-page--explorer .experience-hero__actions .button--ghost:hover {
-  background: rgba(255, 255, 255, 0.26);
+  background: var(--color-vibrant-cyan);
 }
 
 .experience-page--explorer .chip-link {
-  background: rgba(255, 255, 255, 0.18);
-  border: 1px solid rgba(255, 255, 255, 0.32);
+  background: var(--color-sensitive-blue);
+  border: 1px solid var(--color-neutral-white);
   color: var(--color-neutral-white);
 }
 
 .experience-page--explorer .chip-link:hover {
   transform: translateY(-2px);
-  box-shadow: none;
   color: var(--color-neutral-white);
 }
 
@@ -490,7 +482,6 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  box-shadow: 0 34px 80px rgba(24, 14, 60, 0.25);
 }
 
 .explorer-toolbar__header {
@@ -515,13 +506,12 @@
 
 .toolbar-control {
   flex: 1 1 280px;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-neutral-white);
   border-radius: 28px;
   padding: 1.25rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  box-shadow: 0 26px 60px rgba(12, 22, 60, 0.24);
 }
 
 .toolbar-control__label {
@@ -537,16 +527,14 @@
   align-items: center;
   gap: 0.9rem;
   border-radius: 18px;
-  border: 1px solid rgba(80, 50, 145, 0.22);
+  border: 1px solid var(--color-rich-purple);
   padding: 0.65rem 0.85rem;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 14px 30px rgba(24, 32, 72, 0.14);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  background: var(--color-neutral-white);
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
 .toolbar-control__field:focus-within {
-  border-color: rgba(45, 190, 205, 0.65);
-  box-shadow: 0 18px 40px rgba(45, 190, 205, 0.25);
+  border-color: var(--color-vibrant-cyan);
   transform: translateY(-1px);
 }
 
@@ -623,7 +611,6 @@
   border-radius: 28px;
   background: var(--explorer-card-surface);
   border: 1px solid var(--explorer-card-border);
-  box-shadow: 0 22px 44px rgba(24, 14, 60, 0.18);
 }
 
 .explorer-group__header {
@@ -664,8 +651,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  box-shadow: 0 16px 36px rgba(24, 14, 60, 0.16);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease;
 }
 
 .explorer-card__title {
@@ -688,7 +674,6 @@
 .explorer-card.is-active {
   transform: translateY(-6px);
   border-color: var(--color-rich-blue);
-  box-shadow: 0 18px 38px rgba(47, 138, 220, 0.18);
 }
 
 
@@ -697,7 +682,6 @@
   border-radius: 30px;
   border: 1px solid var(--explorer-card-border);
   background: var(--explorer-card-surface-strong);
-  box-shadow: 0 32px 65px rgba(24, 14, 60, 0.28);
   position: sticky;
   top: 2rem;
   align-self: start;
@@ -814,7 +798,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  box-shadow: 0 26px 60px rgba(24, 14, 60, 0.18);
   overflow: hidden;
 }
 
@@ -847,29 +830,39 @@
   gap: 0.35rem;
 }
 
-.explorer-similar.tone-green {
-  border-color: rgba(20, 155, 95, 0.32);
-  box-shadow: 0 28px 60px rgba(20, 155, 95, 0.18);
+.explorer-card.tone-green,
+.explorer-similar.tone-green,
+.explorer-recommendation.tone-green {
+  border-color: var(--color-rich-green);
+  background: var(--color-sensitive-green);
 }
 
-.explorer-similar.tone-yellow {
-  border-color: rgba(255, 200, 50, 0.32);
-  box-shadow: 0 28px 60px rgba(255, 200, 50, 0.2);
+.explorer-card.tone-yellow,
+.explorer-similar.tone-yellow,
+.explorer-recommendation.tone-yellow {
+  border-color: var(--color-vibrant-yellow);
+  background: var(--color-sensitive-yellow);
 }
 
-.explorer-similar.tone-lilac {
-  border-color: rgba(235, 60, 150, 0.28);
-  box-shadow: 0 28px 60px rgba(166, 76, 206, 0.18);
+.explorer-card.tone-lilac,
+.explorer-similar.tone-lilac,
+.explorer-recommendation.tone-lilac {
+  border-color: var(--color-vibrant-magenta);
+  background: var(--color-sensitive-pink);
 }
 
-.explorer-similar.tone-blue {
-  border-color: rgba(47, 138, 220, 0.32);
-  box-shadow: 0 28px 60px rgba(47, 138, 220, 0.2);
+.explorer-card.tone-blue,
+.explorer-similar.tone-blue,
+.explorer-recommendation.tone-blue {
+  border-color: var(--color-rich-blue);
+  background: var(--color-sensitive-blue);
 }
 
-.explorer-similar.tone-red {
-  border-color: rgba(230, 30, 80, 0.3);
-  box-shadow: 0 28px 60px rgba(230, 30, 80, 0.18);
+.explorer-card.tone-red,
+.explorer-similar.tone-red,
+.explorer-recommendation.tone-red {
+  border-color: var(--color-rich-red);
+  background: var(--color-sensitive-pink);
 }
 
 .explorer-recommendations {
@@ -881,7 +874,6 @@
   border-radius: 28px;
   padding: 2rem;
   border: 1px solid var(--explorer-card-border);
-  box-shadow: 0 24px 56px rgba(24, 14, 60, 0.18);
 }
 
 .explorer-recommendations__header {
@@ -910,7 +902,6 @@
   border: 1px solid var(--explorer-card-border);
   background: var(--explorer-card-surface);
   padding: 1.35rem 1.5rem;
-  box-shadow: 0 28px 64px rgba(24, 14, 60, 0.2);
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
@@ -957,30 +948,6 @@
   flex: 1 1 150px;
 }
 
-.explorer-recommendation.tone-green {
-  border-color: rgba(20, 155, 95, 0.35);
-  box-shadow: 0 30px 64px rgba(20, 155, 95, 0.2);
-}
-
-.explorer-recommendation.tone-yellow {
-  border-color: rgba(255, 200, 50, 0.35);
-  box-shadow: 0 30px 64px rgba(255, 200, 50, 0.22);
-}
-
-.explorer-recommendation.tone-lilac {
-  border-color: rgba(235, 60, 150, 0.3);
-  box-shadow: 0 30px 64px rgba(166, 76, 206, 0.2);
-}
-
-.explorer-recommendation.tone-blue {
-  border-color: rgba(47, 138, 220, 0.35);
-  box-shadow: 0 30px 64px rgba(47, 138, 220, 0.22);
-}
-
-.explorer-recommendation.tone-red {
-  border-color: rgba(230, 30, 80, 0.35);
-  box-shadow: 0 30px 64px rgba(230, 30, 80, 0.2);
-}
 
 @media (max-width: 960px) {
   .experience-page--explorer .container {
