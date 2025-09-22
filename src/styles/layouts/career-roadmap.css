@@ -663,10 +663,24 @@
   border-radius: 14px;
   background: var(--surface);
   box-shadow: var(--shadow);
+  overflow: visible;
 }
 
 .tile.grid { min-width: auto; max-width: none; width: 100%; }
-.tile.active { border-color: var(--color-rich-purple); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); }
+.tile.reached {
+  background: linear-gradient(135deg, rgba(80, 50, 145, 0.12), rgba(45, 190, 205, 0.08));
+  border-color: rgba(80, 50, 145, 0.45);
+  box-shadow: 0 6px 14px rgba(80, 50, 145, 0.15);
+}
+.tile.reached .tile-index {
+  background: var(--color-vibrant-cyan);
+  color: var(--color-text);
+}
+.tile.active {
+  border-color: var(--color-rich-purple);
+  box-shadow: 0 10px 22px rgba(80, 50, 145, 0.28);
+  background: linear-gradient(135deg, rgba(80, 50, 145, 0.18), rgba(165, 205, 80, 0.14));
+}
 .tile-index {
   display: inline-flex;
   align-items: center;
@@ -687,6 +701,66 @@
   background: var(--color-vibrant-green);
   border: 2px solid var(--color-rich-green);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.tile-direction {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-rich-purple);
+  color: var(--color-text-inverse);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 2;
+  --x: 0;
+  --y: 0;
+  transform: translate(var(--x), var(--y)) scale(0.8);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  box-shadow: 0 6px 12px rgba(80, 50, 145, 0.2);
+}
+.tile-direction::before {
+  content: '→';
+  line-height: 1;
+}
+.tile-direction--right {
+  top: 50%;
+  right: -18px;
+  --x: 50%;
+  --y: -50%;
+}
+.tile-direction--left {
+  top: 50%;
+  left: -18px;
+  --x: -50%;
+  --y: -50%;
+}
+.tile-direction--left::before {
+  content: '←';
+}
+.tile-direction--down {
+  bottom: -18px;
+  left: 50%;
+  --x: -50%;
+  --y: 50%;
+}
+.tile-direction--down::before {
+  content: '↓';
+}
+.tile-direction.active {
+  opacity: 1;
+  transform: translate(var(--x), var(--y)) scale(1);
+}
+.tile-direction.pending {
+  opacity: 0.75;
+  background: var(--color-vibrant-green);
+  color: var(--color-text);
+  transform: translate(var(--x), var(--y)) scale(0.95);
 }
 
 .connector { position: absolute; right: -24px; top: 24px; width: 24px; height: 2px; background: var(--color-border-soft); }

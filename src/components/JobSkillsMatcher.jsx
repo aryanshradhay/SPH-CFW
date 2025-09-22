@@ -132,6 +132,7 @@ const JobSkillsMatcher = () => {
 
   const recommendationsForMyPosition = useMemo(() => {
     if (!myPosition) return [];
+    const myRank = myPosition.seniorityRank ?? null;
     return jobs
       .filter((job) => job.id !== myPosition.id)
       .map((job) => ({
@@ -139,6 +140,11 @@ const JobSkillsMatcher = () => {
         similarity: simScore(myPosition, job),
         summary: summarizeTransition(myPosition, job, 2),
       }))
+      .filter((job) => {
+        if (myRank == null) return true;
+        if (job.seniorityRank == null) return true;
+        return job.seniorityRank >= myRank;
+      })
       .filter((job) => job.similarity >= 60)
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 6);
