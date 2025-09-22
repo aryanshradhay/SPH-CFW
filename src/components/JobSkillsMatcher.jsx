@@ -214,6 +214,12 @@ const JobSkillsMatcher = () => {
     }
   };
 
+  const snapshotDescription = selectedJob?.description?.trim() || '';
+  const snapshotTooltipId = useMemo(
+    () => (selectedJob ? `explorer-snapshot-${selectedJob.id}` : undefined),
+    [selectedJob]
+  );
+
   return (
     <div className="page solid-bg experience-page experience-page--explorer explorer-page">
       <SiteHeader />
@@ -572,21 +578,33 @@ const JobSkillsMatcher = () => {
 
                   <div className="explorer-detail__body">
                     <div className="explorer-detail__quick-actions">
-                      <button className="chip" onClick={() => setMyPositionTitle(selectedJob.title)}>
-                        Save as My Position
+                      <button
+                        type="button"
+                        className="explorer-action"
+                        onClick={() => setMyPositionTitle(selectedJob.title)}
+                      >
+                        <span className="explorer-action__label">Save as My Position</span>
+                        <span className="explorer-action__hint">
+                          Updates your saved baseline with this role
+                        </span>
                       </button>
                       <button
-                        className="chip"
+                        type="button"
+                        className="explorer-action"
                         onClick={() =>
                           navigate('/roadmap', {
                             state: { currentTitle: selectedJob.title },
                           })
                         }
                       >
-                        Set as Current in Roadmap
+                        <span className="explorer-action__label">Set as Current in Roadmap</span>
+                        <span className="explorer-action__hint">
+                          Prefill the roadmap planner with this role
+                        </span>
                       </button>
                       <button
-                        className="chip"
+                        type="button"
+                        className="explorer-action"
                         onClick={() =>
                           navigate('/roadmap', {
                             state: {
@@ -596,14 +614,27 @@ const JobSkillsMatcher = () => {
                           })
                         }
                       >
-                        Plan as Target Role
+                        <span className="explorer-action__label">Plan as Target Role</span>
+                        <span className="explorer-action__hint">
+                          Compare strengths and gaps for this transition
+                        </span>
+                      </button>
+                      <button
+                        type="button"
+                        className="explorer-action explorer-action--snapshot"
+                        aria-describedby={snapshotTooltipId}
+                      >
+                        <span className="explorer-action__label">Role snapshot</span>
+                        <span className="explorer-action__hint">Hover or focus to preview</span>
+                        <span
+                          id={snapshotTooltipId}
+                          className="explorer-action__tooltip"
+                          role="tooltip"
+                        >
+                          {snapshotDescription || 'We are gathering a snapshot for this role.'}
+                        </span>
                       </button>
                     </div>
-
-                    <section className="explorer-detail__section">
-                      <h4>Role snapshot</h4>
-                      <p>{selectedJob.description}</p>
-                    </section>
 
                     <section className="explorer-detail__section">
                       <h4>Skill profile</h4>
