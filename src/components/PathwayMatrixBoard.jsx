@@ -368,7 +368,7 @@ export default function PathwayMatrixBoard() {
             </div>
           </div>
           <div className="page-heading-actions">
-            <Link to="/play-lab" className="btn ghost small">
+            <Link to="/play-lab" className="button button--small">
               Games Hub
             </Link>
           </div>
@@ -386,7 +386,7 @@ export default function PathwayMatrixBoard() {
                   ))}
                 </select>
               </div>
-              <button className="btn" onClick={() => setSeed((s) => s + 1)} title="Reshuffle choice on same roll">
+              <button className="button" onClick={() => setSeed((s) => s + 1)} title="Reshuffle choice on same roll">
                 <Shuffle className="icon-xs mr-6" /> Shuffle
               </button>
               <div className="field" style={{ minWidth: 260 }}>
@@ -400,7 +400,7 @@ export default function PathwayMatrixBoard() {
               </div>
             </div>
             <div className="row gap-12 align-center">
-              <button className="btn primary row center" onClick={onRoll}>
+              <button className="button row center" onClick={onRoll}>
                 <Dice5 className="icon-xs mr-6 white" /> Roll
               </button>
               <div className="text-sm muted">Last roll: {lastRoll || '-'}</div>

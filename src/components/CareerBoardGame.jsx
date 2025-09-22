@@ -268,7 +268,7 @@ export default function CareerBoardGame() {
             </div>
           </div>
           <div className="page-heading-actions">
-            <Link to="/play-lab" className="btn ghost small">
+            <Link to="/play-lab" className="button button--small">
               Games Hub
             </Link>
           </div>
@@ -307,7 +307,7 @@ export default function CareerBoardGame() {
                   ))}
                 </select>
               </div>
-              <button className="btn" onClick={() => setSeed((s) => s + 1)} title="Reshuffle tie-breakers">
+              <button className="button" onClick={() => setSeed((s) => s + 1)} title="Reshuffle tie-breakers">
                 <Shuffle className="icon-xs mr-6" /> Shuffle Path
               </button>
             </div>
@@ -402,11 +402,11 @@ export default function CareerBoardGame() {
 
           {/* Actions */}
           <div className="row gap-12 mt-12">
-            <button className="btn primary row center" onClick={onRoll} disabled={finished || boardJobs.length < 2 || isMoving}>
+            <button className="button row center" onClick={onRoll} disabled={finished || boardJobs.length < 2 || isMoving}>
               <PlayCircle className="icon-xs mr-6 white" /> {finished ? 'Finished' : lastRoll ? `Roll (${lastRoll})` : 'Roll Dice'}
             </button>
             <button
-              className="btn"
+              className="button"
               onClick={() => {
                 setPosition(startIndex);
                 setTurn(0);

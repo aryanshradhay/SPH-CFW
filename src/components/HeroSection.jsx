@@ -17,25 +17,24 @@ export default function HeroSection({
   media,
   children,
 }) {
-  const primaryAction =
-    primaryCta || { label: 'Explore SPH functions', onClick: onExplore, variant: 'primary' };
+  const primaryAction = primaryCta || { label: 'Explore SPH functions', onClick: onExplore };
   const secondaryAction = secondaryCta || null;
 
-  const renderAction = (action, fallbackVariant = 'ghost') => {
+  const renderAction = (action) => {
     if (!action) return null;
-    const { label, to, onClick, variant } = action;
-    const className = `button button--${variant || fallbackVariant}`;
+    const { label, to, onClick, className } = action;
+    const buttonClassName = ['button', className].filter(Boolean).join(' ');
 
     if (to) {
       return (
-        <Link to={to} className={className}>
+        <Link to={to} className={buttonClassName}>
           {label}
         </Link>
       );
     }
 
     return (
-      <button type="button" className={className} onClick={onClick || onExplore}>
+      <button type="button" className={buttonClassName} onClick={onClick || onExplore}>
         {label}
       </button>
     );
@@ -67,8 +66,8 @@ export default function HeroSection({
           </h1>
           <p className="hero__text">{description}</p>
           <div className="hero__actions">
-            {renderAction(primaryAction, 'primary')}
-            {renderAction(secondaryAction, 'ghost')}
+            {renderAction(primaryAction)}
+            {renderAction(secondaryAction)}
           </div>
           {children}
         </div>
