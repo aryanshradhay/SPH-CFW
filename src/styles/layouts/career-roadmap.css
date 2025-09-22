@@ -301,36 +301,41 @@
 }
 
 .roadmap-group {
-  border: 2px solid rgba(141, 89, 255, 0.18);
+  border: 3px solid var(--color-vibrant-magenta);
   border-radius: 22px;
   padding: 1.5rem;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-text-inverse);
   margin-bottom: 1.25rem;
+  box-shadow: 0 24px 48px rgba(32, 24, 82, 0.12);
 }
 
 .roadmap-group__header {
   display: flex;
   align-items: center;
   gap: 0.65rem;
-  font-weight: 700;
-  color: var(--color-rich-purple);
+  font-weight: 800;
+  color: var(--color-vibrant-magenta);
   margin-bottom: 1rem;
+  letter-spacing: 0.01em;
 }
 
 .roadmap-group__icon {
   width: 32px;
   height: 32px;
   border-radius: 12px;
-  background: rgba(141, 89, 255, 0.14);
+  background: rgba(235, 60, 150, 0.16);
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  color: var(--color-vibrant-magenta);
 }
 
 .roadmap-group__count {
   margin-left: auto;
   font-size: 0.8rem;
-  color: var(--muted);
+  color: var(--color-vibrant-yellow);
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(20, 18, 54, 0.35);
 }
 
 .roadmap-group__grid {
@@ -341,10 +346,10 @@
 
 .roadmap-card {
   border-radius: 20px;
-  border: 1px solid rgba(141, 89, 255, 0.2);
-  background: rgba(255, 255, 255, 0.96);
+  border: 2px solid rgba(235, 60, 150, 0.28);
+  background: var(--color-text-inverse);
   padding: 1.1rem 1.25rem;
-  box-shadow: 0 12px 30px rgba(20, 30, 70, 0.12);
+  box-shadow: 0 18px 40px rgba(32, 24, 82, 0.12);
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -360,18 +365,21 @@
 .roadmap-card__header h4 {
   margin: 0;
   font-size: 1rem;
-  color: var(--color-rich-purple);
+  color: var(--color-vibrant-magenta);
+  font-weight: 800;
 }
 
 .roadmap-card__range {
   font-size: 0.82rem;
-  color: var(--muted);
+  color: var(--color-vibrant-yellow);
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(20, 18, 54, 0.35);
 }
 
 .roadmap-card__gap {
   font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--color-rich-purple);
+  font-weight: 700;
+  color: var(--color-vibrant-magenta);
 }
 
 .roadmap-card__footer {
@@ -384,7 +392,8 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--muted);
+  color: var(--color-vibrant-yellow);
+  font-weight: 700;
 }
 
 .roadmap-card__training {
@@ -392,7 +401,8 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.8rem;
-  color: var(--color-rich-purple);
+  color: var(--color-vibrant-magenta);
+  font-weight: 600;
 }
 
 .roadmap-results {
@@ -415,10 +425,10 @@
 
 .roadmap-recommendation {
   border-radius: 22px;
-  border: 1px solid rgba(141, 89, 255, 0.2);
-  background: rgba(255, 255, 255, 0.95);
+  border: 2px solid rgba(235, 60, 150, 0.28);
+  background: var(--color-text-inverse);
   padding: 1.3rem 1.5rem;
-  box-shadow: 0 16px 40px rgba(16, 26, 70, 0.14);
+  box-shadow: 0 20px 45px rgba(16, 26, 70, 0.16);
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -433,9 +443,10 @@
 
 .roadmap-recommendation__summary {
   font-size: 0.85rem;
-  color: var(--color-rich-purple);
+  color: var(--color-vibrant-magenta);
   display: grid;
   gap: 0.35rem;
+  font-weight: 600;
 }
 
 .roadmap-recommendation__actions {
