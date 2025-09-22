@@ -64,8 +64,6 @@
 
 .explorer-hero__field-label {
   text-transform: uppercase;
-.explorer-hero__field-label {
-  text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.72rem;
   font-weight: 700;
@@ -438,7 +436,6 @@
   transform: translateY(-2px);
   box-shadow: 0 12px 28px rgba(32, 24, 82, 0.12);
   color: var(--color-rich-purple);
-}
 }
 
 .experience-page--explorer .section-h2 {
