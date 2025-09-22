@@ -764,11 +764,8 @@
   color: var(--muted);
   position: relative;
   z-index: 1;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
   transition: color 0.25s ease;
+  overflow-wrap: anywhere;
 }
 
 .explorer-card:hover .explorer-card__summary,
