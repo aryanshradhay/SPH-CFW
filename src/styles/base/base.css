@@ -36,17 +36,17 @@
   --color-neutral-ink: #1a1133;
 
   /* Thematic tokens */
-  --color-background: var(--color-sensitive-yellow);
+  --color-background: var(--color-rich-purple);
   --color-surface: var(--color-neutral-white);
-  --color-surface-alt: var(--color-sensitive-blue);
+  --color-surface-alt: rgba(255, 255, 255, 0.85);
 
-  --color-text: var(--color-neutral-ink);
-  --color-text-strong: var(--color-rich-purple);
+  --color-text: rgba(255, 255, 255, 0.92);
+  --color-text-strong: var(--color-neutral-white);
   --color-text-inverse: #ffffff;
-  --color-muted: #3f2f68;
+  --color-muted: rgba(80, 50, 145, 0.65);
 
-  --color-border-strong: var(--color-rich-purple);
-  --color-border-soft: var(--color-sensitive-pink);
+  --color-border-strong: rgba(255, 255, 255, 0.28);
+  --color-border-soft: rgba(255, 255, 255, 0.16);
 
   --shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
   --radius: 16px;
@@ -101,14 +101,14 @@ p {
 }
 
 a {
-  color: var(--color-rich-purple);
+  color: var(--color-vibrant-yellow);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 a:hover,
 a:focus-visible {
-  color: var(--color-rich-blue);
+  color: var(--color-neutral-white);
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
