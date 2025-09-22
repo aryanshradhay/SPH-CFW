@@ -42,7 +42,7 @@ export default function GamesHub() {
                   For the displayed role, pick the correct skill from multiple choices. Quick rounds to build familiarity.
                 </p>
               </div>
-              <Link to="/play-lab/guess-skill" className="btn primary play-lab-card-cta">
+              <Link to="/play-lab/guess-skill" className="button play-lab-card-cta">
                 Play
               </Link>
             </article>
@@ -60,7 +60,7 @@ export default function GamesHub() {
                   See top skills and the function; choose which role they describe. Great for learning role signatures.
                 </p>
               </div>
-              <Link to="/play-lab/guess-role" className="btn primary play-lab-card-cta">
+              <Link to="/play-lab/guess-role" className="button play-lab-card-cta">
                 Play
               </Link>
             </article>
@@ -78,7 +78,7 @@ export default function GamesHub() {
                   Read a skill definition and pick the correct skill name. Sharpens vocabulary and expectations.
                 </p>
               </div>
-              <Link to="/play-lab/skill-quiz" className="btn primary play-lab-card-cta">
+              <Link to="/play-lab/skill-quiz" className="button play-lab-card-cta">
                 Play
               </Link>
             </article>
@@ -96,7 +96,7 @@ export default function GamesHub() {
                   Follow a board-style path of roles to see how careers progress within a function. Roll to advance and view key skills at each step.
                 </p>
               </div>
-              <Link to="/play-lab/career-board" className="btn primary play-lab-card-cta">
+              <Link to="/play-lab/career-board" className="button play-lab-card-cta">
                 Play
               </Link>
             </article>
@@ -114,7 +114,7 @@ export default function GamesHub() {
                   A grid of origin vs landing clusters. Roll or click to explore allowed transitions and see example roles in the destination.
                 </p>
               </div>
-              <Link to="/play-lab/pathway-matrix" className="btn primary play-lab-card-cta">
+              <Link to="/play-lab/pathway-matrix" className="button play-lab-card-cta">
                 Play
               </Link>
             </article>

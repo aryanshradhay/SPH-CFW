@@ -170,7 +170,7 @@ export default function GuessRoleGame() {
             </div>
           </div>
           <div className="page-heading-actions">
-            <Link to="/play-lab" className="btn ghost small">
+            <Link to="/play-lab" className="button button--small">
               Games Hub
             </Link>
           </div>
@@ -206,8 +206,8 @@ export default function GuessRoleGame() {
               <h3 className="title-md">Nice work!</h3>
               <p className="muted">Your score: {score} / {TOTAL_ROUNDS}</p>
               <div className="row gap-12">
-                <button className="btn primary" onClick={resetGame}>Play Again</button>
-                <Link to="/play-lab" className="btn">Games Hub</Link>
+                <button className="button" onClick={resetGame}>Play Again</button>
+                <Link to="/play-lab" className="button">Games Hub</Link>
               </div>
             </div>
           )}
@@ -257,7 +257,7 @@ export default function GuessRoleGame() {
 
               <div className="row gap-12 mt-12">
                 <button
-                  className="btn primary row center"
+                  className="button row center"
                   onClick={() => {
                     if (!answered) return; // answer first
                     if (round >= TOTAL_ROUNDS) {

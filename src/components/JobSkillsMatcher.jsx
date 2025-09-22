@@ -302,7 +302,7 @@ const JobSkillsMatcher = () => {
                 <div className="explorer-hero__form-actions">
                   <button
                     type="submit"
-                    className="button button--inverse button--small"
+                    className="button button--small"
                     disabled={!myPickerTitle}
                   >
                     Save my position
@@ -310,7 +310,7 @@ const JobSkillsMatcher = () => {
                   {myPosition && (
                     <button
                       type="button"
-                      className="button button--ghost button--small"
+                      className="button button--small"
                       onClick={handleClearMyPosition}
                     >
                       Clear saved role
@@ -319,7 +319,7 @@ const JobSkillsMatcher = () => {
                   <Link
                     to="/roadmap"
                     state={roadmapLinkState}
-                    className="button button--ghost button--small explorer-hero__roadmap"
+                    className="button button--small explorer-hero__roadmap"
                   >
                     Manage in roadmap
                   </Link>
@@ -343,18 +343,18 @@ const JobSkillsMatcher = () => {
               </div>
             </div>
             <div className="experience-hero__actions explorer-hero__actions">
-              <button type="button" className="button button--inverse" onClick={handleBrowseRoles}>
+              <button type="button" className="button" onClick={handleBrowseRoles}>
                 Browse all roles
               </button>
               <button
                 type="button"
-                className="button button--secondary"
+                className="button"
                 onClick={handleViewRecommendations}
                 disabled={!myPosition}
               >
                 View recommendations
               </button>
-              <Link to="/roadmap" className="button button--ghost">
+              <Link to="/roadmap" className="button">
                 Plan my roadmap
               </Link>
             </div>
@@ -374,7 +374,7 @@ const JobSkillsMatcher = () => {
             {myPosition && (
               <button
                 type="button"
-                className="button button--ghost button--small"
+                className="button button--small"
                 onClick={handleBrowseRoles}
               >
                 Explore all roles
@@ -416,14 +416,14 @@ const JobSkillsMatcher = () => {
                       <div className="explorer-recommendation__actions">
                         <button
                           type="button"
-                          className="button button--inverse button--small"
+                          className="button button--small"
                           onClick={() => handleOpenRecommendation(job)}
                         >
                           Inspect role
                         </button>
                         <button
                           type="button"
-                          className="button button--ghost button--small"
+                          className="button button--small"
                           onClick={() =>
                             navigate('/roadmap', {
                               state: { currentTitle: myPosition.title, targetTitle: job.title },
@@ -584,7 +584,7 @@ const JobSkillsMatcher = () => {
                         {selectedJob.division}
                       </p>
                     </div>
-                    <button className="icon-button" onClick={() => setSelectedJob(null)} aria-label="Close details">
+                    <button className="button button--icon" onClick={() => setSelectedJob(null)} aria-label="Close details">
                       <X className="icon-sm" />
                     </button>
                   </div>

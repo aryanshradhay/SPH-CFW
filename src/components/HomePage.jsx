@@ -21,8 +21,8 @@ export default function HomePage() {
       <SiteHeader />
       <HeroSection
         onExplore={handleExplore}
-        primaryCta={{ label: 'Launch Career Explorer', to: '/career-explorer', variant: 'primary' }}
-        secondaryCta={{ label: 'Browse SPH functions', onClick: handleExplore, variant: 'ghost' }}
+        primaryCta={{ label: 'Launch Career Explorer', to: '/career-explorer' }}
+        secondaryCta={{ label: 'Browse SPH functions', onClick: handleExplore }}
       />
 
 

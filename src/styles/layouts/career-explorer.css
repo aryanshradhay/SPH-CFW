@@ -478,40 +478,11 @@
 }
 
 .experience-page--explorer .experience-hero .button {
-  box-shadow: 0 16px 36px rgba(32, 24, 82, 0.14);
+  box-shadow: 0 16px 36px rgba(32, 24, 82, 0.18);
 }
 
-.experience-page--explorer .experience-hero .button--inverse {
-  background: var(--color-rich-purple);
-  border : var(--color-text-inverse);
-  color: var(--color-text-inverse);
-}
-
-.experience-page--explorer .experience-hero .button--inverse:hover {
+.experience-page--explorer .experience-hero .button:hover {
   box-shadow: 0 22px 48px rgba(46, 28, 112, 0.32);
-}
-
-.experience-page--explorer .experience-hero .button--secondary {
-  background: var(--color-rich-purple);
-  border-color: var(--color-text-inverse);
-  color: var(--color-text-inverse);
-}
-
-.experience-page--explorer .experience-hero .button--secondary:disabled {
-  color: rgba(80, 50, 145, 0.55);
-  border-color: rgba(80, 50, 145, 0.25);
-  background: linear-gradient(135deg, rgba(141, 89, 255, 0.12), rgba(150, 215, 210, 0.12));
-}
-
-.experience-page--explorer .experience-hero .button--ghost {
-  border-color: rgba(141, 89, 255, 0.55);
-  background: rgba(150, 215, 210, 0.16);
-  color: var(--color-rich-purple);
-}
-
-.experience-page--explorer .experience-hero .button--ghost:hover {
-  background: rgba(150, 215, 210, 0.26);
-  box-shadow: 0 18px 40px rgba(32, 24, 82, 0.16);
 }
 
 .experience-page--explorer .experience-hero .chip,
@@ -1105,15 +1076,6 @@
 
 .explorer-recommendation__actions .button {
   flex: 1 1 150px;
-}
-
-.explorer-recommendation__actions .button--ghost {
-  color: var(--color-neutral-white);
-  border-color: var(--color-neutral-white);
-}
-
-.explorer-recommendation__actions .button--ghost:hover {
-  background: rgba(255, 255, 255, 0.12);
 }
 
 .explorer-recommendation.tone-green {

@@ -1,7 +1,5 @@
 /*
- * Button system shared across classic .btn markup and the new BEM-friendly
- * .button component. Updated to reflect Merck's rich, vibrant, and sensitive
- * palette without gradients or tints.
+ * Unified button styles.
  */
 
 .button,
@@ -12,15 +10,29 @@
   gap: 0.5rem;
   padding: 0.625rem 1rem;
   border-radius: 14px;
-  border: 2px solid var(--color-border-soft);
+  border: 2px solid var(--color-rich-purple);
+  background: var(--color-rich-purple);
+  color: var(--color-text-inverse);
   cursor: pointer;
   font-weight: 700;
   font-size: 0.9375rem;
   letter-spacing: 0.01em;
+  text-decoration: none;
   transition: transform 0.15s ease, box-shadow 0.15s ease,
-  background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  background: var(--surface);
-  color: var(--color-text);
+    background 0.2s ease, color 0.2s ease;
+  box-shadow: 0 12px 30px rgba(80, 50, 145, 0.25);
+}
+
+.button:hover,
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(80, 50, 145, 0.35);
+}
+
+.button:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid var(--color-vibrant-cyan);
+  outline-offset: 2px;
 }
 
 .button:disabled,
@@ -29,95 +41,8 @@
 .btn[aria-disabled='true'] {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.button--primary,
-.btn.primary {
-  background: var(--color-rich-purple);
-  color: var(--color-text-inverse);
-  border-color: var(--color-rich-purple);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
-}
-
-.button--primary:hover,
-.btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
-}
-
-.button--primary:focus-visible,
-.btn.primary:focus-visible {
-  outline: 3px solid var(--color-vibrant-cyan);
-  outline-offset: 2px;
-}
-
-.button--secondary,
-.btn.secondary {
-  background: var(--color-vibrant-yellow);
-  color: var(--color-rich-purple);
-  border-color: var(--color-rich-purple);
-}
-
-.button--secondary:hover,
-.btn.secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
-}
-
-.button--ghost,
-.btn.ghost {
-  background: transparent;
-  color: var(--color-rich-purple);
-  border-color: var(--color-rich-purple);
-}
-
-.button--ghost:hover,
-.btn.ghost:hover {
-  background: var(--color-sensitive-pink);
-}
-
-.button--ghost:focus-visible,
-.btn.ghost:focus-visible {
-  outline: 3px solid var(--color-vibrant-cyan);
-  outline-offset: 2px;
-}
-
-.button--inverse {
-  background: var(--color-text-inverse);
-  color: var(--color-rich-purple);
-  border-color: transparent;
-  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28);
-}
-
-.button--inverse:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.3);
-}
-
-.button--inverse:focus-visible {
-  outline: 3px solid var(--color-vibrant-cyan);
-  outline-offset: 2px;
-}
-
-.button--fun,
-.btn.fun {
-  background: var(--color-rich-red);
-  color: var(--color-text-inverse);
-  border: 0;
-  padding: 0.65rem 1.25rem;
-  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.25);
-}
-
-.button--fun:hover,
-.btn.fun:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32);
-}
-
-.button--fun:focus-visible,
-.btn.fun:focus-visible {
-  outline: 3px solid var(--color-vibrant-yellow);
-  outline-offset: 3px;
+  transform: none;
+  box-shadow: none;
 }
 
 .button--full,
@@ -127,23 +52,21 @@
 
 .button--small,
 .btn.small {
-  padding: 0.375rem 0.75rem;
+  padding: 0.4rem 0.75rem;
   font-size: 0.8125rem;
   border-radius: 12px;
 }
 
-.icon-button {
-  background: var(--color-sensitive-blue);
-  color: var(--color-rich-purple);
-  border: 1px solid var(--color-rich-purple);
-  padding: 0.375rem 0.5rem;
+.button--icon {
+  padding: 0.375rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 12px;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
 }
 
-.icon-button:hover {
-  background: var(--color-sensitive-green);
+.button svg,
+.btn svg {
+  flex-shrink: 0;
 }
 
 .badge {

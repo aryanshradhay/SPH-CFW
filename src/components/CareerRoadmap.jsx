@@ -402,10 +402,10 @@ export default function CareerRoadmap() {
               )}
             </div>
             <div className="experience-hero__actions">
-              <button type="button" className="button button--inverse" onClick={scrollToPlanner}>
+              <button type="button" className="button" onClick={scrollToPlanner}>
                 Start planning
               </button>
-              <Link to="/career-explorer" className="button button--ghost">
+              <Link to="/career-explorer" className="button">
                 Launch career explorer
               </Link>
             </div>
@@ -472,7 +472,7 @@ export default function CareerRoadmap() {
               <div className="roadmap-card-block__actions">
                 <button
                   type="button"
-                  className="button button--primary"
+                  className="button"
                   onClick={setMyPositionFromPicker}
                   disabled={!myPickerTitle}
                 >
@@ -640,7 +640,7 @@ export default function CareerRoadmap() {
                       <div className="roadmap-recommendation__actions">
                         <button
                           type="button"
-                          className="button button--ghost"
+                        className="button"
                           onClick={() => {
                             ensurePlannerCanShowJob(myPosition.title);
                             ensurePlannerCanShowJob(job.title);
