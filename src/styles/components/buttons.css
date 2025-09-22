@@ -10,17 +10,30 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.625rem 1rem;
+  padding: 0.65rem 1.1rem;
   border-radius: 14px;
-  border: 2px solid var(--color-border-soft);
+  border: 1px solid rgba(80, 50, 145, 0.22);
   cursor: pointer;
   font-weight: 700;
   font-size: 0.9375rem;
   letter-spacing: 0.01em;
-  transition: transform 0.15s ease, box-shadow 0.15s ease,
-  background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  background: var(--surface);
-  color: var(--color-text);
+  transition: transform 0.18s ease, box-shadow 0.18s ease,
+    background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(241, 237, 255, 0.9));
+  color: var(--color-rich-purple);
+  box-shadow: 0 14px 32px rgba(32, 32, 72, 0.12);
+}
+
+.button:hover,
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 22px 50px rgba(32, 32, 72, 0.16);
+}
+
+.button:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid rgba(45, 190, 205, 0.4);
+  outline-offset: 2px;
 }
 
 .button:disabled,
@@ -33,16 +46,17 @@
 
 .button--primary,
 .btn.primary {
-  background: var(--color-rich-purple);
+  background: linear-gradient(135deg, #6a4ae0, #2f9adf);
   color: var(--color-text-inverse);
-  border-color: var(--color-rich-purple);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+  border-color: transparent;
+  box-shadow: 0 26px 56px rgba(71, 61, 160, 0.45);
 }
 
 .button--primary:hover,
 .btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+  transform: translateY(-3px);
+  box-shadow: 0 32px 64px rgba(71, 61, 160, 0.5);
+  filter: brightness(1.05);
 }
 
 .button--primary:focus-visible,
@@ -53,27 +67,30 @@
 
 .button--secondary,
 .btn.secondary {
-  background: var(--color-vibrant-yellow);
+  background: linear-gradient(135deg, #ffe9a9, #ffd46a);
   color: var(--color-rich-purple);
-  border-color: var(--color-rich-purple);
+  border-color: rgba(255, 210, 102, 0.6);
+  box-shadow: 0 18px 40px rgba(205, 168, 70, 0.25);
 }
 
 .button--secondary:hover,
 .btn.secondary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  transform: translateY(-3px);
+  box-shadow: 0 26px 56px rgba(205, 168, 70, 0.3);
 }
 
 .button--ghost,
 .btn.ghost {
-  background: transparent;
+  background: rgba(80, 50, 145, 0.08);
   color: var(--color-rich-purple);
-  border-color: var(--color-rich-purple);
+  border-color: rgba(80, 50, 145, 0.28);
+  box-shadow: 0 10px 26px rgba(80, 50, 145, 0.12);
 }
 
 .button--ghost:hover,
 .btn.ghost:hover {
-  background: var(--color-sensitive-pink);
+  background: rgba(80, 50, 145, 0.14);
+  box-shadow: 0 16px 34px rgba(80, 50, 145, 0.18);
 }
 
 .button--ghost:focus-visible,
@@ -83,15 +100,15 @@
 }
 
 .button--inverse {
-  background: var(--color-text-inverse);
+  background: linear-gradient(140deg, #ffffff, #f2f5ff);
   color: var(--color-rich-purple);
-  border-color: transparent;
-  box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28);
+  border-color: rgba(80, 50, 145, 0.16);
+  box-shadow: 0 28px 60px rgba(20, 32, 70, 0.28);
 }
 
 .button--inverse:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 26px 52px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 36px 72px rgba(20, 32, 70, 0.32);
 }
 
 .button--inverse:focus-visible {
@@ -101,17 +118,17 @@
 
 .button--fun,
 .btn.fun {
-  background: var(--color-rich-red);
+  background: linear-gradient(135deg, #ff5aa5, #ff7a5c);
   color: var(--color-text-inverse);
   border: 0;
   padding: 0.65rem 1.25rem;
-  box-shadow: 0 20px 36px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 24px 48px rgba(204, 66, 109, 0.38);
 }
 
 .button--fun:hover,
 .btn.fun:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32);
+  transform: translateY(-3px);
+  box-shadow: 0 32px 64px rgba(204, 66, 109, 0.42);
 }
 
 .button--fun:focus-visible,
@@ -133,46 +150,51 @@
 }
 
 .icon-button {
-  background: var(--color-sensitive-blue);
+  background: rgba(45, 190, 205, 0.16);
   color: var(--color-rich-purple);
-  border: 1px solid var(--color-rich-purple);
+  border: 1px solid rgba(45, 190, 205, 0.36);
   padding: 0.375rem 0.5rem;
   border-radius: 12px;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 24px rgba(28, 116, 130, 0.18);
 }
 
 .icon-button:hover {
-  background: var(--color-sensitive-green);
+  background: rgba(45, 190, 205, 0.24);
+  box-shadow: 0 16px 34px rgba(28, 116, 130, 0.22);
 }
 
 .badge {
   font-size: 0.75rem;
-  padding: 0.25rem 0.75rem;
+  padding: 0.3rem 0.8rem;
   border-radius: 999px;
-  border: 1px solid var(--color-border-soft);
-  font-weight: 700;
+  border: 1px solid rgba(80, 50, 145, 0.24);
+  font-weight: 600;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  background: rgba(80, 50, 145, 0.08);
+  color: var(--color-rich-purple);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .badge.green {
-  background: var(--color-sensitive-green);
+  background: rgba(20, 155, 95, 0.14);
   color: var(--color-rich-green);
-  border-color: var(--color-rich-green);
+  border-color: rgba(20, 155, 95, 0.3);
 }
 
 .badge.yellow {
-  background: var(--color-sensitive-yellow);
+  background: rgba(255, 200, 50, 0.18);
   color: var(--color-rich-purple);
-  border-color: var(--color-vibrant-yellow);
+  border-color: rgba(255, 200, 50, 0.4);
 }
 
 .badge.purple {
-  background: var(--color-rich-purple);
+  background: linear-gradient(135deg, #6a4ae0, #4c70f0);
   color: var(--color-text-inverse);
-  border-color: var(--color-rich-purple);
+  border-color: transparent;
 }
 
 .badge.solid {
@@ -180,21 +202,21 @@
 }
 
 .badge.solid.green {
-  background: var(--color-rich-green);
+  background: linear-gradient(135deg, #3bc47b, #16a05d);
   color: var(--color-text-inverse);
 }
 
 .badge.solid.yellow {
-  background: var(--color-vibrant-yellow);
+  background: linear-gradient(135deg, #ffd65d, #ffb71b);
   color: var(--color-rich-purple);
 }
 
 .badge.solid.orange {
-  background: var(--color-vibrant-magenta);
+  background: linear-gradient(135deg, #ff6bb5, #ff508a);
   color: var(--color-text-inverse);
 }
 
 .badge.solid.gray {
-  background: var(--color-sensitive-pink);
+  background: rgba(80, 50, 145, 0.14);
   color: var(--color-rich-purple);
 }
