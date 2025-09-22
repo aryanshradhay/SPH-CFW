@@ -170,9 +170,9 @@ export function summarizeTransition(currentJob, targetJob, maxItems = 3) {
 export function getSimilarityBadge(score) {
   if (score >= 90) return { label: 'Excellent', color: 'badge solid green' };
   if (score >= 80) return { label: 'Great', color: 'badge solid yellow' };
-  if (score >= 70) return { label: 'Good', color: 'badge solid orange' };
-  if (score >= 60) return { label: 'Emerging', color: 'badge solid purple' };
-  return { label: 'Early Match', color: 'badge solid gray' };
+  if (score >= 70) return { label: 'Good', color: 'badge green' };
+  if (score >= 60) return { label: 'Emerging', color: 'badge purple' };
+  return { label: 'Early Match', color: 'badge yellow' };
 }
 
 export function getTrainingRecommendations(skillName, typeOrGuess, gap) {
