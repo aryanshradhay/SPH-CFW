@@ -1,7 +1,7 @@
 /* SPH Career Explorer layout styles */
 
 .explorer-page {
-  background: var(--color-neutral-white);
+  background: var(--color-text-inverse);
 }
 
 .explorer-page .hero {
@@ -656,9 +656,10 @@
 .explorer-group {
   padding: 2rem;
   border-radius: 28px;
-  background: var(--color-rich-purple);
+  background: var(--color-text-inverse);
   border: 3px solid var(--color-vibrant-magenta);
-  color: var(--color-neutral-white);
+  color: var(--color-rich-purple);
+  box-shadow: 0 24px 48px rgba(32, 24, 82, 0.14);
 }
 
 .explorer-group__header {
@@ -674,12 +675,14 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-vibrant-magenta);
+  letter-spacing: 0.01em;
 }
 
 .explorer-group__count {
   font-size: 0.85rem;
   color: var(--color-vibrant-yellow);
-  font-weight: 600;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(20, 18, 54, 0.35);
 }
 
 .explorer-card-grid {
@@ -692,8 +695,8 @@
   position: relative;
   border-radius: 22px;
   padding: 1.25rem 1.4rem 1.35rem;
-  background: var(--color-neutral-white);
-  border: 3px solid var(--color-rich-purple);
+  background: var(--color-text-inverse);
+  border: 3px solid var(--color-vibrant-magenta);
   text-align: left;
   cursor: pointer;
   display: flex;
@@ -702,8 +705,8 @@
   min-height: 220px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease,
     background 0.25s ease;
-  overflow: hidden;
-  z-index: 0;
+  box-shadow: 0 18px 40px rgba(32, 24, 82, 0.12);
+  z-index: 1;
 }
 
 .explorer-card::after {
@@ -711,7 +714,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(150deg, rgba(80, 50, 145, 0.16), rgba(255, 214, 238, 0));
+  background: linear-gradient(150deg, rgba(235, 60, 150, 0.22), rgba(255, 200, 50, 0.08));
   opacity: 0;
   transform: translateY(16px) scale(0.96);
   transition: opacity 0.3s ease, transform 0.3s ease;
@@ -721,17 +724,20 @@
 
 .explorer-card__title {
   font-size: 1rem;
-  font-weight: 700;
-  color: var(--color-rich-purple);
+  font-weight: 800;
+  color: var(--color-vibrant-magenta);
   position: relative;
   z-index: 1;
+  letter-spacing: 0.01em;
 }
 
 .explorer-card__meta {
   font-size: 0.85rem;
-  color: var(--color-rich-blue);
+  color: var(--color-vibrant-yellow);
+  font-weight: 600;
   position: relative;
   z-index: 1;
+  text-shadow: 0 1px 1px rgba(20, 18, 54, 0.35);
 }
 
 .explorer-card__badge {
@@ -747,31 +753,127 @@
   align-self: flex-start;
   padding: 0.3rem 0.75rem;
   border-radius: 999px;
-  background: rgba(80, 50, 145, 0.12);
-  color: var(--color-rich-purple);
+  background: rgba(255, 200, 50, 0.18);
+  color: var(--color-vibrant-magenta);
   font-size: 0.68rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 800;
   position: relative;
   z-index: 1;
+  box-shadow: inset 0 0 0 1px rgba(235, 60, 150, 0.35);
 }
 
-.explorer-card__summary {
-  margin-top: 0.6rem;
-  font-size: 0.78rem;
-  line-height: 1.5;
-  color: var(--muted);
+/** Tooltip presentation */
+.explorer-card-wrapper {
   position: relative;
-  z-index: 1;
-  transition: color 0.25s ease;
-  overflow-wrap: anywhere;
+  display: block;
+  height: 100%;
 }
 
-.explorer-card:hover .explorer-card__summary,
-.explorer-card.is-active .explorer-card__summary,
-.explorer-card:focus-visible .explorer-card__summary {
+.explorer-card-wrapper .explorer-card {
+  width: 100%;
+}
+
+.explorer-card__tooltip {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 1rem);
+  width: clamp(220px, 28vw, 320px);
+  padding: 1.1rem 1.25rem;
+  border-radius: 18px;
+  border: 3px solid var(--color-vibrant-magenta);
+  background: var(--color-text-inverse);
+  box-shadow: 0 24px 48px rgba(32, 24, 82, 0.22);
   color: var(--color-rich-purple);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.explorer-card__tooltip::before {
+  content: '';
+  position: absolute;
+  top: 1.4rem;
+  left: -12px;
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-bottom: 12px solid transparent;
+  border-right: 12px solid var(--color-vibrant-magenta);
+}
+
+.explorer-card__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 1.4rem;
+  left: -9px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-right: 10px solid var(--color-text-inverse);
+}
+
+.explorer-card__tooltip-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: var(--color-vibrant-yellow);
+  text-shadow: 0 1px 1px rgba(20, 18, 54, 0.35);
+}
+
+.explorer-card__tooltip-text {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--color-vibrant-magenta);
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgba(20, 18, 54, 0.2);
+}
+
+.explorer-card-wrapper:hover .explorer-card__tooltip,
+.explorer-card-wrapper:focus-within .explorer-card__tooltip {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 960px) {
+  .explorer-card__tooltip {
+    left: calc(100% + 0.75rem);
+    width: clamp(220px, 40vw, 280px);
+  }
+}
+
+@media (max-width: 768px) {
+  .explorer-card-wrapper {
+    position: static;
+  }
+
+  .explorer-card__tooltip {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    margin-top: 0.85rem;
+    transform: translateY(-10px);
+  }
+
+  .explorer-card__tooltip::before,
+  .explorer-card__tooltip::after {
+    display: none;
+  }
+
+  .explorer-card-wrapper:hover .explorer-card__tooltip,
+  .explorer-card-wrapper:focus-within .explorer-card__tooltip {
+    transform: translateY(0);
+  }
 }
 
 .explorer-card:hover,
