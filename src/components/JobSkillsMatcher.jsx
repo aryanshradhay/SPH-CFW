@@ -32,6 +32,14 @@ function getSimilarityTone(sim) {
   return 'tone-neutral';
 }
 
+function formatSnapshot(text, limit = 150) {
+  if (!text) return '';
+  const clean = text.replace(/\s+/g, ' ').trim();
+  if (!clean) return '';
+  if (clean.length <= limit) return clean;
+  return `${clean.slice(0, limit - 1).trimEnd()}…`;
+}
+
 /* ------------------------- Main Component (Single Page) ------------------------- */
 const JobSkillsMatcher = () => {
   const navigate = useNavigate();
@@ -525,6 +533,7 @@ const JobSkillsMatcher = () => {
                           const similarity = myPosition ? simScore(myPosition, job) : null;
                           const toneClass = similarity != null ? getSimilarityTone(similarity) : 'tone-neutral';
                           const badge = similarity != null ? getSimilarityBadge(similarity) : null;
+                          const snapshot = formatSnapshot(job.description);
 
                           return (
                             <button
@@ -535,9 +544,21 @@ const JobSkillsMatcher = () => {
                               aria-pressed={isSelected}
                               title={`Open ${job.title}`}
                             >
-                              <span className="explorer-card__title">{job.title}</span>
-                              <span className="explorer-card__meta">{job.division}</span>
-                              {badge && <span className={`explorer-card__badge ${badge.color}`}>{badge.label}</span>}
+                              <div className="explorer-card__top">
+                                <div className="explorer-card__info">
+                                  <span className="explorer-card__title">{job.title}</span>
+                                  <span className="explorer-card__meta">{job.division}</span>
+                                </div>
+                                {badge && (
+                                  <span className={`explorer-card__badge ${badge.color}`}>{badge.label}</span>
+                                )}
+                              </div>
+                              {snapshot && (
+                                <div className="explorer-card__snapshot">
+                                  <span className="explorer-card__snapshot-label">Role snapshot</span>
+                                  <p className="explorer-card__description">{snapshot}</p>
+                                </div>
+                              )}
                             </button>
                           );
                         })}
