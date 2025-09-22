@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/SPH-CFW/static/css/main.dc3a1894.css",
+    "main.js": "/SPH-CFW/static/js/main.a273dd42.js",
+    "static/media/merck.ttf": "/SPH-CFW/static/media/merck.46efd46cde48fa957018.ttf",
+    "index.html": "/SPH-CFW/index.html",
+    "main.dc3a1894.css.map": "/SPH-CFW/static/css/main.dc3a1894.css.map",
+    "main.a273dd42.js.map": "/SPH-CFW/static/js/main.a273dd42.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.dc3a1894.css",
+    "static/js/main.a273dd42.js"
+  ]
+}
