@@ -290,6 +290,7 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--explorer-text-soft);
+
 }
 
 .explorer-control__field {
@@ -527,6 +528,7 @@
 
 .toolbar-control {
   flex: 1 1 280px;
+
   background: rgba(80, 50, 145, 0.08);
   border-radius: 28px;
   padding: 1.25rem 1.5rem;
