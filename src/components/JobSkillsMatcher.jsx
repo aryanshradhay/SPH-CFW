@@ -520,7 +520,7 @@ const JobSkillsMatcher = () => {
                         <span className="explorer-group__count">{groupedJobs[division].length} roles</span>
                       </div>
                       <div className="explorer-card-grid">
-                        {groupedJobs[division].map((job) => {
+                        {groupedJobs[division].map((job, index) => {
                           const isSelected = selectedJob && selectedJob.id === job.id;
                           const similarity = myPosition ? simScore(myPosition, job) : null;
                           const toneClass = similarity != null ? getSimilarityTone(similarity) : 'tone-neutral';
@@ -528,36 +528,41 @@ const JobSkillsMatcher = () => {
                           const summarySource = (job.description || job.objective || job.clusterDef || '')
                             .replace(/\s+/g, ' ')
                             .trim();
-                          const summaryText = summarySource.length > 0
-                            ? summarySource.length > 160
-                              ? `${summarySource.slice(0, 157).trimEnd()}…`
-                              : summarySource
-                            : '';
                           const clusterLabel = (job.cluster || '').trim();
-                          const accessibleLabel = summaryText
-                            ? `Open ${job.title}. ${summaryText}`
-                            : `Open ${job.title}`;
+                          const accessibleLabel = `Open ${job.title}`;
+                          const summaryId = summarySource
+                            ? `explorer-summary-${String(job.id ?? index).toLowerCase().replace(/[^a-z0-9]+/g, '-')}-${index}`
+                            : undefined;
 
                           return (
-                            <button
-                              key={job.id}
-                              type="button"
-                              className={`explorer-card ${toneClass} ${isSelected ? 'is-active' : ''}`}
-                              onClick={() => setSelectedJob(job)}
-                              aria-pressed={isSelected}
-                              title={`Open ${job.title}`}
-                              aria-label={accessibleLabel}
-                            >
-                              <span className="explorer-card__title">{job.title}</span>
-                              <span className="explorer-card__meta">{job.division}</span>
-                              {badge && <span className={`explorer-card__badge ${badge.color}`}>{badge.label}</span>}
-                              {clusterLabel && (
-                                <span className="explorer-card__cluster">{clusterLabel}</span>
+                            <div key={job.id} className={`explorer-card-wrapper ${summarySource ? 'has-summary' : ''}`}>
+                              <button
+                                type="button"
+                                className={`explorer-card ${toneClass} ${isSelected ? 'is-active' : ''}`}
+                                onClick={() => setSelectedJob(job)}
+                                aria-pressed={isSelected}
+                                title={`Open ${job.title}`}
+                                aria-label={accessibleLabel}
+                                {...(summaryId ? { 'aria-describedby': summaryId } : {})}
+                              >
+                                <span className="explorer-card__title">{job.title}</span>
+                                <span className="explorer-card__meta">{job.division}</span>
+                                {badge && <span className={`explorer-card__badge ${badge.color}`}>{badge.label}</span>}
+                                {clusterLabel && (
+                                  <span className="explorer-card__cluster">{clusterLabel}</span>
+                                )}
+                              </button>
+                              {summarySource && (
+                                <div
+                                  id={summaryId}
+                                  className="explorer-card__tooltip"
+                                  role="tooltip"
+                                >
+                                  <span className="explorer-card__tooltip-label">Role snapshot</span>
+                                  <p className="explorer-card__tooltip-text">{summarySource}</p>
+                                </div>
                               )}
-                              {summaryText && (
-                                <span className="explorer-card__summary">{summaryText}</span>
-                              )}
-                            </button>
+                            </div>
                           );
                         })}
                       </div>
