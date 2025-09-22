@@ -214,12 +214,6 @@ const JobSkillsMatcher = () => {
     }
   };
 
-  const snapshotDescription = selectedJob?.description?.trim() || '';
-  const snapshotTooltipId = useMemo(
-    () => (selectedJob ? `explorer-snapshot-${selectedJob.id}` : undefined),
-    [selectedJob]
-  );
-
   return (
     <div className="page solid-bg experience-page experience-page--explorer explorer-page">
       <SiteHeader />
@@ -531,6 +525,18 @@ const JobSkillsMatcher = () => {
                           const similarity = myPosition ? simScore(myPosition, job) : null;
                           const toneClass = similarity != null ? getSimilarityTone(similarity) : 'tone-neutral';
                           const badge = similarity != null ? getSimilarityBadge(similarity) : null;
+                          const summarySource = (job.description || job.objective || job.clusterDef || '')
+                            .replace(/\s+/g, ' ')
+                            .trim();
+                          const summaryText = summarySource.length > 0
+                            ? summarySource.length > 160
+                              ? `${summarySource.slice(0, 157).trimEnd()}…`
+                              : summarySource
+                            : '';
+                          const clusterLabel = (job.cluster || '').trim();
+                          const accessibleLabel = summaryText
+                            ? `Open ${job.title}. ${summaryText}`
+                            : `Open ${job.title}`;
 
                           return (
                             <button
@@ -540,10 +546,17 @@ const JobSkillsMatcher = () => {
                               onClick={() => setSelectedJob(job)}
                               aria-pressed={isSelected}
                               title={`Open ${job.title}`}
+                              aria-label={accessibleLabel}
                             >
                               <span className="explorer-card__title">{job.title}</span>
                               <span className="explorer-card__meta">{job.division}</span>
                               {badge && <span className={`explorer-card__badge ${badge.color}`}>{badge.label}</span>}
+                              {clusterLabel && (
+                                <span className="explorer-card__cluster">{clusterLabel}</span>
+                              )}
+                              {summaryText && (
+                                <span className="explorer-card__summary">{summaryText}</span>
+                              )}
                             </button>
                           );
                         })}
@@ -617,21 +630,6 @@ const JobSkillsMatcher = () => {
                         <span className="explorer-action__label">Plan as Target Role</span>
                         <span className="explorer-action__hint">
                           Compare strengths and gaps for this transition
-                        </span>
-                      </button>
-                      <button
-                        type="button"
-                        className="explorer-action explorer-action--snapshot"
-                        aria-describedby={snapshotTooltipId}
-                      >
-                        <span className="explorer-action__label">Role snapshot</span>
-                        <span className="explorer-action__hint">Hover or focus to preview</span>
-                        <span
-                          id={snapshotTooltipId}
-                          className="explorer-action__tooltip"
-                          role="tooltip"
-                        >
-                          {snapshotDescription || 'We are gathering a snapshot for this role.'}
                         </span>
                       </button>
                     </div>

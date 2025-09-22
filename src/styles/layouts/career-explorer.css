@@ -9,14 +9,15 @@
 }
 
 .explorer-hero__status-card {
-  background: rgba(80, 50, 145, 0.06);
-  border: 1px solid rgba(80, 50, 145, 0.16);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.32);
   border-radius: 24px;
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 1.1rem;
-  box-shadow: 0 16px 36px rgba(32, 24, 82, 0.12);
+  box-shadow: 0 24px 54px rgba(8, 6, 30, 0.28);
+  color: var(--color-neutral-white);
 }
 .explorer-hero__status-heading {
   display: grid;
@@ -24,16 +25,16 @@
 }
 
 .explorer-hero__status-card .experience-hero__status-label {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .explorer-hero__status-card .experience-hero__status-value {
-  color: var(--color-rich-purple);
+  color: var(--color-neutral-white);
   font-size: clamp(1.4rem, 2.4vw, 1.6rem);
 }
 
 .explorer-hero__status-card .experience-hero__status-text {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
 }
 
@@ -44,12 +45,12 @@
   width: fit-content;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: rgba(80, 50, 145, 0.12);
+  background: rgba(255, 255, 255, 0.22);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.7rem;
   font-weight: 700;
-  color: var(--color-rich-purple);
+  color: var(--color-neutral-white);
 }
 
 .explorer-hero__form {
@@ -147,14 +148,14 @@
   font-size: clamp(1.8rem, 2.4vw, 2.4rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--color-rich-purple);
+  color: var(--color-neutral-white);
 }
 
 .explorer-hero__metric-label {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.78rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .explorer-hero__actions {
@@ -352,12 +353,22 @@
 }
 
 .experience-hero--explorer {
-  background: var(--surface);
+  background: linear-gradient(150deg, rgba(80, 50, 145, 0.96), rgba(141, 89, 255, 0.85));
+  color: var(--color-neutral-white);
 }
 
 .experience-page--explorer .experience-hero {
-  border: 1px solid rgba(80, 50, 145, 0.16);
-  box-shadow: 0 36px 96px rgba(32, 24, 82, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 42px 110px rgba(20, 12, 52, 0.35);
+}
+
+.experience-page--explorer .experience-hero__title,
+.experience-page--explorer .experience-hero__subtitle {
+  color: var(--color-neutral-white);
+}
+
+.experience-page--explorer .experience-hero__subtitle {
+  opacity: 0.85;
 }
 
 .experience-page--explorer .experience-hero::before,
@@ -450,20 +461,16 @@
 }
 
 .experience-page--explorer .experience-hero__icon {
-  background: linear-gradient(135deg, rgba(80, 50, 145, 0.22), rgba(150, 215, 210, 0.16));
-  box-shadow: 0 18px 36px rgba(32, 24, 82, 0.2);
-  color: var(--color-rich-purple);
-}
-
-.experience-page--explorer .experience-hero__subtitle {
-  color: var(--muted);
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 20px 44px rgba(8, 6, 32, 0.32);
+  color: var(--color-neutral-white);
 }
 
 .experience-page--explorer .experience-hero__status-card {
-  background: linear-gradient(160deg, rgba(80, 50, 145, 0.08), rgba(150, 215, 210, 0.08));
-  border: 1px solid rgba(80, 50, 145, 0.2);
-  box-shadow: 0 20px 44px rgba(32, 24, 82, 0.14);
-  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 24px 54px rgba(8, 6, 30, 0.28);
+  color: var(--color-neutral-white);
 }
 
 .experience-page--explorer .experience-hero__actions {
@@ -507,16 +514,30 @@
   box-shadow: 0 18px 40px rgba(32, 24, 82, 0.16);
 }
 
-.experience-page--explorer .chip-link {
-  background: rgba(80, 50, 145, 0.08);
-  border: 1px dashed rgba(80, 50, 145, 0.35);
-  color: var(--color-rich-purple);
+.experience-page--explorer .experience-hero .chip,
+.experience-page--explorer .experience-hero .chip-link,
+.experience-page--explorer .experience-hero .chip--ghost {
+  color: var(--color-neutral-white);
 }
 
-.experience-page--explorer .chip-link:hover {
+.experience-page--explorer .experience-hero .chip {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.36);
+}
+
+.experience-page--explorer .experience-hero .chip-link {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px dashed rgba(255, 255, 255, 0.5);
+}
+
+.experience-page--explorer .experience-hero .chip--ghost {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.experience-page--explorer .experience-hero .chip-link:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(32, 24, 82, 0.12);
-  color: var(--color-rich-purple);
+  box-shadow: 0 12px 28px rgba(8, 6, 24, 0.25);
+  color: var(--color-neutral-white);
 }
 
 .experience-page--explorer .section-h2 {
@@ -707,6 +728,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  min-height: 220px;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease,
     background 0.25s ease;
   overflow: hidden;
@@ -746,6 +768,42 @@
   margin-top: 0.35rem;
   position: relative;
   z-index: 1;
+}
+
+.explorer-card__cluster {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(80, 50, 145, 0.12);
+  color: var(--color-rich-purple);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.explorer-card__summary {
+  margin-top: 0.6rem;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+  position: relative;
+  z-index: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  transition: color 0.25s ease;
+}
+
+.explorer-card:hover .explorer-card__summary,
+.explorer-card.is-active .explorer-card__summary,
+.explorer-card:focus-visible .explorer-card__summary {
+  color: var(--color-rich-purple);
 }
 
 .explorer-card:hover,
@@ -862,7 +920,6 @@
   color: var(--muted);
 }
 
-.explorer-action:hover,
 .explorer-action:focus-visible {
   transform: translateY(-2px);
   border-color: rgba(80, 50, 145, 0.35);
@@ -873,45 +930,6 @@
 .explorer-action:focus-visible {
   outline: 3px solid var(--color-vibrant-cyan);
   outline-offset: 3px;
-}
-
-.explorer-action__tooltip {
-  position: absolute;
-  left: 50%;
-  bottom: calc(100% + 14px);
-  transform: translate(-50%, 6px);
-  width: min(320px, 85vw);
-  padding: 0.85rem 1rem;
-  border-radius: 16px;
-  border: 1px solid rgba(80, 50, 145, 0.22);
-  background: var(--surface);
-  box-shadow: 0 20px 42px rgba(32, 24, 82, 0.16);
-  color: var(--muted);
-  font-size: 0.85rem;
-  line-height: 1.5;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  z-index: 5;
-}
-
-.explorer-action__tooltip::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -8px;
-  transform: translateX(-50%) rotate(45deg);
-  width: 14px;
-  height: 14px;
-  background: var(--surface);
-  border-right: 1px solid rgba(80, 50, 145, 0.22);
-  border-bottom: 1px solid rgba(80, 50, 145, 0.22);
-}
-
-.explorer-action--snapshot:hover .explorer-action__tooltip,
-.explorer-action--snapshot:focus-visible .explorer-action__tooltip {
-  opacity: 1;
-  transform: translate(-50%, -4px);
 }
 
 .explorer-detail__section {
