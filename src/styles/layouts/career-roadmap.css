@@ -15,6 +15,20 @@
     rgba(160, 210, 255, 0.55) 0%,
     rgba(160, 210, 255, 0) 70%
   );
+  animation: roadmapGlowDrift 26s ease-in-out infinite;
+}
+
+@keyframes roadmapGlowDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-22px, 18px, 0) scale(1.06);
+  }
+  75% {
+    transform: translate3d(18px, -20px, 0) scale(0.95);
+  }
 }
 
 .experience-page--roadmap .experience-hero::after {
@@ -27,7 +41,49 @@
     rgba(180, 240, 210, 0.5) 0%,
     rgba(180, 240, 210, 0) 70%
   );
+  animation: roadmapGlowPulse 24s ease-in-out infinite;
   animation-delay: 0.9s;
+}
+
+@keyframes roadmapGlowPulse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.65;
+  }
+  45% {
+    transform: translate3d(-16px, 18px, 0) scale(1.1);
+    opacity: 0.88;
+  }
+  75% {
+    transform: translate3d(20px, -14px, 0) scale(0.92);
+    opacity: 0.72;
+  }
+}
+
+@keyframes roadmapAccent {
+  0%,
+  100% {
+    transform: scaleX(0.6);
+    opacity: 0.35;
+  }
+  50% {
+    transform: scaleX(1);
+    opacity: 0.95;
+  }
+}
+
+.experience-page--roadmap .experience-hero__header::after {
+  content: '';
+  position: absolute;
+  left: 90px;
+  bottom: -12px;
+  width: 150px;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-rich-blue), var(--color-vibrant-green));
+  opacity: 0.6;
+  animation: roadmapAccent 7s ease-in-out infinite;
 }
 
 .experience-page--roadmap .experience-hero__icon {
