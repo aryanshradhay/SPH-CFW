@@ -37,6 +37,7 @@ const JobSkillsMatcher = () => {
   const navigate = useNavigate();
   const { jobs, divisions, skillIDF } = useJobDataset();
   const [selectedJob, setSelectedJob] = useState(null);
+  const [detailView, setDetailView] = useState('overview');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedDivision, setSelectedDivision] = useState('all');
   const [myPickerDivision, setMyPickerDivision] = useState('all');
@@ -49,6 +50,15 @@ const JobSkillsMatcher = () => {
     if (typeof window === 'undefined') return '';
     return window.localStorage.getItem('eva-my-position') || '';
   });
+
+  const detailTabs = useMemo(
+    () => [
+      { id: 'overview', label: 'Overview', icon: Compass },
+      { id: 'skills', label: 'Skill DNA', icon: Users },
+      { id: 'pathways', label: 'Transitions', icon: TrendingUp },
+    ],
+    []
+  );
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -163,6 +173,10 @@ const JobSkillsMatcher = () => {
     }
   }, [myPickerJobs, myPickerTitle]);
 
+  useEffect(() => {
+    setDetailView('overview');
+  }, [selectedJob]);
+
   useRevealOnScroll(
     selectedJob ? selectedJob.id : 0,
     filteredJobs.length,
@@ -170,6 +184,36 @@ const JobSkillsMatcher = () => {
     myPosition ? myPosition.id : 0,
     recommendationsForMyPosition.length
   );
+
+  const selectedJobHighlights = useMemo(() => {
+    if (!selectedJob) return [];
+    return [...(selectedJob.skillOrder || [])]
+      .sort((a, b) => {
+        const aVal = selectedJob.skillMap?.[a] ?? 0;
+        const bVal = selectedJob.skillMap?.[b] ?? 0;
+        if (bVal === aVal) return a.localeCompare(b);
+        return bVal - aVal;
+      })
+      .slice(0, 4);
+  }, [selectedJob]);
+
+  const selectedJobSummary = useMemo(() => {
+    if (!selectedJob) {
+      return { objective: '', cluster: '', clusterDef: '', description: '' };
+    }
+
+    return {
+      objective: (selectedJob.objective || '').trim(),
+      cluster: (selectedJob.cluster || '').trim(),
+      clusterDef: (selectedJob.clusterDef || '').trim(),
+      description: (selectedJob.description || '').trim(),
+    };
+  }, [selectedJob]);
+
+  const baselineSimilarity = useMemo(() => {
+    if (!selectedJob || !myPosition) return null;
+    return Math.round(simScore(myPosition, selectedJob));
+  }, [selectedJob, myPosition, simScore]);
 
   const handleBrowseRoles = () => {
     if (filtersRef.current) {
@@ -582,7 +626,11 @@ const JobSkillsMatcher = () => {
                         {selectedJob.division}
                       </p>
                     </div>
-                    <button className="button button--icon" onClick={() => setSelectedJob(null)} aria-label="Close details">
+                    <button
+                      className="button button--icon"
+                      onClick={() => setSelectedJob(null)}
+                      aria-label="Close details"
+                    >
                       <X className="icon-sm" />
                     </button>
                   </div>
@@ -632,133 +680,250 @@ const JobSkillsMatcher = () => {
                       </button>
                     </div>
 
-                    <section className="explorer-detail__section">
-                      <h4>Skill profile</h4>
-                      <div className="explorer-detail__skills">
-                        {selectedJob.skillOrder.length ? (
-                          <>
-                            {selectedJobSkillsByType.functional.length > 0 && (
-                              <div>
-                                <h5>Functional</h5>
-                                {selectedJobSkillsByType.functional.map((name, i) => {
-                                  const val = selectedJob.skillMap[name] ?? 0;
+                    <div className="explorer-detail__tabs" role="tablist" aria-label="Job detail sections">
+                      {detailTabs.map(({ id, label, icon: Icon }) => {
+                        const tabId = `explorer-detail-tab-${id}`;
+                        const panelId = `explorer-detail-panel-${id}`;
+                        return (
+                          <button
+                            key={id}
+                            type="button"
+                            id={tabId}
+                            className={`explorer-detail__tab ${detailView === id ? 'is-active' : ''}`}
+                            role="tab"
+                            aria-selected={detailView === id}
+                            aria-controls={panelId}
+                            onClick={() => setDetailView(id)}
+                          >
+                            <Icon className="icon-xs" aria-hidden="true" />
+                            <span>{label}</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="explorer-detail__content">
+                      <section
+                        id="explorer-detail-panel-overview"
+                        role="tabpanel"
+                        aria-labelledby="explorer-detail-tab-overview"
+                        className={`explorer-detail__panel ${detailView === 'overview' ? 'is-active' : ''}`}
+                        hidden={detailView !== 'overview'}
+                      >
+                        <div className="explorer-overview">
+                          <article className="explorer-overview__card explorer-overview__card--purpose">
+                            <h4>Role purpose</h4>
+                            <p>
+                              {selectedJobSummary.objective || selectedJobSummary.description ||
+                                'This role contributes to the framework with defined responsibilities.'}
+                            </p>
+                          </article>
+
+                          {(selectedJobSummary.cluster || selectedJobSummary.clusterDef) && (
+                            <article className="explorer-overview__card explorer-overview__card--cluster">
+                              <h4>Cluster focus</h4>
+                              {selectedJobSummary.cluster && (
+                                <p className="explorer-overview__meta">
+                                  <strong>Cluster:</strong> {selectedJobSummary.cluster}
+                                </p>
+                              )}
+                              {selectedJobSummary.clusterDef && <p>{selectedJobSummary.clusterDef}</p>}
+                            </article>
+                          )}
+
+                          <article className="explorer-overview__card explorer-overview__card--meta">
+                            <h4>Role snapshot</h4>
+                            <ul className="explorer-overview__list">
+                              <li>
+                                <span>Division</span>
+                                <strong>{selectedJob.division}</strong>
+                              </li>
+                              {selectedJobSummary.cluster && (
+                                <li>
+                                  <span>Position cluster</span>
+                                  <strong>{selectedJobSummary.cluster}</strong>
+                                </li>
+                              )}
+                              <li>
+                                <span>Skills mapped</span>
+                                <strong>{selectedJob.skillOrder.length}</strong>
+                              </li>
+                              {baselineSimilarity != null && (
+                                <li>
+                                  <span>Match vs My Position</span>
+                                  <strong>{baselineSimilarity}%</strong>
+                                </li>
+                              )}
+                            </ul>
+                          </article>
+
+                          {selectedJobHighlights.length > 0 && (
+                            <article className="explorer-overview__card explorer-overview__card--skills">
+                              <h4>Signature skills</h4>
+                              <ul className="explorer-overview__skills">
+                                {selectedJobHighlights.map((name) => {
+                                  const level = selectedJob.skillMap[name] ?? 0;
                                   const def = selectedJob.skillDefByName?.[name];
                                   return (
-                                    <div key={name + i} className="skill-bar">
-                                      <div className="skill-bar__meta">
+                                    <li key={name}>
+                                      <div className="explorer-overview__skill-header">
                                         <span>{name}</span>
-                                        <span>{val}/5</span>
+                                        <span>{level}/5</span>
                                       </div>
-                                      {def && <div className="skill-bar__description">{def}</div>}
-                                      <div className="bar">
-                                        <div className="bar-fill blue" style={{ width: (val / 5) * 100 + '%' }} />
-                                      </div>
-                                    </div>
+                                      {def && <p>{def}</p>}
+                                    </li>
                                   );
                                 })}
-                              </div>
-                            )}
-                            {selectedJobSkillsByType.soft.length > 0 && (
-                              <div>
-                                <h5>Soft</h5>
-                                {selectedJobSkillsByType.soft.map((name, i) => {
-                                  const val = selectedJob.skillMap[name] ?? 0;
-                                  const def = selectedJob.skillDefByName?.[name];
-                                  return (
-                                    <div key={name + i} className="skill-bar">
-                                      <div className="skill-bar__meta">
-                                        <span>{name}</span>
-                                        <span>{val}/5</span>
-                                      </div>
-                                      {def && <div className="skill-bar__description">{def}</div>}
-                                      <div className="bar">
-                                        <div className="bar-fill blue" style={{ width: (val / 5) * 100 + '%' }} />
-                                      </div>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            )}
-                            {selectedJobSkillsByType.unknown.length > 0 && (
-                              <div>
-                                <h5>Other</h5>
-                                {selectedJobSkillsByType.unknown.map((name, i) => {
-                                  const val = selectedJob.skillMap[name] ?? 0;
-                                  return (
-                                    <div key={name + i} className="skill-bar">
-                                      <div className="skill-bar__meta">
-                                        <span>{name}</span>
-                                        <span>{val}/5</span>
-                                      </div>
-                                      <div className="bar">
-                                        <div className="bar-fill blue" style={{ width: (val / 5) * 100 + '%' }} />
-                                      </div>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            )}
-                          </>
-                        ) : (
-                          <p>No skill data available for this title.</p>
-                        )}
-                      </div>
-                    </section>
+                              </ul>
+                            </article>
+                          )}
+                        </div>
+                      </section>
 
-                    <section className="explorer-detail__section">
-                      <h4 className="explorer-detail__section-title">
-                        <TrendingUp className="icon-sm" /> Similar pathways
-                      </h4>
-
-                      {matchingJobsForSelected.length > 0 ? (
-                        <div className="explorer-similar-list">
-                          {matchingJobsForSelected.map((job) => {
-                            const badge = getSimilarityBadge(job.similarity);
-                            const toneClass = getSimilarityTone(job.similarity);
-                            const strengths = job.summary.strengths.map((s) => s.name).join(', ');
-                            const gaps = job.summary.gaps.map((g) => `${g.name} (+${g.gap})`).join(', ');
-                            return (
-                              <div key={job.id} className={`explorer-similar ${toneClass}`}>
-                                <div className="explorer-similar__header">
-                                  <h5>{job.title}</h5>
-                                  <span className={badge.color}>{badge.label}</span>
-                                </div>
-                                <p className="explorer-similar__meta">{job.division}</p>
-                                {(strengths || gaps) && (
-                                  <div className="explorer-similar__summary">
-                                    {strengths && (
-                                      <div>
-                                        <strong>Strengths:</strong> {strengths}
-                                      </div>
-                                    )}
-                                    {gaps && (
-                                      <div>
-                                        <strong>Gaps:</strong> {gaps}
-                                      </div>
-                                    )}
+                      <section
+                        id="explorer-detail-panel-skills"
+                        role="tabpanel"
+                        aria-labelledby="explorer-detail-tab-skills"
+                        className={`explorer-detail__panel ${detailView === 'skills' ? 'is-active' : ''}`}
+                        hidden={detailView !== 'skills'}
+                      >
+                        <div className="explorer-detail__section">
+                          <h4>Skill profile</h4>
+                          <div className="explorer-detail__skills">
+                            {selectedJob.skillOrder.length ? (
+                              <>
+                                {selectedJobSkillsByType.functional.length > 0 && (
+                                  <div className="explorer-skill-group">
+                                    <h5>Functional</h5>
+                                    {selectedJobSkillsByType.functional.map((name, i) => {
+                                      const val = selectedJob.skillMap[name] ?? 0;
+                                      const def = selectedJob.skillDefByName?.[name];
+                                      return (
+                                        <div key={name + i} className="skill-bar">
+                                          <div className="skill-bar__meta">
+                                            <span>{name}</span>
+                                            <span>{val}/5</span>
+                                          </div>
+                                          {def && <div className="skill-bar__description">{def}</div>}
+                                          <div className="bar">
+                                            <div className="bar-fill blue" style={{ width: (val / 5) * 100 + '%' }} />
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
                                   </div>
                                 )}
-                                <button
-                                  className="chip chip--ghost"
-                                  onClick={() =>
-                                    navigate('/roadmap', {
-                                      state: { currentTitle: selectedJob.title, targetTitle: job.title },
-                                    })
-                                  }
-                                >
-                                  Plan in Roadmap
-                                </button>
-                              </div>
-                            );
-                          })}
+                                {selectedJobSkillsByType.soft.length > 0 && (
+                                  <div className="explorer-skill-group">
+                                    <h5>Soft</h5>
+                                    {selectedJobSkillsByType.soft.map((name, i) => {
+                                      const val = selectedJob.skillMap[name] ?? 0;
+                                      const def = selectedJob.skillDefByName?.[name];
+                                      return (
+                                        <div key={name + i} className="skill-bar">
+                                          <div className="skill-bar__meta">
+                                            <span>{name}</span>
+                                            <span>{val}/5</span>
+                                          </div>
+                                          {def && <div className="skill-bar__description">{def}</div>}
+                                          <div className="bar">
+                                            <div className="bar-fill blue" style={{ width: (val / 5) * 100 + '%' }} />
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                                {selectedJobSkillsByType.unknown.length > 0 && (
+                                  <div className="explorer-skill-group">
+                                    <h5>Other</h5>
+                                    {selectedJobSkillsByType.unknown.map((name, i) => {
+                                      const val = selectedJob.skillMap[name] ?? 0;
+                                      return (
+                                        <div key={name + i} className="skill-bar">
+                                          <div className="skill-bar__meta">
+                                            <span>{name}</span>
+                                            <span>{val}/5</span>
+                                          </div>
+                                          <div className="bar">
+                                            <div className="bar-fill blue" style={{ width: (val / 5) * 100 + '%' }} />
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                )}
+                              </>
+                            ) : (
+                              <p>No skill data available for this title.</p>
+                            )}
+                          </div>
                         </div>
-                      ) : (
-                        <div className="explorer-empty explorer-empty--inline">
-                          <TrendingUp className="icon-md" />
-                          <p>No similar positions found yet.</p>
+                      </section>
+
+                      <section
+                        id="explorer-detail-panel-pathways"
+                        role="tabpanel"
+                        aria-labelledby="explorer-detail-tab-pathways"
+                        className={`explorer-detail__panel ${detailView === 'pathways' ? 'is-active' : ''}`}
+                        hidden={detailView !== 'pathways'}
+                      >
+                        <div className="explorer-detail__section">
+                          <h4 className="explorer-detail__section-title">
+                            <TrendingUp className="icon-sm" /> Similar pathways
+                          </h4>
+
+                          {matchingJobsForSelected.length > 0 ? (
+                            <div className="explorer-similar-list">
+                              {matchingJobsForSelected.map((job) => {
+                                const badge = getSimilarityBadge(job.similarity);
+                                const toneClass = getSimilarityTone(job.similarity);
+                                const strengths = job.summary.strengths.map((s) => s.name).join(', ');
+                                const gaps = job.summary.gaps.map((g) => `${g.name} (+${g.gap})`).join(', ');
+                                return (
+                                  <div key={job.id} className={`explorer-similar ${toneClass}`}>
+                                    <div className="explorer-similar__header">
+                                      <h5>{job.title}</h5>
+                                      <span className={badge.color}>{badge.label}</span>
+                                    </div>
+                                    <p className="explorer-similar__meta">{job.division}</p>
+                                    {(strengths || gaps) && (
+                                      <div className="explorer-similar__summary">
+                                        {strengths && (
+                                          <div>
+                                            <strong>Strengths:</strong> {strengths}
+                                          </div>
+                                        )}
+                                        {gaps && (
+                                          <div>
+                                            <strong>Gaps:</strong> {gaps}
+                                          </div>
+                                        )}
+                                      </div>
+                                    )}
+                                    <button
+                                      className="chip chip--ghost"
+                                      onClick={() =>
+                                        navigate('/roadmap', {
+                                          state: { currentTitle: selectedJob.title, targetTitle: job.title },
+                                        })
+                                      }
+                                    >
+                                      Plan in Roadmap
+                                    </button>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <div className="explorer-empty explorer-empty--inline">
+                              <TrendingUp className="icon-md" />
+                              <p>No similar positions found yet.</p>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </section>
+                      </section>
+                    </div>
                   </div>
                 </aside>
               )}

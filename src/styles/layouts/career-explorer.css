@@ -618,11 +618,12 @@
 
 .explorer-layout {
   display: grid;
-  gap: 2rem;
+  gap: clamp(1.75rem, 3vw, 2.5rem);
+  align-items: start;
 }
 
 .explorer-layout--split {
-  grid-template-columns: minmax(0, 3fr) minmax(320px, 2fr);
+  grid-template-columns: minmax(260px, 1.5fr) minmax(0, 2.5fr);
 }
 
 .explorer-results {
@@ -768,6 +769,7 @@
   max-height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .explorer-detail__header {
@@ -810,13 +812,14 @@
   padding: 1.75rem;
   display: flex;
   flex-direction: column;
-  gap: 1.75rem;
+  gap: 1.5rem;
 }
 
 .explorer-detail__quick-actions {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.85rem;
+  margin-bottom: 0.5rem;
 }
 
 .explorer-action {
@@ -859,6 +862,153 @@
 .explorer-action:focus-visible {
   outline: 3px solid var(--color-vibrant-cyan);
   outline-offset: 3px;
+}
+
+.explorer-detail__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.explorer-detail__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid rgba(80, 50, 145, 0.28);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--color-rich-purple);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.explorer-detail__tab:is(:hover, :focus-visible) {
+  border-color: var(--color-vibrant-magenta);
+  transform: translateY(-1px);
+}
+
+.explorer-detail__tab.is-active {
+  background: var(--color-rich-purple);
+  color: var(--color-neutral-white);
+  border-color: var(--color-vibrant-magenta);
+  box-shadow: 0 16px 28px rgba(32, 24, 82, 0.24);
+}
+
+.explorer-detail__tab:focus-visible {
+  outline: 3px solid var(--color-vibrant-cyan);
+  outline-offset: 3px;
+}
+
+.explorer-detail__content {
+  position: relative;
+  min-height: 260px;
+}
+
+.explorer-detail__panel {
+  display: grid;
+  gap: 1.5rem;
+  opacity: 0;
+  transform: translateY(16px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.explorer-detail__panel.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.explorer-overview {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.explorer-overview__card {
+  border-radius: 22px;
+  border: 1px solid rgba(80, 50, 145, 0.18);
+  background: var(--surface);
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 18px 38px rgba(32, 24, 82, 0.14);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.explorer-overview__card h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-rich-purple);
+}
+
+.explorer-overview__meta {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--color-rich-blue);
+}
+
+.explorer-overview__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.explorer-overview__list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: var(--color-rich-purple);
+}
+
+.explorer-overview__list span {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.explorer-overview__list strong {
+  color: var(--color-rich-purple);
+  font-size: 0.95rem;
+}
+
+.explorer-overview__skills {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.explorer-overview__skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-weight: 600;
+  color: var(--color-rich-purple);
+}
+
+.explorer-overview__skills li p {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--color-rich-blue);
+}
+
+.explorer-skill-group {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.explorer-skill-group h5 {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-rich-purple);
 }
 
 .explorer-detail__section {
@@ -1054,6 +1204,18 @@
 
 .explorer-recommendation.tone-red {
   border-color: var(--color-rich-red);
+}
+
+@media (min-width: 880px) {
+  .explorer-overview {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (min-width: 1040px) {
+  .explorer-detail__content {
+    min-height: 320px;
+  }
 }
 
 @media (max-width: 960px) {

@@ -467,23 +467,11 @@
   }
 }
 
-.title-lg { font-size: 26px; font-weight: 700; color: var(--color-rich-purple); }
 .title-md { font-size: 20px; font-weight: 700; color: var(--color-rich-purple); }
-.title-sm { font-size: 16px; font-weight: 600; color: var(--color-rich-purple); }
 
 .text-600 { font-weight: 600; }
 .text-xs { font-size: 12px; }
-.text-sm { font-size: 15px; }
-.text-md { font-size: 16px; }
-.text-blue { color: var(--color-rich-blue); }
-.text-green { color: var(--color-rich-green); }
-.text-yellow { color: var(--color-vibrant-yellow); }
-.text-red { color: var(--color-rich-red); }
 
-.muted { color: var(--muted); }
-.lh { line-height: 1.6; }
-
-.gap-12 { gap: 12px; }
 .gap-8 { gap: 8px; }
 .mr-6 { margin-right: 6px; }
 .mr-8 { margin-right: 8px; }
@@ -493,34 +481,6 @@
 .mb-12 { margin-bottom: 12px; }
 .mb-16 { margin-bottom: 16px; }
 .mt-4 { margin-top: 4px; }
-
-.brand-wordmark {
-  font-family: 'Merck', 'Verdana';
-  font-weight: 400 !important;
-  font-size: 36px;
-  line-height: 1;
-  color: var(--color-rich-purple);
-  text-decoration: none;
-  display: inline-block;
-  margin-right: 8px;
-}
-
-.brand-logo { height: 40px; width: auto; display: block; }
-
-.hide-mobile { display: none; }
-@media (min-width: 768px) { .hide-mobile { display: initial; } }
-@media (max-width: 767.98px) { .show-mobile { display: initial; } }
-@media (min-width: 768px) { .show-mobile { display: none; } }
-@media (max-width: 767.98px) { .brand-wordmark { font-size: 28px; } }
-
-.toolbar.card {
-  padding: 16px;
-  border: 2px solid var(--color-border-soft);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  background: var(--surface);
-  margin-bottom: 24px;
-}
 
 .toolbar-grid {
   display: grid;
