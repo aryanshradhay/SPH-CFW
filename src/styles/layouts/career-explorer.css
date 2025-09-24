@@ -1,41 +1,20 @@
-/* SPH Career Explorer layout styles */
-
-.explorer-page {
-  background: var(--color-neutral-white);
-}
-
 .explorer-page .hero {
   padding-bottom: 5rem;
 }
 
-.explorer-hero__status-card {
-  background: rgba(255, 255, 255, 0.14);
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  border-radius: 24px;
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.1rem;
-  box-shadow: 0 24px 54px rgba(8, 6, 30, 0.28);
-  color: var(--color-neutral-white);
-}
+
 .explorer-hero__status-heading {
   display: grid;
   gap: 0.6rem;
 }
 
 .explorer-hero__status-card .experience-hero__status-label {
-  color: rgba(255, 255, 255, 0.72);
+  color:var(--color-neutral-white);
 }
 
 .explorer-hero__status-card .experience-hero__status-value {
   color: var(--color-neutral-white);
   font-size: clamp(1.4rem, 2.4vw, 1.6rem);
-}
-
-.explorer-hero__status-card .experience-hero__status-text {
-  color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
 }
 
 .explorer-hero__status-pill {
@@ -68,7 +47,7 @@
   letter-spacing: 0.08em;
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--color-neutral-white);
 }
 
 .explorer-hero__select-wrapper {
@@ -79,8 +58,8 @@
   width: 100%;
   padding: 0.6rem 0.85rem;
   border-radius: 14px;
-  border: 1px solid rgba(80, 50, 145, 0.2);
-  background: var(--surface);
+  border: 1px var(--color-vibrant-magenta);
+  background: var(--color-neutral-white);
   color: var(--color-text);
   font-weight: 600;
   letter-spacing: 0.01em;
@@ -89,13 +68,9 @@
   box-shadow: 0 8px 20px rgba(32, 24, 82, 0.08);
 }
 
-.explorer-hero__select:hover {
-  border-color: rgba(80, 50, 145, 0.4);
-}
-
 .explorer-hero__select:focus {
   outline: none;
-  border-color: var(--color-rich-purple);
+  border-color: var(--color-rich-green);
   box-shadow: 0 0 0 3px rgba(80, 50, 145, 0.18);
 }
 
@@ -113,7 +88,7 @@
 .explorer-hero__helper {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--color-neutral-white);
 }
 
 .explorer-hero__form-actions {
@@ -155,7 +130,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.78rem;
-  color: rgba(255, 255, 255, 0.72);
+  color: var(--color-neutral-white);
 }
 
 .explorer-hero__actions {
@@ -362,9 +337,12 @@
   box-shadow: 0 42px 110px rgba(20, 12, 52, 0.35);
 }
 
-.experience-page--explorer .experience-hero__title,
+.experience-page--explorer .experience-hero__title{
+  color: var(--color-vibrant-magenta);
+}
+
 .experience-page--explorer .experience-hero__subtitle {
-  color: var(--color-neutral-white);
+  color: var(--color-vibrant-magenta);
 }
 
 .experience-page--explorer .experience-hero__subtitle {
@@ -656,8 +634,8 @@
 .explorer-group {
   padding: 2rem;
   border-radius: 28px;
-  background: var(--color-rich-purple);
-  border: 3px solid var(--color-vibrant-magenta);
+  background: var(--color-neutral-white);
+  border: 3px solid var(--color-rich-purple);
   color: var(--color-neutral-white);
 }
 
@@ -706,18 +684,7 @@
   z-index: 0;
 }
 
-.explorer-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(150deg, rgba(80, 50, 145, 0.16), rgba(255, 214, 238, 0));
-  opacity: 0;
-  transform: translateY(16px) scale(0.96);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  pointer-events: none;
-  z-index: -1;
-}
+
 
 .explorer-card__title {
   font-size: 1rem;
@@ -726,10 +693,14 @@
   position: relative;
   z-index: 1;
 }
+.explorer-card.is-active {
+  color: var(--color-neutral-white);
+
+}
 
 .explorer-card__meta {
   font-size: 0.85rem;
-  color: var(--color-rich-blue);
+  color: var(--color-vibrant-magenta);
   position: relative;
   z-index: 1;
 }
@@ -757,16 +728,6 @@
   z-index: 1;
 }
 
-.explorer-card__summary {
-  margin-top: 0.6rem;
-  font-size: 0.78rem;
-  line-height: 1.5;
-  color: var(--muted);
-  position: relative;
-  z-index: 1;
-  transition: color 0.25s ease;
-  overflow-wrap: anywhere;
-}
 
 .explorer-card:hover .explorer-card__summary,
 .explorer-card.is-active .explorer-card__summary,
@@ -777,9 +738,9 @@
 .explorer-card:hover,
 .explorer-card.is-active {
   transform: translateY(-6px);
-  border-color: var(--color-rich-blue);
+  border-color: var(--color-vibrant-magenta);
   box-shadow: 0 20px 45px rgba(32, 24, 82, 0.16);
-  background: linear-gradient(160deg, rgba(255, 255, 255, 0.98), rgba(237, 240, 255, 0.98));
+  background: var(--color-rich-purple);
 }
 
 .explorer-card:hover::after,

@@ -1,7 +1,7 @@
 // src/utils/jobDataUtils.js
 import Papa from 'papaparse';
 
-export const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
+export const CSV_URL = (process.env.PUBLIC_URL || '') + '/position-skills.csv';
 
 export const normKey = (s) => String(s || '').trim();
 

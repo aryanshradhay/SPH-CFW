@@ -231,6 +231,7 @@ const JobSkillsMatcher = () => {
               </p>
             </div>
           </div>
+
           <div className="experience-hero__grid">
             <div className="experience-hero__status-card explorer-hero__status-card">
               <div className="explorer-hero__status-heading">
@@ -553,9 +554,6 @@ const JobSkillsMatcher = () => {
                               {badge && <span className={`explorer-card__badge ${badge.color}`}>{badge.label}</span>}
                               {clusterLabel && (
                                 <span className="explorer-card__cluster">{clusterLabel}</span>
-                              )}
-                              {summaryText && (
-                                <span className="explorer-card__summary">{summaryText}</span>
                               )}
                             </button>
                           );
