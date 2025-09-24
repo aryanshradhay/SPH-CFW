@@ -24,8 +24,6 @@ export default function HomePage() {
         primaryCta={{ label: 'Launch Career Explorer', to: '/career-explorer' }}
         secondaryCta={{ label: 'Browse SPH functions', onClick: handleExplore }}
       />
-
-
       <FrameworkFunctions ref={functionsRef} functions={frameworkFunctions} />
     </div>
   );

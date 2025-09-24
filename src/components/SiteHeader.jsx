@@ -13,26 +13,34 @@ const navItems = [
     to: '/roadmap',
     isActive: (pathname) => pathname.startsWith('/roadmap'),
   },
-  { label: 'Play Lab', to: '/play-lab', isActive: (pathname) => pathname.startsWith('/play-lab') },
+  {
+    label: 'Play Lab',
+    to: '/play-lab',
+    isActive: (pathname) => pathname.startsWith('/play-lab'),
+  },
 ];
 
 export default function SiteHeader() {
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   return (
     <header className="top-bar" aria-label="Primary navigation">
-      <Link to="/" className="top-bar__brand">Merck</Link>
+      <Link to="/" className="top-bar__brand">
+        Merck
+      </Link>
       <nav className="top-bar__menu">
-        {navItems.map((item) => {
-          const active = item.isActive(location.pathname);
+        {navItems.map(({ label, to, isActive }) => {
+          const className = ['top-bar__link'];
+          if (isActive(pathname)) className.push('top-bar__link--active');
+
           return (
             <Link
-              key={item.to}
-              to={item.to}
-              className={`top-bar__link${active ? ' top-bar__link--active' : ''}`}
-              aria-current={active ? 'page' : undefined}
+              key={to}
+              to={to}
+              className={className.join(' ')}
+              aria-current={className.length > 1 ? 'page' : undefined}
             >
-              {item.label}
+              {label}
             </Link>
           );
         })}
