@@ -6,7 +6,7 @@ import {
   MapPin,
   Sparkles,
   Target,
-  Scales,
+  Scale,
   Layers,
   ArrowRight,
   Star,
@@ -275,7 +275,7 @@ export default function JobInsightCanvas({
               </select>
               {compareInsights && (
                 <p className="insight-compare__score">
-                  <Scales className="icon-xs" /> {formatSimilarity(compareInsights.similarity)}
+                  <Scale className="icon-xs" /> {formatSimilarity(compareInsights.similarity)}
                 </p>
               )}
             </div>

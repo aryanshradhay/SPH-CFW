@@ -154,6 +154,8 @@ const JobSkillsMatcher = () => {
     }
   }, [myPickerJobs, myPickerTitle]);
 
+  const [detailView, setDetailView] = useState(false);
+
   useEffect(() => {
     setDetailView('overview');
   }, [selectedJob]);
