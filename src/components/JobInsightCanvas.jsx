@@ -29,132 +29,149 @@ const typeLabels = {
   unknown: 'Additional',
 };
 
-export default function JobInsightCanvas({
-  job,
-  onClose,
-  onOpenJob,
-  onSaveMyPosition,
-  onPlanRoadmap,
-  summary,
-  highlights,
-  skillsByType,
-  baselineSimilarity,
-  matchingJobs,
-  recommendations,
-  myPosition,
-  jobs,
-  simScore,
-}) {
-  const [compareTargetId, setCompareTargetId] = useState('');
+const JobInsightCanvas = React.forwardRef(
+  (
+    {
+      job,
+      onClose,
+      onOpenJob,
+      onSaveMyPosition,
+      onPlanRoadmap,
+      summary,
+      highlights,
+      skillsByType,
+      baselineSimilarity,
+      matchingJobs,
+      recommendations,
+      myPosition,
+      jobs,
+      simScore,
+    },
+    ref
+  ) => {
+    const [compareTargetId, setCompareTargetId] = useState('');
 
-  useEffect(() => {
-    setCompareTargetId('');
-  }, [job?.id]);
+    useEffect(() => {
+      setCompareTargetId('');
+    }, [job?.id]);
 
-  const compareJob = useMemo(() => {
-    if (!compareTargetId) return null;
-    return jobs.find((candidate) => String(candidate.id) === compareTargetId) || null;
-  }, [jobs, compareTargetId]);
+    const compareJob = useMemo(() => {
+      if (!compareTargetId) return null;
+      return jobs.find((candidate) => String(candidate.id) === compareTargetId) || null;
+    }, [jobs, compareTargetId]);
 
-  const compareInsights = useMemo(() => {
-    if (!compareJob) return null;
-    const similarity = simScore(job, compareJob);
-    const summaryRows = summarizeTransition(job, compareJob, 6);
-    return { similarity, summaryRows };
-  }, [job, compareJob, simScore]);
+    const compareInsights = useMemo(() => {
+      if (!compareJob) return null;
+      const similarity = simScore(job, compareJob);
+      const summaryRows = summarizeTransition(job, compareJob, 6);
+      return { similarity, summaryRows };
+    }, [job, compareJob, simScore]);
 
-  const skillLadder = useMemo(() => {
-    return (job.skillOrder || [])
-      .map((name) => ({
-        name,
-        level: job.skillMap?.[name] ?? 0,
-        definition: job.skillDefByName?.[name] || '',
-        type: classifyType(job.skillTypeByName?.[name]),
-      }))
-      .sort((a, b) => {
-        if (b.level === a.level) return a.name.localeCompare(b.name);
-        return b.level - a.level;
-      })
-      .slice(0, 8);
-  }, [job]);
+    const skillLadder = useMemo(() => {
+      return (job.skillOrder || [])
+        .map((name) => ({
+          name,
+          level: job.skillMap?.[name] ?? 0,
+          definition: job.skillDefByName?.[name] || '',
+          type: classifyType(job.skillTypeByName?.[name]),
+        }))
+        .sort((a, b) => {
+          if (b.level === a.level) return a.name.localeCompare(b.name);
+          return b.level - a.level;
+        })
+        .slice(0, 8);
+    }, [job]);
 
-  const skillMix = useMemo(() => {
-    const mix = {
-      functional: skillsByType?.functional?.length || 0,
-      soft: skillsByType?.soft?.length || 0,
-      unknown: skillsByType?.unknown?.length || 0,
+    const skillMix = useMemo(() => {
+      const mix = {
+        functional: skillsByType?.functional?.length || 0,
+        soft: skillsByType?.soft?.length || 0,
+        unknown: skillsByType?.unknown?.length || 0,
+      };
+      const total = Math.max(1, mix.functional + mix.soft + mix.unknown);
+      return {
+        mix,
+        percentages: {
+          functional: Math.round((mix.functional / total) * 100),
+          soft: Math.round((mix.soft / total) * 100),
+          unknown: Math.round((mix.unknown / total) * 100),
+        },
+        total,
+      };
+    }, [skillsByType]);
+
+    const sharedCluster =
+      compareJob && job.cluster && compareJob.cluster && job.cluster === compareJob.cluster;
+
+    const sharedSkills = useMemo(() => {
+      if (!compareJob) return [];
+      const shared = (job.skillOrder || []).filter((name) => compareJob.skillOrder?.includes(name));
+      return shared
+        .map((name) => ({
+          name,
+          current: job.skillMap?.[name] ?? 0,
+          target: compareJob.skillMap?.[name] ?? 0,
+        }))
+        .sort((a, b) => (b.current + b.target) / 2 - (a.current + a.target) / 2)
+        .slice(0, 6);
+    }, [job, compareJob]);
+
+    const bridgeSkills = useMemo(() => {
+      if (!compareInsights) return [];
+      return compareInsights.summaryRows.gaps.map((gap) => ({
+        ...gap,
+        displayType: typeLabels[gap.type] || 'Additional',
+      }));
+    }, [compareInsights]);
+
+    const strengths = useMemo(() => {
+      if (!compareInsights) return [];
+      return compareInsights.summaryRows.strengths.map((strength) => ({
+        ...strength,
+        displayType: typeLabels[strength.type] || 'Additional',
+      }));
+    }, [compareInsights]);
+
+    const similarityBadge = baselineSimilarity != null ? getSimilarityBadge(baselineSimilarity) : null;
+
+    const handleCompareChange = (event) => {
+      setCompareTargetId(event.target.value);
     };
-    const total = Math.max(1, mix.functional + mix.soft + mix.unknown);
-    return {
-      mix,
-      percentages: {
-        functional: Math.round((mix.functional / total) * 100),
-        soft: Math.round((mix.soft / total) * 100),
-        unknown: Math.round((mix.unknown / total) * 100),
-      },
-      total,
+
+    const handleOpenSimilar = (targetJob) => {
+      onOpenJob(targetJob);
     };
-  }, [skillsByType]);
 
-  const sharedCluster = compareJob && job.cluster && compareJob.cluster && job.cluster === compareJob.cluster;
+    const handleSetAsCurrent = () => {
+      onSaveMyPosition(job);
+    };
 
-  const sharedSkills = useMemo(() => {
-    if (!compareJob) return [];
-    const shared = (job.skillOrder || []).filter((name) => compareJob.skillOrder?.includes(name));
-    return shared
-      .map((name) => ({
-        name,
-        current: job.skillMap?.[name] ?? 0,
-        target: compareJob.skillMap?.[name] ?? 0,
-      }))
-      .sort((a, b) => (b.current + b.target) / 2 - (a.current + a.target) / 2)
-      .slice(0, 6);
-  }, [job, compareJob]);
+    const handlePlanAsCurrent = () => {
+      onPlanRoadmap({ currentTitle: job.title });
+    };
 
-  const bridgeSkills = useMemo(() => {
-    if (!compareInsights) return [];
-    return compareInsights.summaryRows.gaps.map((gap) => ({
-      ...gap,
-      displayType: typeLabels[gap.type] || 'Additional',
-    }));
-  }, [compareInsights]);
+    const handlePlanAsTarget = () => {
+      const state = myPosition?.title
+        ? { currentTitle: myPosition.title, targetTitle: job.title }
+        : { targetTitle: job.title };
+      onPlanRoadmap(state);
+    };
 
-  const strengths = useMemo(() => {
-    if (!compareInsights) return [];
-    return compareInsights.summaryRows.strengths.map((strength) => ({
-      ...strength,
-      displayType: typeLabels[strength.type] || 'Additional',
-    }));
-  }, [compareInsights]);
+    if (!job) {
+      return null;
+    }
 
-  const similarityBadge = baselineSimilarity != null ? getSimilarityBadge(baselineSimilarity) : null;
+    const headingId = `job-insight-${job.id}`;
 
-  const handleCompareChange = (event) => {
-    setCompareTargetId(event.target.value);
-  };
-
-  const handleOpenSimilar = (targetJob) => {
-    onOpenJob(targetJob);
-  };
-
-  const handleSetAsCurrent = () => {
-    onSaveMyPosition(job);
-  };
-
-  const handlePlanAsCurrent = () => {
-    onPlanRoadmap({ currentTitle: job.title });
-  };
-
-  const handlePlanAsTarget = () => {
-    const state = myPosition?.title
-      ? { currentTitle: myPosition.title, targetTitle: job.title }
-      : { targetTitle: job.title };
-    onPlanRoadmap(state);
-  };
-
-  return (
-    <div className="insight-overlay" role="dialog" aria-modal="true" aria-label={`Details for ${job.title}`}>
-      <div className="insight-canvas">
+    return (
+      <aside
+        ref={ref}
+        className="insight-panel"
+        role="complementary"
+        aria-labelledby={headingId}
+        aria-label={`Details for ${job.title}`}
+      >
+        <div className="insight-canvas">
         <header className="insight-canvas__hero">
           <button className="insight-canvas__close" onClick={onClose} aria-label="Close job insight">
             <X className="icon-sm" />
@@ -165,7 +182,9 @@ export default function JobInsightCanvas({
               Back to explorer
             </button>
           </div>
-          <h2 className="insight-canvas__title">{job.title}</h2>
+          <h2 id={headingId} className="insight-canvas__title">
+            {job.title}
+          </h2>
           <p className="insight-canvas__meta">
             <MapPin className="icon-xs" /> {job.division}
           </p>
@@ -416,6 +435,10 @@ export default function JobInsightCanvas({
           </section>
         )}
       </div>
-    </div>
+    </aside>
   );
-}
+});
+
+JobInsightCanvas.displayName = 'JobInsightCanvas';
+
+export default JobInsightCanvas;
