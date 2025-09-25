@@ -35,6 +35,7 @@ const JobSkillsMatcher = () => {
   const filtersRef = useRef(null);
   const recommendationsRef = useRef(null);
   const resultsRef = useRef(null);
+  const insightRef = useRef(null);
 
   const [myPositionTitle, setMyPositionTitle] = useState(() => {
     if (typeof window === 'undefined') return '';
@@ -158,6 +159,12 @@ const JobSkillsMatcher = () => {
 
   useEffect(() => {
     setDetailView('overview');
+  }, [selectedJob]);
+
+  useEffect(() => {
+    if (selectedJob && insightRef.current) {
+      insightRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }, [selectedJob]);
 
   useRevealOnScroll(
@@ -628,6 +635,7 @@ const JobSkillsMatcher = () => {
           </section>
           {selectedJob && (
             <JobInsightCanvas
+              ref={insightRef}
               job={selectedJob}
               onClose={handleCloseJob}
               onOpenJob={handleOpenJob}
