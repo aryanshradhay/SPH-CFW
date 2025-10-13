@@ -1,4 +1,4 @@
-/* SPH Career Roadmap layout styles */
+﻿/* SPH Career Roadmap layout styles */
 
 .experience-page--roadmap .experience-hero {
   background: var(--color-rich-purple);
@@ -919,3 +919,42 @@
 .kind-other { background: var(--surface); }
 .kind-empty { background: var(--surface); }
 
+.roadmap-hero__status-wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.roadmap-hero__status-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.roadmap-hero__helper-bot .cbot_base {
+  --cbot-size: clamp(132px, 18vw, 190px);
+}
+
+.roadmap-hero__helper-bot {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .roadmap-hero__status-wrapper {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .roadmap-hero__helper-bot {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .roadmap-hero__status-body {
+    width: 100%;
+  }
+}

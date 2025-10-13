@@ -329,23 +329,25 @@
 .explorer-empty {
   padding: 3rem 2rem;
   border-radius: 28px;
-  border: 3px dashed var(--color-rich-purple);
-  background: var(--color-neutral-white);
+  border: 2px dashed var(--color-border-soft);
+  background: var(--surface);
   text-align: center;
   color: var(--color-rich-purple);
   display: grid;
   place-items: center;
   gap: 1rem;
+  box-shadow: none;
 }
 
 .explorer-empty svg {
-  color: var(--color-rich-blue);
+  color: var(--color-rich-purple);
 }
 
 .explorer-empty--inline {
   padding: 1.5rem;
   border-style: dashed;
   border-radius: 20px;
+  background: var(--surface);
 }
 
 @media (max-width: 960px) {

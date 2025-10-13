@@ -28,6 +28,7 @@ import {
 import '../styles/main.css';
 import '../styles/layouts/career-roadmap.css';
 import SiteHeader from './SiteHeader';
+import ChibiPixelBot from './ChibiPixelBot';
 
 const RoadmapDetails = ({ currentJob, targetJob }) => {
   const [va, vb, names] = useMemo(
@@ -103,7 +104,7 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
                 <div className="roadmap-card__header">
                   <h4>{s.name}</h4>
                   <span className="roadmap-card__range">
-                    {s.current}/5 → {s.target}/5
+                    {s.current}/5 -> {s.target}/5
                   </span>
                 </div>
                 <div className="roadmap-card__body">
@@ -381,25 +382,35 @@ export default function CareerRoadmap() {
           </div>
           <div className="experience-hero__grid">
             <div className="experience-hero__status-card">
-              {myPosition ? (
-                <>
-                  <span className="experience-hero__status-label">Saved starting role</span>
-                  <span className="experience-hero__status-value">{myPosition.title}</span>
-                  <button className="chip chip--ghost" type="button" onClick={scrollToPlanner}>
-                    Update or plan from here
-                  </button>
-                </>
-              ) : (
-                <>
-                  <span className="experience-hero__status-label">Ready to personalise?</span>
-                  <p className="experience-hero__status-text">
-                    Save your current role below to unlock curated transitions and faster planning.
-                  </p>
-                  <button className="chip-link" type="button" onClick={scrollToPlanner}>
-                    Save my position
-                  </button>
-                </>
-              )}
+              <div className="roadmap-hero__status-wrapper">
+                <div className="roadmap-hero__status-body">
+                  {myPosition ? (
+                    <>
+                      <span className="experience-hero__status-label">Saved starting role</span>
+                      <span className="experience-hero__status-value">{myPosition.title}</span>
+                      <button className="chip chip--ghost" type="button" onClick={scrollToPlanner}>
+                        Update or plan from here
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <span className="experience-hero__status-label">Ready to personalise?</span>
+                      <p className="experience-hero__status-text">
+                        Save your current role below to unlock curated transitions and faster planning.
+                      </p>
+                      <button className="chip-link" type="button" onClick={scrollToPlanner}>
+                        Save my position
+                      </button>
+                    </>
+                  )}
+                </div>
+                <ChibiPixelBot
+                  size="sm"
+                  animated
+                  alt=""
+                  className="roadmap-hero__helper-bot"
+                />
+              </div>
             </div>
             <div className="experience-hero__actions">
               <button type="button" className="button" onClick={scrollToPlanner}>

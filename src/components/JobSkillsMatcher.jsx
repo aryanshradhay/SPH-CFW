@@ -155,12 +155,6 @@ const JobSkillsMatcher = () => {
     }
   }, [myPickerJobs, myPickerTitle]);
 
-  const [detailView, setDetailView] = useState(false);
-
-  useEffect(() => {
-    setDetailView('overview');
-  }, [selectedJob]);
-
   useEffect(() => {
     if (selectedJob && insightRef.current) {
       insightRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -174,18 +168,6 @@ const JobSkillsMatcher = () => {
     myPosition ? myPosition.id : 0,
     recommendationsForMyPosition.length
   );
-
-  const selectedJobHighlights = useMemo(() => {
-    if (!selectedJob) return [];
-    return [...(selectedJob.skillOrder || [])]
-      .sort((a, b) => {
-        const aVal = selectedJob.skillMap?.[a] ?? 0;
-        const bVal = selectedJob.skillMap?.[b] ?? 0;
-        if (bVal === aVal) return a.localeCompare(b);
-        return bVal - aVal;
-      })
-      .slice(0, 4);
-  }, [selectedJob]);
 
   const selectedJobSummary = useMemo(() => {
     if (!selectedJob) {
@@ -353,7 +335,7 @@ const JobSkillsMatcher = () => {
                       <option value="">Select role...</option>
                       {myPickerJobs.map((job) => (
                         <option key={job.id} value={job.title}>
-                          {job.title} – {job.division}
+                          {job.title} - {job.division}
                         </option>
                       ))}
                     </select>
@@ -638,18 +620,12 @@ const JobSkillsMatcher = () => {
               ref={insightRef}
               job={selectedJob}
               onClose={handleCloseJob}
-              onOpenJob={handleOpenJob}
               onSaveMyPosition={handleSetMyPositionFromJob}
               onPlanRoadmap={handlePlanRoadmap}
               summary={selectedJobSummary}
-              highlights={selectedJobHighlights}
               skillsByType={selectedJobSkillsByType}
               baselineSimilarity={baselineSimilarity}
-              matchingJobs={matchingJobsForSelected}
-              recommendations={recommendationsForMyPosition}
               myPosition={myPosition}
-              jobs={jobs}
-              simScore={simScore}
             />
           )}
         </main>
