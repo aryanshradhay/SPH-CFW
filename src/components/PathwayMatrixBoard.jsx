@@ -4,8 +4,9 @@ import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import { Grid3x3, Dice5, Flag, Shuffle, HelpCircle, BookOpen } from 'lucide-react';
 import '../styles/main.css';
+import { POSITION_SKILLS_CSV_URL } from '../utils/datasets';
 
-const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
+const CSV_URL = POSITION_SKILLS_CSV_URL;
 const MATRIX_CSV_URL = (process.env.PUBLIC_URL || '') + '/pathway-matrix.csv';
 
 // ---------------- Utils ----------------
