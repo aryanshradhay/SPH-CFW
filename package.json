@@ -1,6 +1,6 @@
 {
-  "name": "job-skills-matcher",
-  "version": "0.1.0",
+  "name": "SPH_Career_Framework",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
