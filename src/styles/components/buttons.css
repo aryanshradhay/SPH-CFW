@@ -96,6 +96,36 @@
   outline-color: var(--color-rich-purple);
 }
 
+.feature-panel .button--ghost {
+  color: var(--color-neutral-white);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.feature-panel .button--ghost:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+.feature-panel .button--ghost:focus-visible {
+  outline-color: rgba(255, 255, 255, 0.6);
+}
+
+.feature-panel .button--secondary {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--color-neutral-white);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow: none;
+}
+
+.feature-panel .button--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.feature-panel .button--secondary:focus-visible {
+  outline-color: rgba(255, 255, 255, 0.6);
+}
+
 .button svg,
 .btn svg {
   flex-shrink: 0;
