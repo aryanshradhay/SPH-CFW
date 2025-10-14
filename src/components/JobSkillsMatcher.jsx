@@ -14,7 +14,7 @@ import useRevealOnScroll from '../hooks/useRevealOnScroll';
 import JobInsightCanvas from './JobInsightCanvas';
 import FeaturePanel from './FeaturePanel';
 import ErrorState from './ErrorState';
-import { FEEDBACK_LINKS, FEEDBACK_FORM_URL, IMPROVEMENT_FORM_URL } from '../data/feedbackLinks';
+import {IMPROVEMENT_FORM_URL } from '../data/feedbackLinks';
 
 /* ------------------------- Main Component (Single Page) ------------------------- */
 const JobSkillsMatcher = () => {
