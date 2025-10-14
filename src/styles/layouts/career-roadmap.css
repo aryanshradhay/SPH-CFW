@@ -425,6 +425,17 @@
   color: var(--color-rich-purple);
 }
 
+.roadmap-card__training a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.roadmap-card__training a:hover,
+.roadmap-card__training a:focus {
+  text-decoration: underline;
+}
+
 .roadmap-results {
   margin-top: 2.75rem;
 }
@@ -696,12 +707,29 @@
 
 .bar {
   width: 100%;
-  height: 10px;
-  background: rgba(17, 17, 26, 0.12);
+  height: 12px;
+  background: rgba(17, 17, 26, 0.08);
   border-radius: 999px;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(17, 17, 26, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(17, 17, 26, 0.12);
+}
+
+.bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: repeating-linear-gradient(
+    to right,
+    transparent 0,
+    transparent calc(20% - 1px),
+    rgba(17, 17, 26, 0.14) calc(20% - 1px),
+    rgba(17, 17, 26, 0.14) 20%
+  );
+  pointer-events: none;
+  opacity: 0.45;
+  z-index: 0;
 }
 
 .bar__segment {
@@ -710,32 +738,64 @@
   bottom: 0;
   left: 0;
   border-radius: inherit;
-  transition: width 0.25s ease;
+  transition: width 0.25s ease, left 0.25s ease;
 }
 
-.bar__segment--target {
-  z-index: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(180, 220, 150, 0.9),
-    rgba(20, 155, 95, 0.75)
-  );
-}
-
-.bar__segment--current {
+.bar__segment--achieved {
   z-index: 1;
-  background: linear-gradient(
-    90deg,
-    rgba(15, 105, 175, 0.95),
-    rgba(15, 105, 175, 1)
-  );
+  background: linear-gradient(90deg, #3b5bdb 0%, #4263eb 100%);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+
+.bar__segment--gap {
+  z-index: 2;
+  background: linear-gradient(90deg, #ffb347 0%, #ff922b 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.bar__target-marker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  background: rgba(17, 17, 26, 0.55);
+  border-radius: 999px;
+  z-index: 3;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .bar__segment {
     transition: none;
   }
+}
+
+.bar-legend {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.bar-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.bar-legend__swatch {
+  width: 14px;
+  height: 6px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.bar-legend__swatch--achieved {
+  background: linear-gradient(90deg, #3b5bdb 0%, #4263eb 100%);
+}
+
+.bar-legend__swatch--gap {
+  background: linear-gradient(90deg, #ffb347 0%, #ff922b 100%);
 }
 
 .modal-backdrop {

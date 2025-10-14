@@ -98,6 +98,9 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
               s.type || typeByName[s.name] || '',
               Math.abs(s.gap)
             );
+            const currentPercent = Math.min(100, (s.current / 5) * 100);
+            const targetPercent = Math.min(100, (s.target / 5) * 100);
+            const gapPercent = Math.max(0, targetPercent - currentPercent);
             return (
               <div key={i} className="roadmap-card">
                 <div className="roadmap-card__header">
@@ -117,23 +120,54 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
                     aria-label={`Current level ${s.current} out of 5, target level ${s.target} out of 5`}
                   >
                     <div
-                      className="bar__segment bar__segment--target"
-                      style={{ width: Math.min(100, (s.target / 5) * 100) + '%' }}
+                      className="bar__segment bar__segment--achieved"
+                      style={{ width: `${currentPercent}%` }}
                     />
+                    {gapPercent > 0 && (
+                      <div
+                        className="bar__segment bar__segment--gap"
+                        style={{ width: `${gapPercent}%`, left: `${currentPercent}%` }}
+                      />
+                    )}
                     <div
-                      className="bar__segment bar__segment--current"
-                      style={{ width: Math.min(100, (s.current / 5) * 100) + '%' }}
+                      className="bar__target-marker"
+                      style={{ left: `calc(${targetPercent}% - 1px)` }}
+                      aria-hidden="true"
                     />
+                  </div>
+                  <div className="bar-legend" aria-hidden="true">
+                    <span className="bar-legend__item">
+                      <span className="bar-legend__swatch bar-legend__swatch--achieved" />
+                      <span>Current</span>
+                    </span>
+                    {gapPercent > 0 && (
+                      <span className="bar-legend__item">
+                        <span className="bar-legend__swatch bar-legend__swatch--gap" />
+                        <span>Gap to target</span>
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="roadmap-card__footer">
                   <span className="roadmap-card__label">Recommended training from SPH Academy</span>
-                  {recs.map((t, idx) => (
-                    <div key={idx} className="roadmap-card__training">
-                      <BookOpen className="icon-xs" />
-                      {t}
-                    </div>
-                  ))}
+                  {recs.map((t, idx) => {
+                    const label = typeof t === 'string' ? t : t?.label || '';
+                    const url = typeof t === 'object' ? t?.url : undefined;
+                    if (!label) return null;
+
+                    return (
+                      <div key={`${label}-${idx}`} className="roadmap-card__training">
+                        <BookOpen className="icon-xs" />
+                        {url ? (
+                          <a href={url} target="_blank" rel="noopener noreferrer">
+                            {label}
+                          </a>
+                        ) : (
+                          <span>{label}</span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );
