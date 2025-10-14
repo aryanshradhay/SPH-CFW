@@ -371,10 +371,10 @@
 
 .roadmap-card {
   border-radius: 20px;
-  border: 1px solid rgba(141, 89, 255, 0.2);
+  border: 1px solid rgba(17, 17, 26, 0.12);
   background: rgba(255, 255, 255, 0.96);
   padding: 1.1rem 1.25rem;
-  box-shadow: 0 12px 30px rgba(20, 30, 70, 0.12);
+  box-shadow: 0 12px 28px rgba(17, 17, 26, 0.12);
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -390,18 +390,32 @@
 .roadmap-card__header h4 {
   margin: 0;
   font-size: 1rem;
-  color: var(--color-rich-purple);
+  color: rgba(17, 17, 26, 0.88);
 }
 
 .roadmap-card__range {
   font-size: 0.82rem;
-  color: var(--muted);
+  color: rgba(17, 17, 26, 0.6);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.roadmap-card__range-value {
+  color: rgba(17, 17, 26, 0.72);
+}
+
+.roadmap-card__range-arrow {
+  color: rgba(17, 17, 26, 0.4);
+  font-size: 0.9em;
+  line-height: 1;
 }
 
 .roadmap-card__gap {
   font-size: 0.8rem;
   font-weight: 600;
-  color: var(--color-rich-purple);
+  color: rgba(17, 17, 26, 0.75);
 }
 
 .roadmap-card__footer {
@@ -422,7 +436,7 @@
   align-items: center;
   gap: 0.5rem;
   font-size: 0.8rem;
-  color: var(--color-rich-purple);
+  color: rgba(17, 17, 26, 0.78);
 }
 
 .roadmap-card__training a {
@@ -456,10 +470,10 @@
 
 .roadmap-recommendation {
   border-radius: 22px;
-  border: 1px solid rgba(141, 89, 255, 0.2);
+  border: 1px solid rgba(17, 17, 26, 0.12);
   background: rgba(255, 255, 255, 0.95);
   padding: 1.3rem 1.5rem;
-  box-shadow: 0 16px 40px rgba(16, 26, 70, 0.14);
+  box-shadow: 0 16px 40px rgba(17, 17, 26, 0.14);
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
@@ -474,7 +488,7 @@
 
 .roadmap-recommendation__summary {
   font-size: 0.85rem;
-  color: var(--color-rich-purple);
+  color: rgba(17, 17, 26, 0.75);
   display: grid;
   gap: 0.35rem;
 }
@@ -708,11 +722,12 @@
 .bar {
   width: 100%;
   height: 12px;
-  background: rgba(17, 17, 26, 0.08);
+  background: #fff;
   border-radius: 999px;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 0 1px rgba(17, 17, 26, 0.12);
+  border: 1px solid rgba(17, 17, 26, 0.6);
+  box-shadow: inset 0 0 0 1px rgba(17, 17, 26, 0.08);
 }
 
 .bar::after {
@@ -724,11 +739,11 @@
     to right,
     transparent 0,
     transparent calc(20% - 1px),
-    rgba(17, 17, 26, 0.14) calc(20% - 1px),
-    rgba(17, 17, 26, 0.14) 20%
+    rgba(17, 17, 26, 0.12) calc(20% - 1px),
+    rgba(17, 17, 26, 0.12) 20%
   );
   pointer-events: none;
-  opacity: 0.45;
+  opacity: 0.25;
   z-index: 0;
 }
 
@@ -743,14 +758,14 @@
 
 .bar__segment--achieved {
   z-index: 1;
-  background: linear-gradient(90deg, #3b5bdb 0%, #4263eb 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  background: linear-gradient(90deg, rgba(17, 17, 26, 0.85) 0%, rgba(17, 17, 26, 0.75) 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.28);
 }
 
 .bar__segment--gap {
   z-index: 2;
-  background: linear-gradient(90deg, #ffb347 0%, #ff922b 100%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+  background: linear-gradient(90deg, #f97316 0%, #f97316 100%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
 }
 
 .bar__target-marker {
@@ -758,7 +773,7 @@
   top: -4px;
   bottom: -4px;
   width: 2px;
-  background: rgba(17, 17, 26, 0.55);
+  background: rgba(17, 17, 26, 0.75);
   border-radius: 999px;
   z-index: 3;
 }
@@ -791,11 +806,11 @@
 }
 
 .bar-legend__swatch--achieved {
-  background: linear-gradient(90deg, #3b5bdb 0%, #4263eb 100%);
+  background: linear-gradient(90deg, rgba(17, 17, 26, 0.85) 0%, rgba(17, 17, 26, 0.75) 100%);
 }
 
 .bar-legend__swatch--gap {
-  background: linear-gradient(90deg, #ffb347 0%, #ff922b 100%);
+  background: linear-gradient(90deg, #f97316 0%, #f97316 100%);
 }
 
 .modal-backdrop {
