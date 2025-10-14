@@ -128,12 +128,24 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
                 </div>
                 <div className="roadmap-card__footer">
                   <span className="roadmap-card__label">Recommended training from SPH Academy</span>
-                  {recs.map((t, idx) => (
-                    <div key={idx} className="roadmap-card__training">
-                      <BookOpen className="icon-xs" />
-                      {t}
-                    </div>
-                  ))}
+                  {recs.map((t, idx) => {
+                    const label = typeof t === 'string' ? t : t?.label || '';
+                    const url = typeof t === 'object' ? t?.url : undefined;
+                    if (!label) return null;
+
+                    return (
+                      <div key={`${label}-${idx}`} className="roadmap-card__training">
+                        <BookOpen className="icon-xs" />
+                        {url ? (
+                          <a href={url} target="_blank" rel="noopener noreferrer">
+                            {label}
+                          </a>
+                        ) : (
+                          <span>{label}</span>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );

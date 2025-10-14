@@ -425,6 +425,17 @@
   color: var(--color-rich-purple);
 }
 
+.roadmap-card__training a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.roadmap-card__training a:hover,
+.roadmap-card__training a:focus {
+  text-decoration: underline;
+}
+
 .roadmap-results {
   margin-top: 2.75rem;
 }

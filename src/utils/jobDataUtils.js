@@ -2,6 +2,8 @@
 import Papa from 'papaparse';
 
 export const CSV_URL = (process.env.PUBLIC_URL || '') + '/position-skills.csv';
+export const TRAININGS_CSV_URL =
+  (process.env.PUBLIC_URL || '') + '/SPH skill based career pathing - Matrix 20250922(Trainings).csv';
 
 export const normKey = (s) => String(s || '').trim();
 
@@ -175,21 +177,95 @@ export function getSimilarityBadge(score) {
   return { label: 'Early Match', color: 'badge solid gray' };
 }
 
+const defaultTrainingFallback = {
+  soft: [
+    { label: 'SPH Academy • Executive communication workshop' },
+    { label: 'SPH Academy • Stakeholder influence & negotiation' },
+    { label: 'SPH Academy • Cross-cultural collaboration' },
+  ],
+  functional: [
+    { label: 'SPH Academy • Advanced domain certification' },
+    { label: 'SPH Academy • Tools & systems deep-dive' },
+    { label: 'SPH Academy • Mentored project-based learning' },
+  ],
+  unknown: [
+    { label: 'SPH Academy • Adaptive learning plan' },
+    { label: 'SPH Academy • Peer mentoring circle' },
+    { label: 'SPH Academy • Expert-led workshop' },
+  ],
+};
+
+const emptyTrainingIndex = () => ({
+  bySkill: new Map(),
+  byType: {
+    functional: [],
+    soft: [],
+    unknown: [],
+  },
+});
+
+let trainingIndex = emptyTrainingIndex();
+
+function normaliseSkillKey(skillName) {
+  return normKey(skillName).toLowerCase();
+}
+
+function buildTrainingIndex(rows) {
+  const index = emptyTrainingIndex();
+
+  rows.forEach((row) => {
+    const skillName = getCI(row, 'Skill');
+    const training = getCI(row, 'Trainings');
+    const source = getCI(row, 'Source');
+    if (!skillName || !training) return;
+
+    const typeRaw = getCI(row, 'Functional or Softskill?');
+    const type = classifyType(typeRaw) || 'unknown';
+    const key = normaliseSkillKey(skillName);
+
+    const entry = {
+      label: training,
+      url: source || '',
+      type,
+    };
+
+    if (!index.bySkill.has(key)) {
+      index.bySkill.set(key, []);
+    }
+
+    const existing = index.bySkill.get(key);
+    if (!existing.some((item) => item.label === entry.label && item.url === entry.url)) {
+      existing.push(entry);
+    }
+
+    if (type && index.byType[type]) {
+      index.byType[type].push(entry);
+    } else {
+      index.byType.unknown.push(entry);
+    }
+  });
+
+  return index;
+}
+
 export function getTrainingRecommendations(skillName, typeOrGuess, gap) {
-  const soft = [
-    'Executive communication workshop',
-    'Stakeholder influence & negotiation',
-    'Cross-cultural collaboration',
-  ];
-  const functional = [
-    'Advanced domain certification',
-    'Tools & systems deep-dive',
-    'Mentored project-based learning',
-  ];
-  const pool = /soft/i.test(typeOrGuess) ? soft : functional;
+  const typeGuess = classifyType(typeOrGuess) || 'unknown';
   const count = Math.min(3, Math.max(1, Math.ceil(gap || 1)));
-  const prefix = 'SPH Academy • ';
-  return pool.slice(0, count).map((item) => `${prefix}${item}`);
+  const fallback = defaultTrainingFallback[typeGuess] || defaultTrainingFallback.unknown;
+
+  if (!skillName) {
+    return fallback.slice(0, count);
+  }
+
+  const key = normaliseSkillKey(skillName);
+  const bySkill = trainingIndex.bySkill.get(key) || [];
+  const pool = bySkill.length ? bySkill : trainingIndex.byType[typeGuess] || [];
+
+  if (pool && pool.length) {
+    return pool.slice(0, count);
+  }
+
+  return fallback.slice(0, count);
 }
 
 export function transformRowsToJobs(rows) {
@@ -293,9 +369,9 @@ export function computeSkillIDF(jobs) {
   return idfObj;
 }
 
-export function parseCsvToJobs() {
+function parseCsvRows(url) {
   return new Promise((resolve, reject) => {
-    Papa.parse(CSV_URL, {
+    Papa.parse(url, {
       download: true,
       header: true,
       dynamicTyping: false,
@@ -309,15 +385,26 @@ export function parseCsvToJobs() {
             ])
           )
         );
-        const jobs = transformRowsToJobs(rows);
-        resolve({
-          jobs,
-          divisions: Array.from(new Set(jobs.map((j) => j.division))),
-          skillIDF: computeSkillIDF(jobs),
-        });
+        resolve(rows);
       },
       error: (err) => reject(err),
     });
+  });
+}
+
+export function parseCsvToJobs() {
+  return Promise.all([
+    parseCsvRows(CSV_URL),
+    parseCsvRows(TRAININGS_CSV_URL).catch(() => []),
+  ]).then(([jobRows, trainingRows]) => {
+    const jobs = transformRowsToJobs(jobRows);
+    trainingIndex = buildTrainingIndex(trainingRows);
+
+    return {
+      jobs,
+      divisions: Array.from(new Set(jobs.map((j) => j.division))),
+      skillIDF: computeSkillIDF(jobs),
+    };
   });
 }
 
