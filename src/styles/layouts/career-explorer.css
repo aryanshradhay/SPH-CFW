@@ -635,12 +635,39 @@
 }
 
 .explorer-group {
+  position: relative;
   padding: 2rem;
   border-radius: 26px;
-  background: var(--surface);
-  border: 2px solid var(--color-border-soft);
+  background: linear-gradient(
+      135deg,
+      rgba(150, 215, 210, 0.35) 0%,
+      rgba(150, 215, 210, 0.18) 26%,
+      rgba(150, 215, 210, 0) 70%
+    ),
+    var(--surface);
+  border: 2px solid rgba(150, 215, 210, 0.4);
   box-shadow: 0 20px 46px rgba(15, 24, 60, 0.16);
   color: var(--color-text);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.explorer-group::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: min(180px, 28%);
+  height: min(180px, 40%);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 213, 0, 0.45) 0%,
+    rgba(255, 213, 0, 0.24) 42%,
+    rgba(255, 213, 0, 0) 75%
+  );
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .explorer-group__header {
@@ -693,8 +720,12 @@
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease,
     background 0.25s ease;
   overflow: hidden;
-  z-index: 0;
+  z-index: 1;
   box-shadow: 0 16px 36px rgba(16, 24, 60, 0.12);
+}
+
+.explorer-group .explorer-card {
+  box-shadow: 0 12px 28px rgba(16, 24, 60, 0.1);
 }
 
 
