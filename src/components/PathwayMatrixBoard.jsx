@@ -494,11 +494,29 @@ export default function PathwayMatrixBoard() {
                         <span className="text-sm text-600">+{g.gap.toFixed(1)}</span>
                       </div>
                       <div className="row" style={{ gap: 8 }}>
-                        <div className="bar" style={{ flex: 1 }} title={`Origin: ${g.from.toFixed(1)}/5`}>
-                          <div className="bar-fill blue" style={{ width: Math.min(100, (g.from / 5) * 100) + '%' }} />
+                        <div
+                          className="bar"
+                          style={{ flex: 1 }}
+                          role="img"
+                          aria-label={`Origin level ${g.from.toFixed(1)} out of 5`}
+                          title={`Origin: ${g.from.toFixed(1)}/5`}
+                        >
+                          <div
+                            className="bar__segment bar__segment--current"
+                            style={{ width: Math.min(100, (g.from / 5) * 100) + '%' }}
+                          />
                         </div>
-                        <div className="bar" style={{ flex: 1 }} title={`Destination: ${g.to.toFixed(1)}/5`}>
-                          <div className="bar-fill yellow" style={{ width: Math.min(100, (g.to / 5) * 100) + '%' }} />
+                        <div
+                          className="bar"
+                          style={{ flex: 1 }}
+                          role="img"
+                          aria-label={`Destination level ${g.to.toFixed(1)} out of 5`}
+                          title={`Destination: ${g.to.toFixed(1)}/5`}
+                        >
+                          <div
+                            className="bar__segment bar__segment--target"
+                            style={{ width: Math.min(100, (g.to / 5) * 100) + '%' }}
+                          />
                         </div>
                       </div>
                     </div>

@@ -111,13 +111,19 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
                     Gap: {s.gap > 0 ? '+' : ''}
                     {s.gap} levels
                   </div>
-                  <div className="bar">
-                    <div className="bar-fill blue" style={{ width: (s.current / 5) * 100 + '%' }}>
-                      <div
-                        className="bar-planned green"
-                        style={{ width: Math.max(0, ((s.target - s.current) / 5) * 100) + '%' }}
-                      />
-                    </div>
+                  <div
+                    className="bar"
+                    role="img"
+                    aria-label={`Current level ${s.current} out of 5, target level ${s.target} out of 5`}
+                  >
+                    <div
+                      className="bar__segment bar__segment--target"
+                      style={{ width: Math.min(100, (s.target / 5) * 100) + '%' }}
+                    />
+                    <div
+                      className="bar__segment bar__segment--current"
+                      style={{ width: Math.min(100, (s.current / 5) * 100) + '%' }}
+                    />
                   </div>
                 </div>
                 <div className="roadmap-card__footer">
@@ -226,35 +232,16 @@ export default function CareerRoadmap() {
   const { currentTitle: stateCurrentTitle = '', targetTitle: stateTargetTitle = '' } =
     location.state || {};
 
-  const [plannerDivision, setPlannerDivision] = useState('all');
+  const [plannerCurrentDivision, setPlannerCurrentDivision] = useState('all');
+  const [plannerTargetDivision, setPlannerTargetDivision] = useState('all');
   const [plannerCurrentTitle, setPlannerCurrentTitle] = useState('');
   const [plannerTargetTitle, setPlannerTargetTitle] = useState('');
-  const [myPositionTitle, setMyPositionTitle] = useState(() => {
-    if (typeof window === 'undefined') return '';
-    return window.localStorage.getItem('eva-my-position') || '';
-  });
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    if (myPositionTitle) {
-      window.localStorage.setItem('eva-my-position', myPositionTitle);
-    } else {
-      window.localStorage.removeItem('eva-my-position');
-    }
-  }, [myPositionTitle]);
 
   useEffect(() => {
     if (stateCurrentTitle) {
       setPlannerCurrentTitle(stateCurrentTitle);
-    } else if (!plannerCurrentTitle && myPositionTitle) {
-      setPlannerCurrentTitle(myPositionTitle);
     }
-  }, [stateCurrentTitle, myPositionTitle, plannerCurrentTitle]);
-
-  const myPosition = useMemo(
-    () => jobs.find((j) => j.title === myPositionTitle) || null,
-    [jobs, myPositionTitle]
-  );
+  }, [stateCurrentTitle]);
 
   useEffect(() => {
     if (stateTargetTitle) {
@@ -262,10 +249,15 @@ export default function CareerRoadmap() {
     }
   }, [stateTargetTitle]);
 
-  const plannerJobsFiltered = useMemo(() => {
-    if (plannerDivision === 'all') return jobs;
-    return jobs.filter((j) => j.division === plannerDivision);
-  }, [jobs, plannerDivision]);
+  const plannerCurrentJobs = useMemo(() => {
+    if (plannerCurrentDivision === 'all') return jobs;
+    return jobs.filter((j) => j.division === plannerCurrentDivision);
+  }, [jobs, plannerCurrentDivision]);
+
+  const plannerTargetJobs = useMemo(() => {
+    if (plannerTargetDivision === 'all') return jobs;
+    return jobs.filter((j) => j.division === plannerTargetDivision);
+  }, [jobs, plannerTargetDivision]);
 
   const plannerCurrentJob = useMemo(
     () => jobs.find((j) => j.title === plannerCurrentTitle) || null,
@@ -283,15 +275,15 @@ export default function CareerRoadmap() {
     [skillIDF]
   );
 
-  const recommendationsForMyPosition = useMemo(() => {
-    if (!myPosition) return [];
-    const myRank = myPosition.seniorityRank ?? null;
+  const recommendationsForCurrentRole = useMemo(() => {
+    if (!plannerCurrentJob) return [];
+    const myRank = plannerCurrentJob.seniorityRank ?? null;
     return jobs
-      .filter((job) => job.id !== myPosition.id)
+      .filter((job) => job.id !== plannerCurrentJob.id)
       .map((job) => ({
         ...job,
-        similarity: simScore(myPosition, job),
-        summary: summarizeTransition(myPosition, job, 2),
+        similarity: simScore(plannerCurrentJob, job),
+        summary: summarizeTransition(plannerCurrentJob, job, 2),
       }))
       .filter((job) => {
         if (myRank == null) return true;
@@ -301,35 +293,39 @@ export default function CareerRoadmap() {
       .filter((job) => job.similarity >= 60)
       .sort((a, b) => b.similarity - a.similarity)
       .slice(0, 8);
-  }, [jobs, myPosition, simScore]);
+  }, [jobs, plannerCurrentJob, simScore]);
 
   const ensurePlannerCanShowJob = useCallback(
-    (jobTitle) => {
+    (jobTitle, type) => {
       if (!jobTitle) return;
       const job = jobs.find((j) => j.title === jobTitle);
       if (!job) return;
-      if (plannerDivision !== 'all' && job.division !== plannerDivision) {
-        setPlannerDivision('all');
+      if (type === 'current') {
+        const division = job.division || 'all';
+        if (plannerCurrentDivision === 'all' && division !== 'all') {
+          setPlannerCurrentDivision(division);
+        } else if (plannerCurrentDivision !== 'all' && job.division !== plannerCurrentDivision) {
+          setPlannerCurrentDivision(division);
+        }
+      } else if (type === 'target') {
+        const division = job.division || 'all';
+        if (plannerTargetDivision === 'all' && division !== 'all') {
+          setPlannerTargetDivision(division);
+        } else if (plannerTargetDivision !== 'all' && job.division !== plannerTargetDivision) {
+          setPlannerTargetDivision(division);
+        }
       }
     },
-    [jobs, plannerDivision]
+    [jobs, plannerCurrentDivision, plannerTargetDivision]
   );
 
-  const handleSaveMyPosition = useCallback(
-    (title) => {
-      if (!title) return;
-      ensurePlannerCanShowJob(title);
-      setMyPositionTitle(title);
-      if (!plannerCurrentTitle) {
-        setPlannerCurrentTitle(title);
-      }
-    },
-    [ensurePlannerCanShowJob, plannerCurrentTitle]
-  );
+  useEffect(() => {
+    ensurePlannerCanShowJob(plannerCurrentTitle, 'current');
+  }, [ensurePlannerCanShowJob, plannerCurrentTitle]);
 
-  const handleClearMyPosition = useCallback(() => {
-    setMyPositionTitle('');
-  }, []);
+  useEffect(() => {
+    ensurePlannerCanShowJob(plannerTargetTitle, 'target');
+  }, [ensurePlannerCanShowJob, plannerTargetTitle]);
 
   const hasSelection = plannerCurrentJob && plannerTargetJob;
 
@@ -343,18 +339,6 @@ export default function CareerRoadmap() {
   const handleLaunchExplorer = useCallback(() => {
     navigate('/career-explorer');
   }, [navigate]);
-
-  const featureOverflowActions = useMemo(
-    () => [
-      {
-        label: 'Clear saved role',
-        onClick: handleClearMyPosition,
-        icon: <XCircle className="icon-xs" aria-hidden="true" />,
-        disabled: !myPosition,
-      },
-    ],
-    [handleClearMyPosition, myPosition]
-  );
 
   const featureSecondaryActions = useMemo(
     () => [
@@ -376,13 +360,7 @@ export default function CareerRoadmap() {
     return 'tone-neutral';
   };
 
-  useRevealOnScroll(
-    plannerCurrentTitle,
-    plannerTargetTitle,
-    myPositionTitle,
-    recommendationsForMyPosition.length,
-    jobs.length
-  );
+  useRevealOnScroll(plannerCurrentTitle, plannerTargetTitle, recommendationsForCurrentRole.length, jobs.length);
 
   if (error) {
     return (
@@ -410,60 +388,19 @@ export default function CareerRoadmap() {
             jobs,
             divisions,
             ready,
-            myPosition,
-            recommendationsCount: recommendationsForMyPosition.length,
+            metrics: [
+              { label: 'Roles mapped', value: jobs?.length ?? '-', tone: 'purple' },
+              { label: 'Functions covered', value: divisions?.length ?? '-', tone: 'yellow' },
+            ],
             secondaryActions: featureSecondaryActions,
-            onSaveMyPosition: handleSaveMyPosition,
-            overflowActions: featureOverflowActions,
           }}
           permissions={{}}
+          personalisationEnabled={false}
           onPrimary={scrollToPlanner}
         />
 
         <section id="roadmap-planner" className="roadmap-panel" data-animate="fade-up">
           <div className="roadmap-panel__grid">
-            <div className="roadmap-card-block">
-              <div className="roadmap-card-block__header">
-                <Sparkles className="icon-sm" />
-                <div>
-                  <h2>My position</h2>
-                  <p>Lock in your current role to benchmark every opportunity.</p>
-                </div>
-              </div>
-              <div className="roadmap-card-block__body">
-                {myPosition ? (
-                  <div className="roadmap-card-block__saved">
-                    <span className="roadmap-card-block__saved-label">Saved role</span>
-                    <p className="roadmap-card-block__saved-title">{myPosition.title}</p>
-                    {myPosition.division && (
-                      <p className="roadmap-card-block__saved-meta">{myPosition.division}</p>
-                    )}
-                    <p className="muted text-sm">
-                      Update your saved role using the panel at the top of this page to keep insights in sync.
-                    </p>
-                  </div>
-                ) : (
-                  <p className="muted text-sm">
-                    Save your current role using the panel above to benchmark every opportunity.
-                  </p>
-                )}
-              </div>
-              <div className="roadmap-card-block__actions">
-                <button
-                  type="button"
-                  className="button button--secondary"
-                  onClick={() => {
-                    if (!myPosition) return;
-                    ensurePlannerCanShowJob(myPosition.title);
-                    setPlannerCurrentTitle(myPosition.title);
-                  }}
-                  disabled={!myPosition}
-                >
-                  Prefill planner with saved role
-                </button>
-              </div>
-            </div>
-
             <div className="roadmap-card-block">
               <div className="roadmap-card-block__header">
                 <RouteIcon className="icon-sm" />
@@ -474,19 +411,18 @@ export default function CareerRoadmap() {
               </div>
               <div className="roadmap-card-block__body roadmap-card-block__body--grid">
                 <div className="field field--elevated">
-                  <label className="field__label" htmlFor="planner-division">
-                    Function filter
+                  <label className="field__label" htmlFor="planner-current-division">
+                    Current role function
                   </label>
                   <div className="field__control">
                     <Filter className="icon-sm field__icon" />
                     <select
-                      id="planner-division"
+                      id="planner-current-division"
                       className="input input--elevated"
-                      value={plannerDivision}
+                      value={plannerCurrentDivision}
                       onChange={(e) => {
-                        setPlannerDivision(e.target.value);
+                        setPlannerCurrentDivision(e.target.value);
                         setPlannerCurrentTitle('');
-                        setPlannerTargetTitle('');
                       }}
                     >
                       <option value="all">All functions</option>
@@ -509,14 +445,41 @@ export default function CareerRoadmap() {
                       id="planner-current"
                       className="input input--elevated"
                       value={plannerCurrentTitle}
-                      onChange={(e) => setPlannerCurrentTitle(e.target.value)}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setPlannerCurrentTitle(value);
+                        ensurePlannerCanShowJob(value, 'current');
+                      }}
                     >
-                      <option value="">
-                        {myPosition ? `My position: ${myPosition.title}` : 'Select current role...'}
-                      </option>
-                      {plannerJobsFiltered.map((job) => (
+                      <option value="">Select current role...</option>
+                      {plannerCurrentJobs.map((job) => (
                         <option key={job.id} value={job.title}>
                           {job.title} - {job.division}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div className="field field--elevated">
+                  <label className="field__label" htmlFor="planner-target-division">
+                    Target role function
+                  </label>
+                  <div className="field__control">
+                    <Filter className="icon-sm field__icon" />
+                    <select
+                      id="planner-target-division"
+                      className="input input--elevated"
+                      value={plannerTargetDivision}
+                      onChange={(e) => {
+                        setPlannerTargetDivision(e.target.value);
+                        setPlannerTargetTitle('');
+                      }}
+                    >
+                      <option value="all">All functions</option>
+                      {divisions.map((d) => (
+                        <option key={d} value={d}>
+                          {d}
                         </option>
                       ))}
                     </select>
@@ -533,10 +496,14 @@ export default function CareerRoadmap() {
                       id="planner-target"
                       className="input input--elevated"
                       value={plannerTargetTitle}
-                      onChange={(e) => setPlannerTargetTitle(e.target.value)}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setPlannerTargetTitle(value);
+                        ensurePlannerCanShowJob(value, 'target');
+                      }}
                     >
                       <option value="">Select target role...</option>
-                      {plannerJobsFiltered.map((job) => (
+                      {plannerTargetJobs.map((job) => (
                         <option key={job.id} value={job.title}>
                           {job.title} - {job.division}
                         </option>
@@ -572,15 +539,15 @@ export default function CareerRoadmap() {
             <div>
               <h2 className="section-h2">Personalised recommendations</h2>
               <p className="muted text-sm">
-                Discover adjacent roles that build on your strengths and stretch your capabilities.
+                Discover adjacent roles that build on the strengths of your selected current role.
               </p>
             </div>
           </div>
 
-          {myPosition ? (
-            recommendationsForMyPosition.length > 0 ? (
+          {plannerCurrentJob ? (
+            recommendationsForCurrentRole.length > 0 ? (
               <div className="roadmap-recommendations__grid">
-                {recommendationsForMyPosition.map((job) => {
+                {recommendationsForCurrentRole.map((job) => {
                   const badge = getSimilarityBadge(job.similarity);
                   const toneClass = getToneForScore(job.similarity);
                   const strengths = job.summary.strengths.map((s) => s.name).join(', ');
@@ -611,11 +578,11 @@ export default function CareerRoadmap() {
                       <div className="roadmap-recommendation__actions">
                         <button
                           type="button"
-                        className="button"
+                          className="button"
                           onClick={() => {
-                            ensurePlannerCanShowJob(myPosition.title);
-                            ensurePlannerCanShowJob(job.title);
-                            setPlannerCurrentTitle(myPosition.title);
+                            ensurePlannerCanShowJob(plannerCurrentJob.title, 'current');
+                            ensurePlannerCanShowJob(job.title, 'target');
+                            setPlannerCurrentTitle(plannerCurrentJob.title);
                             setPlannerTargetTitle(job.title);
                             scrollToPlanner();
                           }}
@@ -629,12 +596,12 @@ export default function CareerRoadmap() {
               </div>
             ) : (
               <div className="explorer-empty explorer-empty--inline">
-                <p>We're analysing your saved role for recommendations. Try a different function filter.</p>
+                <p>We're analysing your selected current role for recommendations. Try a different function filter.</p>
               </div>
             )
           ) : (
             <div className="explorer-empty explorer-empty--inline">
-              <p>Save your current position above to see tailored transitions.</p>
+              <p>Select a current role above to see tailored transitions.</p>
             </div>
           )}
         </section>
