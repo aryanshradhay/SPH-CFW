@@ -106,7 +106,11 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
                 <div className="roadmap-card__header">
                   <h4>{s.name}</h4>
                   <span className="roadmap-card__range">
-                    {s.current}/5 -> {s.target}/5
+                    <span className="roadmap-card__range-value">{s.current}/5</span>
+                    <span className="roadmap-card__range-arrow" aria-hidden="true">
+                      &rarr;
+                    </span>
+                    <span className="roadmap-card__range-value">{s.target}/5</span>
                   </span>
                 </div>
                 <div className="roadmap-card__body">
@@ -423,8 +427,8 @@ export default function CareerRoadmap() {
             divisions,
             ready,
             metrics: [
-              { label: 'Roles mapped', value: jobs?.length ?? '-', tone: 'purple' },
-              { label: 'Functions covered', value: divisions?.length ?? '-', tone: 'yellow' },
+              { label: 'Roles mapped', value: jobs?.length ?? '-', tone: 'ink' },
+              { label: 'Functions covered', value: divisions?.length ?? '-', tone: 'accent' },
             ],
             secondaryActions: featureSecondaryActions,
           }}

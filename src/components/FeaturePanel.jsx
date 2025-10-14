@@ -33,21 +33,21 @@ function buildMetrics({ mode, jobs, divisions, recommendationsCount, personalisa
   if (!jobs?.length && !divisions?.length) return [];
 
   const metrics = [
-    { label: 'Roles mapped', value: jobs?.length ?? '-', tone: 'purple' },
-    { label: 'Functions covered', value: divisions?.length ?? '-', tone: 'yellow' },
+    { label: 'Roles mapped', value: jobs?.length ?? '-', tone: 'ink' },
+    { label: 'Functions covered', value: divisions?.length ?? '-', tone: 'accent' },
   ];
 
   if (mode === 'A' && personalisationEnabled) {
     metrics.push({
       label: 'Personalised moves',
       value: typeof recommendationsCount === 'number' ? recommendationsCount : '-',
-      tone: 'green',
+      tone: 'positive',
     });
   } else if (mode === 'B') {
     metrics.push({
       label: 'Planner-ready roles',
       value: typeof recommendationsCount === 'number' ? recommendationsCount : '-',
-      tone: 'green',
+      tone: 'positive',
     });
   }
 
@@ -181,8 +181,11 @@ export default function FeaturePanel({
         {metrics.length > 0 && (
           <div className="feature-panel__metrics" role="presentation">
             {metrics.map((metric) => (
-              <div key={metric.label} className="feature-panel__metric">
-                <span className={`feature-panel__metric-label ${metric.tone || ''}`}>{metric.label}</span>
+              <div
+                key={metric.label}
+                className={`feature-panel__metric feature-panel__metric--${metric.tone || 'neutral'}`}
+              >
+                <span className="feature-panel__metric-label">{metric.label}</span>
                 <span className="feature-panel__metric-value">{metric.value}</span>
               </div>
             ))}
