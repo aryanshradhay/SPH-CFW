@@ -11,7 +11,6 @@ import {
   Shuffle,
 } from 'lucide-react';
 import '../styles/main.css';
-import SiteHeader from './SiteHeader';
 import { inferSeniorityRank } from '../utils/jobDataUtils';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
@@ -254,8 +253,6 @@ export default function CareerBoardGame() {
 
   return (
     <div className="page solid-bg experience-page">
-      <SiteHeader />
-
       <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">

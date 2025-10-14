@@ -670,6 +670,14 @@
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
+.explorer-insight-row {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+
 .explorer-card {
   position: relative;
   border-radius: 22px;

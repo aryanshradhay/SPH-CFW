@@ -1,6 +1,7 @@
 // src/App.jsx
 import React from 'react';
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import AppLayout from './layouts/AppLayout';
 import HomePage from './components/HomePage';
 import JobSkillsMatcher from './components/JobSkillsMatcher';
 import CareerRoadmap from './components/CareerRoadmap';
@@ -13,8 +14,8 @@ import PathwayMatrixBoard from './components/PathwayMatrixBoard';
 
 export default function App() {
   return (
-    <HashRouter>
-      <Routes>
+    <Routes>
+      <Route element={<AppLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/career-explorer" element={<JobSkillsMatcher />} />
         <Route path="/roadmap" element={<CareerRoadmap />} />
@@ -24,8 +25,8 @@ export default function App() {
         <Route path="/play-lab/skill-quiz" element={<SkillDefinitionQuiz />} />
         <Route path="/play-lab/career-board" element={<CareerBoardGame />} />
         <Route path="/play-lab/pathway-matrix" element={<PathwayMatrixBoard />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </HashRouter>
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }

@@ -199,6 +199,16 @@ img {
   align-items: flex-start;
 }
 
+.app-shell {
+  min-height: 100vh;
+  background: var(--color-background);
+}
+
+.app-shell__main {
+  display: block;
+  min-height: 100vh;
+}
+
 .card {
   background: var(--surface);
   border: 2px solid var(--color-border-soft);

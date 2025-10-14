@@ -4,7 +4,6 @@ import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import { Gamepad2, Trophy, Lightbulb, ArrowRight, HelpCircle } from 'lucide-react';
 import '../styles/main.css';
-import SiteHeader from './SiteHeader';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
 
@@ -179,8 +178,6 @@ export default function JobExplorerGame() {
 
   return (
     <div className="page solid-bg experience-page">
-      <SiteHeader />
-
       <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">

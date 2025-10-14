@@ -4,7 +4,6 @@ import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import { Grid3x3, Dice5, Flag, Shuffle, HelpCircle, BookOpen } from 'lucide-react';
 import '../styles/main.css';
-import SiteHeader from './SiteHeader';
 
 const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
 const MATRIX_CSV_URL = (process.env.PUBLIC_URL || '') + '/pathway-matrix.csv';
@@ -354,8 +353,6 @@ export default function PathwayMatrixBoard() {
 
   return (
     <div className="page solid-bg experience-page">
-      <SiteHeader />
-
       <div className="container content experience-content">
         <div className="page-heading">
           <div className="page-heading-main">

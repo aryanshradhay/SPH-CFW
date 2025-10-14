@@ -106,6 +106,7 @@ const JobInsightCanvas = React.forwardRef(
       skillsByType,
       baselineSimilarity,
       myPosition,
+      inline = false,
     },
     ref
   ) => {
@@ -233,7 +234,9 @@ const JobInsightCanvas = React.forwardRef(
       return cards;
     }, [summary, job]);
     const handleSetAsCurrent = () => {
-      onSaveMyPosition(job);
+      if (typeof onSaveMyPosition === 'function') {
+        onSaveMyPosition(job);
+      }
     };
     const handlePlanAsCurrent = () => {
       onPlanRoadmap({ currentTitle: job.title });
@@ -249,7 +252,7 @@ const JobInsightCanvas = React.forwardRef(
     }
     const headingId = `job-insight-${job.id}`;
     return (
-      <aside ref={ref} className="insight-panel" aria-labelledby={headingId} aria-label={`Details for ${job.title}`}>
+      <aside ref={ref} className={`insight-panel${inline ? ' insight-panel--inline' : ''}`} aria-labelledby={headingId} aria-label={`Details for ${job.title}`}>
         <div className="insight-canvas">
           <header className="insight-canvas__hero">
             <button className="insight-canvas__close" onClick={onClose} aria-label="Close job insight">
@@ -379,9 +382,11 @@ const JobInsightCanvas = React.forwardRef(
               </p>
             </div>
             <div className="insight-cta__actions">
-              <button type="button" className="insight-chip" onClick={handleSetAsCurrent}>
-                <Sparkles className="icon-xs" /> Save as My Position
-              </button>
+              {typeof onSaveMyPosition === 'function' && (
+                <button type="button" className="insight-chip" onClick={handleSetAsCurrent}>
+                  <Sparkles className="icon-xs" /> Save as My Position
+                </button>
+              )}
               <button type="button" className="insight-chip" onClick={handlePlanAsCurrent}>
                 <Layers className="icon-xs" /> Roadmap: set current
               </button>

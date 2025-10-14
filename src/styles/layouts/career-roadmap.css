@@ -213,6 +213,36 @@
   gap: 1.1rem;
 }
 
+.roadmap-card-block__saved--inline {
+  grid-column: 1 / -1;
+}
+
+.roadmap-card-block__saved {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.roadmap-card-block__saved-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-rich-purple);
+}
+
+.roadmap-card-block__saved-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-rich-purple);
+}
+
+.roadmap-card-block__saved-meta {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
 .roadmap-card-block__actions {
   display: flex;
   flex-wrap: wrap;

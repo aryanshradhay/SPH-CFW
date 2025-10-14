@@ -1,16 +1,15 @@
 // src/components/CareerRoadmap.jsx
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Route as RouteIcon,
-  MapPin,
   Users,
   Filter,
   CheckCircle,
   AlertCircle,
   XCircle,
   BookOpen,
-  Briefcase,
+  MapPin,
   TrendingUp,
   Sparkles,
   Compass,
@@ -27,8 +26,8 @@ import {
 } from '../utils/jobDataUtils';
 import '../styles/main.css';
 import '../styles/layouts/career-roadmap.css';
-import SiteHeader from './SiteHeader';
-import ChibiPixelBot from './ChibiPixelBot';
+import FeaturePanel from './FeaturePanel';
+import ErrorState from './ErrorState';
 
 const RoadmapDetails = ({ currentJob, targetJob }) => {
   const [va, vb, names] = useMemo(
@@ -221,8 +220,9 @@ const RoadmapDetails = ({ currentJob, targetJob }) => {
 };
 
 export default function CareerRoadmap() {
-  const { jobs, divisions, skillIDF, ready } = useJobDataset();
+  const { jobs, divisions, skillIDF, ready, error } = useJobDataset();
   const location = useLocation();
+  const navigate = useNavigate();
   const { currentTitle: stateCurrentTitle = '', targetTitle: stateTargetTitle = '' } =
     location.state || {};
 
@@ -233,8 +233,6 @@ export default function CareerRoadmap() {
     if (typeof window === 'undefined') return '';
     return window.localStorage.getItem('eva-my-position') || '';
   });
-  const [myPickerDivision, setMyPickerDivision] = useState('all');
-  const [myPickerTitle, setMyPickerTitle] = useState('');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -264,22 +262,10 @@ export default function CareerRoadmap() {
     }
   }, [stateTargetTitle]);
 
-  useEffect(() => {
-    if (myPosition && !myPickerTitle) {
-      setMyPickerDivision(myPosition.division || 'all');
-      setMyPickerTitle(myPosition.title);
-    }
-  }, [myPosition, myPickerTitle]);
-
   const plannerJobsFiltered = useMemo(() => {
     if (plannerDivision === 'all') return jobs;
     return jobs.filter((j) => j.division === plannerDivision);
   }, [jobs, plannerDivision]);
-
-  const myPickerJobs = useMemo(() => {
-    if (myPickerDivision === 'all') return jobs;
-    return jobs.filter((j) => j.division === myPickerDivision);
-  }, [jobs, myPickerDivision]);
 
   const plannerCurrentJob = useMemo(
     () => jobs.find((j) => j.title === plannerCurrentTitle) || null,
@@ -329,14 +315,21 @@ export default function CareerRoadmap() {
     [jobs, plannerDivision]
   );
 
-  const setMyPositionFromPicker = useCallback(() => {
-    if (!myPickerTitle) return;
-    ensurePlannerCanShowJob(myPickerTitle);
-    setMyPositionTitle(myPickerTitle);
-    if (!plannerCurrentTitle) {
-      setPlannerCurrentTitle(myPickerTitle);
-    }
-  }, [myPickerTitle, setMyPositionTitle, plannerCurrentTitle, ensurePlannerCanShowJob]);
+  const handleSaveMyPosition = useCallback(
+    (title) => {
+      if (!title) return;
+      ensurePlannerCanShowJob(title);
+      setMyPositionTitle(title);
+      if (!plannerCurrentTitle) {
+        setPlannerCurrentTitle(title);
+      }
+    },
+    [ensurePlannerCanShowJob, plannerCurrentTitle]
+  );
+
+  const handleClearMyPosition = useCallback(() => {
+    setMyPositionTitle('');
+  }, []);
 
   const hasSelection = plannerCurrentJob && plannerTargetJob;
 
@@ -346,6 +339,34 @@ export default function CareerRoadmap() {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
+
+  const handleLaunchExplorer = useCallback(() => {
+    navigate('/career-explorer');
+  }, [navigate]);
+
+  const featureOverflowActions = useMemo(
+    () => [
+      {
+        label: 'Clear saved role',
+        onClick: handleClearMyPosition,
+        icon: <XCircle className="icon-xs" aria-hidden="true" />,
+        disabled: !myPosition,
+      },
+    ],
+    [handleClearMyPosition, myPosition]
+  );
+
+  const featureSecondaryActions = useMemo(
+    () => [
+      {
+        label: 'Launch career explorer',
+        onClick: handleLaunchExplorer,
+        importance: 'secondary',
+        icon: <Compass className="icon-xs" aria-hidden="true" />,
+      },
+    ],
+    [handleLaunchExplorer]
+  );
 
   const getToneForScore = (score) => {
     if (score >= 90) return 'tone-green';
@@ -363,65 +384,41 @@ export default function CareerRoadmap() {
     jobs.length
   );
 
+  if (error) {
+    return (
+      <div className="page solid-bg experience-page experience-page--roadmap">
+        <div className="content experience-content experience-content--wide">
+          <ErrorState
+            description="We couldn't load the roadmap data right now. Please try again."
+            onRetry={
+              typeof window !== 'undefined'
+                ? () => window.location.reload()
+                : undefined
+            }
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="page solid-bg experience-page experience-page--roadmap">
-      <SiteHeader />
-
       <div className="content experience-content experience-content--wide">
-        <section className="experience-hero experience-hero--explorer" data-animate="fade-slide">
-          <div className="experience-hero__header">
-            <div className="experience-hero__icon" aria-hidden="true">
-              <Compass className="icon-lg" />
-            </div>
-            <div>
-              <h1 className="experience-hero__title">Explorer Roadmap</h1>
-              <p className="experience-hero__subtitle">
-                Plot how you move across the SPH Career Framework with personalised skill insights.
-              </p>
-            </div>
-          </div>
-          <div className="experience-hero__grid">
-            <div className="experience-hero__status-card">
-              <div className="roadmap-hero__status-wrapper">
-                <div className="roadmap-hero__status-body">
-                  {myPosition ? (
-                    <>
-                      <span className="experience-hero__status-label">Saved starting role</span>
-                      <span className="experience-hero__status-value">{myPosition.title}</span>
-                      <button className="chip chip--ghost" type="button" onClick={scrollToPlanner}>
-                        Update or plan from here
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <span className="experience-hero__status-label">Ready to personalise?</span>
-                      <p className="experience-hero__status-text">
-                        Save your current role below to unlock curated transitions and faster planning.
-                      </p>
-                      <button className="chip-link" type="button" onClick={scrollToPlanner}>
-                        Save my position
-                      </button>
-                    </>
-                  )}
-                </div>
-                <ChibiPixelBot
-                  size="sm"
-                  animated
-                  alt=""
-                  className="roadmap-hero__helper-bot"
-                />
-              </div>
-            </div>
-            <div className="experience-hero__actions">
-              <button type="button" className="button" onClick={scrollToPlanner}>
-                Start planning
-              </button>
-              <Link to="/career-explorer" className="button">
-                Launch career explorer
-              </Link>
-            </div>
-          </div>
-        </section>
+        <FeaturePanel
+          mode="B"
+          data={{
+            jobs,
+            divisions,
+            ready,
+            myPosition,
+            recommendationsCount: recommendationsForMyPosition.length,
+            secondaryActions: featureSecondaryActions,
+            onSaveMyPosition: handleSaveMyPosition,
+            overflowActions: featureOverflowActions,
+          }}
+          permissions={{}}
+          onPrimary={scrollToPlanner}
+        />
 
         <section id="roadmap-planner" className="roadmap-panel" data-animate="fade-up">
           <div className="roadmap-panel__grid">
@@ -434,73 +431,36 @@ export default function CareerRoadmap() {
                 </div>
               </div>
               <div className="roadmap-card-block__body">
-                <div className="field field--elevated">
-                  <label className="field__label" htmlFor="my-position-division">
-                    Function
-                  </label>
-                  <div className="field__control">
-                    <Filter className="icon-sm field__icon" />
-                    <select
-                      id="my-position-division"
-                      className="input input--elevated"
-                      value={myPickerDivision}
-                      onChange={(e) => {
-                        setMyPickerDivision(e.target.value);
-                        setMyPickerTitle('');
-                      }}
-                    >
-                      <option value="all">All functions</option>
-                      {divisions.map((d) => (
-                        <option key={d} value={d}>
-                          {d}
-                        </option>
-                      ))}
-                    </select>
+                {myPosition ? (
+                  <div className="roadmap-card-block__saved">
+                    <span className="roadmap-card-block__saved-label">Saved role</span>
+                    <p className="roadmap-card-block__saved-title">{myPosition.title}</p>
+                    {myPosition.division && (
+                      <p className="roadmap-card-block__saved-meta">{myPosition.division}</p>
+                    )}
+                    <p className="muted text-sm">
+                      Update your saved role using the panel at the top of this page to keep insights in sync.
+                    </p>
                   </div>
-                </div>
-                <div className="field field--elevated">
-                  <label className="field__label" htmlFor="my-position-title">
-                    Position
-                  </label>
-                  <div className="field__control">
-                    <Briefcase className="icon-sm field__icon" />
-                    <select
-                      id="my-position-title"
-                      className="input input--elevated"
-                      value={myPickerTitle}
-                      onChange={(e) => setMyPickerTitle(e.target.value)}
-                    >
-                      <option value="">Select your position...</option>
-                      {myPickerJobs.map((job) => (
-                        <option key={job.id} value={job.title}>
-                          {job.title} - {job.division}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                ) : (
+                  <p className="muted text-sm">
+                    Save your current role using the panel above to benchmark every opportunity.
+                  </p>
+                )}
               </div>
               <div className="roadmap-card-block__actions">
                 <button
                   type="button"
-                  className="button"
-                  onClick={setMyPositionFromPicker}
-                  disabled={!myPickerTitle}
+                  className="button button--secondary"
+                  onClick={() => {
+                    if (!myPosition) return;
+                    ensurePlannerCanShowJob(myPosition.title);
+                    setPlannerCurrentTitle(myPosition.title);
+                  }}
+                  disabled={!myPosition}
                 >
-                  Save my position
+                  Prefill planner with saved role
                 </button>
-                {myPosition && (
-                  <button
-                    type="button"
-                    className="chip chip--ghost"
-                    onClick={() => {
-                      ensurePlannerCanShowJob(myPosition.title);
-                      setPlannerCurrentTitle(myPosition.title);
-                    }}
-                  >
-                    Prefill planner with saved role
-                  </button>
-                )}
               </div>
             </div>
 

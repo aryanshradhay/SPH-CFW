@@ -10,5 +10,7 @@
 @import './components/navigation.css';
 @import './components/hero.css';
 @import './components/function-showcase.css';
+@import './components/action-bar.css';
+@import './components/feature-panel.css';
 
 @import './layouts/job-skills-matcher.css';
