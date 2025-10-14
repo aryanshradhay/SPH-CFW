@@ -1,7 +1,9 @@
 // src/utils/jobDataUtils.js
 import Papa from 'papaparse';
 
-export const CSV_URL = (process.env.PUBLIC_URL || '') + '/position-skills.csv';
+import { POSITION_SKILLS_CSV_URL } from './datasets';
+
+export const CSV_URL = POSITION_SKILLS_CSV_URL;
 export const TRAININGS_CSV_URL =
   (process.env.PUBLIC_URL || '') + '/SPH skill based career pathing - Matrix 20250922(Trainings).csv';
 

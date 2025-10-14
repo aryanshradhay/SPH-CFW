@@ -4,8 +4,9 @@ import Papa from 'papaparse';
 import { Link } from 'react-router-dom';
 import { BookOpen, Trophy, Info, ArrowRight } from 'lucide-react';
 import '../styles/main.css';
+import { POSITION_SKILLS_CSV_URL } from '../utils/datasets';
 
-const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
+const CSV_URL = POSITION_SKILLS_CSV_URL;
 
 const normKey = (s) => String(s || '').trim();
 const getCI = (row, ...candidates) => {
