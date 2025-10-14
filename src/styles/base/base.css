@@ -36,17 +36,18 @@
   --color-neutral-ink: #1a1133;
 
   /* Thematic tokens */
-  --color-background: var(--color-sensitive-yellow);
-  --color-surface: var(--color-neutral-white);
-  --color-surface-alt: var(--color-sensitive-blue);
+  --color-background: linear-gradient(180deg, #f4efff 0%, #e4d9ff 52%, #f7f2ff 100%);
+  --color-background-solid: #f4efff;
+  --color-surface: #fdfbff;
+  --color-surface-alt: #ede4ff;
 
   --color-text: var(--color-neutral-ink);
-  --color-text-strong: var(--color-rich-purple);
+  --color-text-strong: #3b276d;
   --color-text-inverse: #ffffff;
-  --color-muted: #3f2f68;
+  --color-muted: #52417f;
 
-  --color-border-strong: var(--color-rich-purple);
-  --color-border-soft: var(--color-sensitive-pink);
+  --color-border-strong: #4f3197;
+  --color-border-soft: rgba(79, 49, 151, 0.25);
 
   --shadow: 0 24px 48px rgba(0, 0, 0, 0.12);
   --radius: 16px;
@@ -80,6 +81,7 @@ body {
   font-family: 'Verdana', 'Merck';
   color: var(--color-text);
   background: var(--color-background);
+  background-color: var(--color-background-solid);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
