@@ -11,9 +11,10 @@ import {
   Shuffle,
 } from 'lucide-react';
 import '../styles/main.css';
+import { POSITION_SKILLS_CSV_URL } from '../utils/datasets';
 import { inferSeniorityRank } from '../utils/jobDataUtils';
 
-const CSV_URL = (process.env.PUBLIC_URL || '') + '/positions-skills.csv';
+const CSV_URL = POSITION_SKILLS_CSV_URL;
 
 // ------------ Utils (kept local for self-containment) ------------
 const normKey = (s) => String(s || '').trim();
