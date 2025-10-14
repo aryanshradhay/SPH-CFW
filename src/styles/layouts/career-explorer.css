@@ -1304,6 +1304,16 @@
   text-align: center;
 }
 
+.explorer-empty__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-inline: 1.5rem;
+  width: 100%;
+  max-width: 22rem;
+}
+
 .explorer-empty .cbot_base {
   --cbot-size: clamp(124px, 22vw, 176px);
   margin-bottom: 0.25rem;
@@ -1320,6 +1330,10 @@
   .explorer-hero__helper-bot {
     width: 100%;
     justify-content: center;
+  }
+
+  .explorer-empty__cta {
+    width: min(100%, 320px);
   }
 
   .explorer-hero__status-body {

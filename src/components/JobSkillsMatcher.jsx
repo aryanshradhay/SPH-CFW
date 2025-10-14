@@ -14,6 +14,7 @@ import useRevealOnScroll from '../hooks/useRevealOnScroll';
 import JobInsightCanvas from './JobInsightCanvas';
 import FeaturePanel from './FeaturePanel';
 import ErrorState from './ErrorState';
+import feedbackLinks from '../data/feedbackLinks';
 
 /* ------------------------- Main Component (Single Page) ------------------------- */
 const JobSkillsMatcher = () => {
@@ -137,6 +138,27 @@ const JobSkillsMatcher = () => {
     ],
     [handlePlanRoadmap]
   );
+
+  const missingRoleLink = useMemo(() => {
+    const baseUrl = feedbackLinks.missingRoleForm;
+    try {
+      const url = new URL(baseUrl);
+      const params = new URLSearchParams(url.search);
+      const trimmedSearch = searchTerm.trim();
+      if (trimmedSearch) {
+        params.set('role', trimmedSearch);
+      }
+      if (selectedDivision && selectedDivision !== 'all') {
+        params.set('division', selectedDivision);
+      } else {
+        params.delete('division');
+      }
+      url.search = params.toString();
+      return url.toString();
+    } catch (err) {
+      return baseUrl;
+    }
+  }, [searchTerm, selectedDivision]);
   
   const handleOpenJob = React.useCallback(
     (job) => {
@@ -307,6 +329,14 @@ const JobSkillsMatcher = () => {
                     <div className="explorer-empty">
                       <Users className="icon-xl" />
                       <p>No roles match your filters just yet. Try a different combination.</p>
+                      <a
+                        className="button button--secondary explorer-empty__cta"
+                        href={missingRoleLink}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Request a role we're missing
+                      </a>
                     </div>
                   )}
                 </div>
