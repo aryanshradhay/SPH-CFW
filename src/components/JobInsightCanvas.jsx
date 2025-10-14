@@ -8,9 +8,11 @@ import {
   Target,
   Layers,
   Star,
+  MessageSquarePlus,
 } from 'lucide-react';
 import '../styles/components/job-insight-canvas.css';
 import { getSimilarityBadge } from '../utils/jobDataUtils';
+import { FEEDBACK_LINKS } from '../data/feedbackLinks';
 
 function formatSimilarity(score) {
   if (score == null) return 'N/A';
@@ -233,6 +235,38 @@ const JobInsightCanvas = React.forwardRef(
       }
       return cards;
     }, [summary, job]);
+    const improvementFormUrl = useMemo(() => {
+      const baseUrl = FEEDBACK_LINKS.improvement;
+      if (!baseUrl) return '';
+      if (!job) return baseUrl;
+
+      const params = new URLSearchParams();
+
+      if (job.title) {
+        params.set('jobTitle', job.title);
+      }
+
+      if (job.id != null) {
+        params.set('jobId', String(job.id));
+      }
+
+      const cluster = summary?.cluster || job.cluster;
+      const division = job.division;
+
+      if (cluster) {
+        params.set('cluster', cluster);
+      } else if (division) {
+        params.set('division', division);
+      }
+
+      const query = params.toString();
+
+      if (!query) {
+        return baseUrl;
+      }
+
+      return `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}${query}`;
+    }, [job?.title, job?.id, job?.cluster, job?.division, summary?.cluster]);
     const handleSetAsCurrent = () => {
       if (typeof onSaveMyPosition === 'function') {
         onSaveMyPosition(job);
@@ -393,6 +427,17 @@ const JobInsightCanvas = React.forwardRef(
               <button type="button" className="insight-chip" onClick={handlePlanAsTarget}>
                 <Target className="icon-xs" /> Roadmap: set target
               </button>
+              {improvementFormUrl && (
+                <a
+                  className="insight-chip insight-chip--link"
+                  href={improvementFormUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={`Suggest improvements for ${job?.title || 'this role'}`}
+                >
+                  <MessageSquarePlus className="icon-xs" /> Suggest improvements
+                </a>
+              )}
             </div>
           </section>
         </div>
