@@ -5,10 +5,9 @@ import {
   ArrowLeft,
   MapPin,
   Sparkles,
-  Target,
-  Layers,
   Star,
   MessageSquarePlus,
+  PartyPopper,
 } from 'lucide-react';
 import '../styles/components/job-insight-canvas.css';
 import { getSimilarityBadge } from '../utils/jobDataUtils';
@@ -103,7 +102,6 @@ const JobInsightCanvas = React.forwardRef(
       job,
       onClose,
       onSaveMyPosition,
-      onPlanRoadmap,
       summary,
       skillsByType,
       baselineSimilarity,
@@ -266,21 +264,44 @@ const JobInsightCanvas = React.forwardRef(
       }
 
       return `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}${query}`;
-    }, [job?.title, job?.id, job?.cluster, job?.division, summary?.cluster]);
+    }, [job, summary?.cluster]);
     const handleSetAsCurrent = () => {
       if (typeof onSaveMyPosition === 'function') {
         onSaveMyPosition(job);
       }
     };
-    const handlePlanAsCurrent = () => {
-      onPlanRoadmap({ currentTitle: job.title });
-    };
-    const handlePlanAsTarget = () => {
-      const state = myPosition?.title
-        ? { currentTitle: myPosition.title, targetTitle: job.title }
-        : { targetTitle: job.title };
-      onPlanRoadmap(state);
-    };
+    const feedbackFormUrl = useMemo(() => {
+      const baseUrl = FEEDBACK_LINKS.feedback;
+      if (!baseUrl) return '';
+      if (!job) return baseUrl;
+
+      const params = new URLSearchParams();
+
+      if (job.title) {
+        params.set('jobTitle', job.title);
+      }
+
+      if (job.id != null) {
+        params.set('jobId', String(job.id));
+      }
+
+      const cluster = summary?.cluster || job.cluster;
+      const division = job.division;
+
+      if (cluster) {
+        params.set('cluster', cluster);
+      } else if (division) {
+        params.set('division', division);
+      }
+
+      const query = params.toString();
+
+      if (!query) {
+        return baseUrl;
+      }
+
+      return `${baseUrl}${baseUrl.includes('?') ? '&' : '?'}${query}`;
+    }, [job, summary?.cluster]);
     if (!job) {
       return null;
     }
@@ -410,32 +431,43 @@ const JobInsightCanvas = React.forwardRef(
           </section>
           <section className="insight-cta">
             <div className="insight-cta__content">
-              <h3>Turn insight into action</h3>
+              <h3>Help us make this sparkle ✨</h3>
               <p>
-                Pin the role to your profile or open a roadmap to see how this position moves you forward.
+                We’re co-creating this canvas with you. Tell us what feels magical or what could use an extra
+                glow-up!
               </p>
             </div>
-            <div className="insight-cta__actions">
+            <div className="insight-cta__actions" aria-label="Feedback actions for this role">
               {typeof onSaveMyPosition === 'function' && (
-                <button type="button" className="insight-chip" onClick={handleSetAsCurrent}>
+                <button
+                  type="button"
+                  className="insight-chip insight-cta__action"
+                  onClick={handleSetAsCurrent}
+                  aria-label={`Save ${job?.title || 'this role'} as My Position`}
+                >
                   <Sparkles className="icon-xs" /> Save as My Position
                 </button>
               )}
-              <button type="button" className="insight-chip" onClick={handlePlanAsCurrent}>
-                <Layers className="icon-xs" /> Roadmap: set current
-              </button>
-              <button type="button" className="insight-chip" onClick={handlePlanAsTarget}>
-                <Target className="icon-xs" /> Roadmap: set target
-              </button>
+              {feedbackFormUrl && (
+                <a
+                  className="insight-chip insight-chip--link insight-cta__action insight-cta__action--primary"
+                  href={feedbackFormUrl}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  aria-label={`Share feedback about ${job?.title || 'this role'}`}
+                >
+                  <PartyPopper className="icon-xs" /> I love this!
+                </a>
+              )}
               {improvementFormUrl && (
                 <a
-                  className="insight-chip insight-chip--link"
+                  className="insight-chip insight-chip--link insight-cta__action"
                   href={improvementFormUrl}
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={`Share an improvement idea for ${job?.title || 'this role'}`}
                 >
-                  <MessageSquarePlus className="icon-xs" /> Share an improvement idea
+                  <MessageSquarePlus className="icon-xs" /> Suggest a glow-up
                 </a>
               )}
             </div>
