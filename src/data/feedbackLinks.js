@@ -1,7 +1,7 @@
 
 
-const DEFAULT_FEEDBACK_FORM_URL = 'https://forms.office.com/e/sphcareerframeworkfeedback';
-const DEFAULT_IMPROVEMENT_FORM_URL = 'https://forms.office.com/e/sphcareerframeworkimprovement';
+const DEFAULT_FEEDBACK_FORM_URL = 'https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=Wft223ejIEG8VFnerX05ych_mCxGzeNNvT6abMIWkX5UNzlMS1kyQkRMOVhOS1M1MlZSVkUySjFITy4u';
+const DEFAULT_IMPROVEMENT_FORM_URL = 'https://forms.office.com/Pages/DesignPageV2.aspx?origin=NeoPortalPage&subpage=design&id=Wft223ejIEG8VFnerX05ych_mCxGzeNNvT6abMIWkX5UQzg0T1hTOEJDWThYNUc2WlFWTVVTQlJHNi4u';
 
 const {
   REACT_APP_FEEDBACK_FORM_URL,

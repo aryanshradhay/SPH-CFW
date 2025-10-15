@@ -789,7 +789,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--color-neutral-white), var(--color-rich-purple));
+  background:var(--color-neutral-white);
   opacity: 1;
   transition: opacity 0.25s ease, transform 0.25s ease;
   z-index: 0;
