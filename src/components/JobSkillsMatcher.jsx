@@ -14,7 +14,7 @@ import useRevealOnScroll from '../hooks/useRevealOnScroll';
 import JobInsightCanvas from './JobInsightCanvas';
 import FeaturePanel from './FeaturePanel';
 import ErrorState from './ErrorState';
-import {IMPROVEMENT_FORM_URL } from '../data/feedbackLinks';
+import { IMPROVEMENT_FORM_URL, FEEDBACK_FORM_URL } from '../data/feedbackLinks';
 
 /* ------------------------- Main Component (Single Page) ------------------------- */
 const JobSkillsMatcher = () => {
@@ -139,6 +139,8 @@ const JobSkillsMatcher = () => {
     [handlePlanRoadmap]
   );
 
+  const generalFeedbackUrl = FEEDBACK_FORM_URL;
+
   const missingRoleLink = useMemo(() => {
     const baseUrl = IMPROVEMENT_FORM_URL;
     try {
@@ -212,6 +214,34 @@ const JobSkillsMatcher = () => {
                     <p className="explorer-panel__subtitle">
                       Use the filters to surface roles across the SPH framework. Open a card to view its skill DNA.
                     </p>
+                  </div>
+                </div>
+                <div className="explorer-panel__feedback" role="note">
+                  <div className="explorer-panel__feedback-copy">
+                    <span className="explorer-panel__feedback-eyebrow">We'd love your feedback</span>
+                    <h3 className="explorer-panel__feedback-title">Help shape the Career Framework experience</h3>
+                    <p className="explorer-panel__feedback-text">
+                      Tell us what&apos;s working well or highlight new ideas we should explore next. Every response helps us
+                      prioritise the updates that matter most to you.
+                    </p>
+                  </div>
+                  <div className="explorer-panel__feedback-actions">
+                    <a
+                      className="button"
+                      href={generalFeedbackUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Share your experience
+                    </a>
+                    <a
+                      className="button button--secondary"
+                      href={missingRoleLink}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                    >
+                      Suggest a role or improvement
+                    </a>
                   </div>
                 </div>
                 <div className="explorer-panel__controls">
@@ -329,13 +359,14 @@ const JobSkillsMatcher = () => {
                     <div className="explorer-empty">
                       <Users className="icon-xl" />
                       <p>No roles match your filters just yet. Try a different combination.</p>
+                      <p>Have a role in mind that isn&apos;t here? We&apos;d love to hear about it.</p>
                       <a
                         className="button button--secondary explorer-empty__cta"
                         href={missingRoleLink}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        Request a role we're missing
+                        Tell us about a role to add
                       </a>
                     </div>
                   )}
