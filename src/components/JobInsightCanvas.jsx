@@ -433,9 +433,9 @@ const JobInsightCanvas = React.forwardRef(
                   href={improvementFormUrl}
                   target="_blank"
                   rel="noreferrer noopener"
-                  aria-label={`Suggest improvements for ${job?.title || 'this role'}`}
+                  aria-label={`Share an improvement idea for ${job?.title || 'this role'}`}
                 >
-                  <MessageSquarePlus className="icon-xs" /> Suggest improvements
+                  <MessageSquarePlus className="icon-xs" /> Share an improvement idea
                 </a>
               )}
             </div>
