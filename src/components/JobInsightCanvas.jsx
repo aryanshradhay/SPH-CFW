@@ -456,7 +456,7 @@ const JobInsightCanvas = React.forwardRef(
                   rel="noreferrer noopener"
                   aria-label={`Share feedback about ${job?.title || 'this role'}`}
                 >
-                  <PartyPopper className="icon-xs" /> I love this!
+                  <PartyPopper className="icon-xs" /> Add a new Role
                 </a>
               )}
               {improvementFormUrl && (
