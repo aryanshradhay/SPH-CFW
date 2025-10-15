@@ -433,7 +433,7 @@
   width: 160px;
   height: 6px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(141, 89, 255, 0.9), rgba(150, 215, 210, 0.9));
+  background: linear-gradient(90deg, var(--color-rich-purple), rgba(150, 215, 210, 0.9));
   opacity: 0.7;
   animation: explorerAccentSlide 6s ease-in-out infinite;
 }
@@ -701,8 +701,8 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, var(--color-sensitive-blue), var(--color-vibrant-magenta));
-  opacity: 0.45;
+  background: linear-gradient(135deg, var(--color-neutral-white), var(--color-rich-purple));
+  opacity: 1;
   transition: opacity 0.25s ease, transform 0.25s ease;
   z-index: 0;
   pointer-events: none;
@@ -718,7 +718,7 @@
 .explorer-card__title {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--color-rich-purple);
+  color: var(--color-text);
   position: relative;
   z-index: 1;
 }
@@ -728,7 +728,7 @@
 
 .explorer-card__meta {
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--color-text);
   position: relative;
   z-index: 1;
 }

@@ -14,7 +14,7 @@
   display: flex;
   justify-content: center;
   align-items: normal;
-  padding: clamp(2.75rem, 5vh, 4.5rem) 0 clamp(1.75rem, 4vh, 3rem);
+  padding: 0;
   padding-bottom: calc(clamp(2.5rem, 5vw, 4rem) + env(safe-area-inset-bottom, 0px));
   margin-inline: auto;
   margin-top: clamp(2rem, 4vw, 3.5rem);
