@@ -36,6 +36,7 @@
   --color-neutral-ink: #1a1133;
 
   /* Thematic tokens */
+  --gradient-feature: linear-gradient(135deg, #7d3ff2 0%, #1b0d46 100%);
   --color-background: linear-gradient(180deg, #f4efff 0%, #e4d9ff 52%, #f7f2ff 100%);
   --color-background-solid: #f4efff;
   --color-surface: #fdfbff;
@@ -204,7 +205,7 @@ img {
 
 .app-shell {
   min-height: 100vh;
-  background: var(--color-background);
+  background: var(--gradient-feature);
 }
 
 .app-shell__main {

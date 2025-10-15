@@ -5,6 +5,8 @@
 
 .framework-functions {
   padding: clamp(2.75rem, 5vh, 4.5rem) 0 clamp(1.75rem, 4vh, 3rem);
+  background: var(--gradient-feature);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .framework-functions .container {
@@ -24,21 +26,22 @@
   justify-content: center;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: var(--color-sensitive-blue);
-  color: var(--color-rich-blue);
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--color-neutral-white);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  border: 2px solid var(--color-rich-blue);
+  border: 2px solid rgba(255, 255, 255, 0.35);
 }
 
 .framework-functions__title {
   font-size: clamp(2rem, 4vw, 3rem);
   margin: 1rem 0 0.75rem;
+  color: var(--color-neutral-white);
 }
 
 .framework-functions__subtitle {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 1.05rem;
 }
 
