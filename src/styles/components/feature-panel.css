@@ -1,5 +1,5 @@
 .feature-panel {
-  background: var(--gradient-feature);
+  background: linear-gradient(135deg, #7d3ff2 0%, #1b0d46 100%);
   border-radius: 28px;
   padding: clamp(1.75rem, 3vw, 2.5rem);
   display: grid;
