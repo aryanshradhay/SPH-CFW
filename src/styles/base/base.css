@@ -78,6 +78,7 @@ body,
 
 body {
   margin: 0;
+  zoom: 75%;
   font-family: 'Verdana', 'Merck';
   color: var(--color-text);
   background: var(--color-background);
