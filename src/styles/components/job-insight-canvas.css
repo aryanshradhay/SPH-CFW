@@ -402,7 +402,7 @@
   padding: clamp(1.8rem, 3vw, 2.6rem);
   border-radius: 28px;
   border: 2px solid rgba(113, 57, 189, 0.45);
-  background: radial-gradient(circle at top left, rgba(176, 118, 255, 0.95), rgba(78, 41, 159, 0.92));
+  background: var(--color-rich-purple);
   box-shadow: 0 24px 55px rgba(38, 14, 94, 0.28);
   overflow: hidden;
   color: #fff;
